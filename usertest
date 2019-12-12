@@ -1,0 +1,23 @@
+
+   Symfony\Component\Debug\Exception\FatalThrowableError  : syntax error, unexpected '->' (T_OBJECT_OPERATOR)
+
+  at C:\xampp\htdocs\worldskills-project6\database\migrations\2019_12_11_032510_create_tickets_table.php:21
+    17|             $table->bigIncrements('ticket_id');
+    18|             $table->string('ticket_name');
+    19|             $table->double('ticket_cost');
+    20|             $table->double('special_validity');
+  > 21|             $table->integer('max_tickets');->nullable();
+    22|             $table->dateTime('tickets_sell_by_date');->nulllable();
+    23|             $table->timestamps();
+    24|         });
+    25|     }
+
+  Exception trace:
+
+  1   Illuminate\Filesystem\Filesystem::requireOnce("C:\xampp\htdocs\worldskills-project6\database\migrations/2019_12_11_032510_create_tickets_table.php")
+      C:\xampp\htdocs\worldskills-project6\vendor\laravel\framework\src\Illuminate\Database\Migrations\MigrationCreator.php:85
+
+  2   Illuminate\Database\Migrations\MigrationCreator::ensureMigrationDoesntAlreadyExist("create_user_test_table", "C:\xampp\htdocs\worldskills-project6\database\migrations")
+      C:\xampp\htdocs\worldskills-project6\vendor\laravel\framework\src\Illuminate\Database\Migrations\MigrationCreator.php:50
+
+  Please use the argument -v to see more details.
