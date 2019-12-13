@@ -27,8 +27,7 @@ a:focus {
     background: #fff;
     border: none;
     border-radius: 0;
-    margin-bottom: 40px;
-    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1%;
 }
 
 .navbar-btn {
@@ -61,8 +60,8 @@ a:focus {
 }
 
 #sidebar .sidebar-header {
-    padding: 20px;
-    background: black;
+    padding: 12px;
+    background: #1b1e21;
 }
 
 #sidebar ul.components {
@@ -95,23 +94,4 @@ ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
     background: #6d7fcc;
-}
-/* ---------------------------------------------------
-    CONTENT STYLE
------------------------------------------------------ */
-
-#content {
-    width: calc(100% - 250px);
-    min-height: 100vh;
-    position: absolute;
-    top: 0;
-    right: 0;
-}
-
-#content-main {
-  padding-left: 30px;
-}
-
-#content.active {
-    width: 100%;
 }

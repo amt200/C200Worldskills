@@ -1,35 +1,34 @@
 <?php
+Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+// --------------- //
+// Manage Events  //
+// ------------- //
+Route::get('/event',  'EventController@index')->name('event');
+Route::group(['prefix' => 'event', 'as' => 'event.'], function () {
+	Route::get('/create', 'EventController@create')->name('create');
+	Route::get('/details', 'EventController@details')->name('details');
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+	Route::get('/create_session', 'SessionController@index')->name('create_session');
+	Route::get('/create_channel', 'ChannelController@index')->name('create_channel');
+	Route::get('/room_capacity', 'RoomController@index')->name('room_capacity');
+	Route::get('/create_room', 'RoomController@create')->name('create_room');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
 });
-Route::get('/manage_event', function () {
-    return view('ManageEvent');
+
+// --------------- //
+// Manage Ticket  //
+// ------------- //
+Route::get('/ticket',  'TicketController@index')->name('ticket');
+Route::group(['prefix' => 'ticket', 'as' => 'ticket.'], function () {
+	Route::get('/create', 'TicketController@create')->name('create');
 });
-Route::get('/manage_event/create_event', function () {
-    return view('CreateEvent');
-});
-Route::get('/manage_event/event_details', function () {
-    return view('EventDetail');
-});
-Route::get('/create_ticket', function () {
-    return view('CreateTicket');
-});
+
+Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
+Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
+Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
+
+
 Route::get('/create_channel', function () {
     return view('CreateChannel');
 });

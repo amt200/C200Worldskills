@@ -1,5 +1,9 @@
 @extends('layouts.master')
 
 @section('content')
-<h1>Dashboard testing</h1>
+<div class="panel-heading">
+	<h1>Dashboard testing</h1>
+</div>
+
+
 @endsection
