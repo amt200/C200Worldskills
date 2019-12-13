@@ -13,48 +13,39 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/navigation.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/main.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
 
 </head>
 <body>
 
+<div id="wrapper">
   <!-- Side bar -->
-  <div class="col-lg-2">
-  <div id="sidebar-wrapper">
-        <nav id="spy">
-            <ul class="sidebar-nav nav">
-                <li class="sidebar-brand">
-                    <a href="#home"><span class="fa fa-home solo">Event Platform</span></a>
-                </li>
-                <li>
-                    <a href="#anch1" data-scroll>
-                        <span class="fa fa-anchor solo">Manage Events</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </div>
-  </div>
+  @include('layouts.side-navigation')
   
-  <div class="col-lg-10">
-  	<nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <a class="navbar-brand" href="#">WorldSkills</a>
+  <div id="content">
+  	<nav class="navbar navbar-dark bg-dark">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">WorldSkills</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign In</a></li>
+          <!-- Edit for backend code -->
+        </ul>
       </div>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign In</a></li>
-        <!-- Edit for backend code -->
-      </ul>
+    </nav>
+    
+    <div id="content-main">
+      @yield('content')
     </div>
-  </nav>
+       
+  </div><!-- End of content -->
+</div><!-- End of wrapper -->
 
-
-  @yield('content')
-
-  </div>
-  <!-- End of col-lg-10 -->
-	
-	<!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
+<!-- Scripts -->
+<script src="{{ asset('js/app.js') }}"></script>
+<script src="{{ asset('js/bootstrap.min.js') }}"></script>
 </body>
 </html>
