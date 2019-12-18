@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class SessionController extends Controller
 {
-  public function Index()
+  public function index()
   {
     return view('CreateSession');
   }
