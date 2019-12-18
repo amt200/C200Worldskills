@@ -33,9 +33,11 @@ Route::get('/create_channel', function () {
     return view('CreateChannel');
 });
 Route::get('/create_session', function () {
-    return view('CreateSession');
+    return 'Something';
 });
-Route::get('/create_room', 'SessionController@index');
+Route::get('/create_room', function () {
+    return view('CreateRoom');
+});
 Route::get('/room_capacity', function () {
     return view('RoomCapacity');
 });
