@@ -33,7 +33,7 @@ Route::get('/create_channel', function () {
     return view('CreateChannel');
 });
 Route::get('/create_session', function () {
-    return 'Something';
+    return view('CreateSession');
 });
 Route::get('/create_room', function () {
     return view('CreateRoom');
