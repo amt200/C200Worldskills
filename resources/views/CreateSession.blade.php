@@ -2,7 +2,10 @@
 
 @section('content')
 <div class="panel-heading">
-    <h1>Create Session</h1>
+    <h2>Create Session</h2>
+    <form method = "post" action="/store">
+
+    </form>
 </div>
 
 

@@ -23,18 +23,21 @@ Route::get('/ticket',  'TicketController@index')->name('ticket');
 Route::group(['prefix' => 'ticket', 'as' => 'ticket.'], function () {
 	Route::get('/create', 'TicketController@create')->name('create');
 });
+// --------------- //
+// Manage session //
+// ------------- //
+Route::group(['prefix' => 'session', 'as' => 'session.'], function () {
+    Route::get('/update', 'SessionController@update')->name('update');
+    Route::post('/store', 'SessionController@store')->name('store');
+});
 
-Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
-Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
-Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
-
-
+// --------------- //
+// Manage channel //
+// ------------- //
 Route::get('/create_channel', function () {
     return view('CreateChannel');
 });
-Route::get('/create_session', function () {
-    return view('CreateSession');
-});
+
 Route::get('/create_room', function () {
     return view('CreateRoom');
 });
@@ -42,4 +45,4 @@ Route::get('/room_capacity', function () {
     return view('RoomCapacity');
 });
 
-Route::get('/home', 'HomeController@index')->name('home');
+
