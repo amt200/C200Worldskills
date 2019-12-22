@@ -9,7 +9,7 @@ class SessionController extends Controller
   public function index(){
     return view('CreateSession');
   }
-  public function store(){
+  public function create(){
 
   }
 

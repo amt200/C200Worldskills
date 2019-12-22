@@ -28,7 +28,7 @@ Route::group(['prefix' => 'ticket', 'as' => 'ticket.'], function () {
 // ------------- //
 Route::group(['prefix' => 'session', 'as' => 'session.'], function () {
     Route::get('/update', 'SessionController@update')->name('update');
-    Route::post('/store', 'SessionController@store')->name('store');
+    Route::post('/create', 'SessionController@create')->name('create');
 });
 
 // --------------- //
