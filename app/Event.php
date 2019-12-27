@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Event extends Model
 {
+  protected $table = 'events';
+  public $timestamps = false;
+
   public function tickets(){
   	return $this->hasMany('App\Ticket');
   }
@@ -22,7 +25,7 @@ class Event extends Model
   	return $this->hasMany('App\Channel');
   }
 
-  public function sessions(){
-  	return $this->hasOne('App\Organization');
-  }
+  // public function sessions(){
+  // 	return $this->hasOne('App\Organization');
+  // }
 }
