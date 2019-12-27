@@ -11,6 +11,8 @@ Route::group(['prefix' => 'event', 'as' => 'event.'], function () {
 	Route::get('/details', 'EventController@details')->name('details');
 
 	Route::get('/create_session', 'SessionController@index')->name('create_session');
+    Route::get('/update_session', 'SessionController@update')->name('update_session');
+    Route::post('/store_session', 'SessionController@store')->name('store_session');
 	Route::get('/create_channel', 'ChannelController@index')->name('create_channel');
 	Route::get('/room_capacity', 'RoomController@index')->name('room_capacity');
 	Route::get('/create_room', 'RoomController@create')->name('create_room');
@@ -28,10 +30,7 @@ Route::group(['prefix' => 'ticket', 'as' => 'ticket.'], function () {
 // --------------- //
 // Manage session //
 // ------------- //
-Route::group(['prefix' => 'session', 'as' => 'session.'], function () {
-    Route::get('/update', 'SessionController@update')->name('update');
-    Route::post('/create', 'SessionController@create')->name('create');
-});
+
 
 // --------------- //
 // Manage channel //
