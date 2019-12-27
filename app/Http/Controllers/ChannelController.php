@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class ChannelController extends Controller
 {
-  public function Index()
+  public function index()
   {
     return view('CreateChannel');
   }

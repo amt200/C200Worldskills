@@ -35,4 +35,5 @@
 		<li>
 			<a href="{{ route('event.room_capacity') }}">Room Capacity</a>
 		</li>
+    </ul>
 </nav>
