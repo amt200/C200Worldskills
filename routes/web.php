@@ -23,8 +23,9 @@ Route::group(['prefix' => 'event', 'as' => 'event.'], function () {
 // ------------- //
 Route::get('/ticket',  'TicketController@index')->name('ticket');
 Route::group(['prefix' => 'ticket', 'as' => 'ticket.'], function () {
-	Route::get('/create', 'TicketController@create')->name('create');
+    Route::get('/create', 'TicketController@create')->name('create');
 });
+
 // --------------- //
 // Manage session //
 // ------------- //
@@ -45,3 +46,8 @@ Route::get('/room_capacity', function () {
 });
 
 
+//ATTENDEE
+Route::get('/attendee',  'AttendeeController@index')->name('attendee');
+Route::group(['prefix' => 'attendee', 'as' => 'attendee.'], function () {
+    Route::get('/event_register', 'AttendeeController@eventRegister')->name('event_register');
+});
