@@ -13,12 +13,15 @@ class CreateRoomsTable extends Migration
      */
     public function up()
     {
-        Schema::create('rooms', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('room_name');
-            $table->integer('room_capacity');
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('rooms'))
+        {
+            Schema::create('rooms', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('room_name');
+                $table->integer('room_capacity');
+                $table->timestamps();
+            });
+        }
     }
 
     /**

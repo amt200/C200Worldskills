@@ -13,12 +13,15 @@ class CreateChannelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('channels', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('channel_name');
-            $table->integer('room_id');
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('channels'))
+        {
+            Schema::create('channels', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('channel_name');
+                $table->integer('room_id');
+                $table->timestamps();
+            });
+        }
     }
 
     /**
