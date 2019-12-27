@@ -7,6 +7,7 @@ Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
 Route::get('/event',  'EventController@index')->name('event');
 Route::group(['prefix' => 'event', 'as' => 'event.'], function () {
 	Route::get('/create', 'EventController@create')->name('create');
+	Route::post('/create', 'EventController@create')->name('create');
 	Route::get('/details', 'EventController@details')->name('details');
 
 	Route::get('/create_session', 'SessionController@index')->name('create_session');
