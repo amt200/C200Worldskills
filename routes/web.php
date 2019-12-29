@@ -52,3 +52,13 @@ Route::get('/attendee',  'AttendeeController@index')->name('attendee');
 Route::group(['prefix' => 'attendee', 'as' => 'attendee.'], function () {
     Route::get('/event_register', 'AttendeeController@eventRegister')->name('event_register');
 });
+
+//ATTENDEE SIGN IN
+Route::get('/sign_in', function() {
+    return view('sign_in');
+});
+Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

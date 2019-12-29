@@ -8,53 +8,56 @@
             <div class="form-group">
 
                 <div class="form-check-inline">
-                    <label class="form-check-label" for="check1">
-                        <input style="border: black 1px" type="checkbox" id="check1" name="ticket[]" value="normal" class="chkboxlist form-check-input">Normal Ticket
-                    </label>
+                    <div class="card">
+                        <div class="card-body">
+                            <input type="checkbox" id="check1" name="ticket[]" value="normal" class="ticket form-check-input">Normal Ticket
+                        </div>
+                    </div>
                 </div>
                 <div class="form-check-inline">
-                    <label class="form-check-label" for="check2">
-                        <input style="border: black 1px" type="checkbox" id="check2" name="ticket[]" value="earlyBird" class="chkboxlist form-check-input">Early Bird
-                    </label>
+                    <div class="card">
+                        <div class="card-body">
+                            <input type="checkbox" id="check2" name="ticket[]" value="earlyBird" class="ticket form-check-input">Early Bird
+                        </div>
+                    </div>
                 </div>
                 <div class="form-check-inline">
-                    <label class="form-check-label" for="check3">
-                        <input style="border: black 1px" type="checkbox" id="check3" name="ticket[]" value="hotelPack" class="chkboxlist form-check-input">Hotel Package
-                    </label>
+                    <div class="card">
+                        <div class="card-body">
+                            <input type="checkbox" id="check3" name="ticket[]" value="hotelPack" class="ticket form-check-input">Hotel Package
+                        </div>
+                    </div>
+
+
                 </div>
             </div>
             <div class="form-group">
                 <label>Select Additional Workshops you want to book:</label>
                 <div class="form-check">
                     <label class="form-check-label" for="check1">
-                        <input type="checkbox" id="check1" name="additional[]" value="y" class="chkboxlist form-check-input">Designing Skills path
+                        <input type="checkbox" id="check1" name="additional[]" value="y" class="workshop form-check-input">Designing Skills path
                     </label>
                 </div>
                 <div class="form-check">
                     <label class="form-check-label" for="check2">
-                        <input type="checkbox" id="check2" name="additional[]" value="g" class="chkboxlist form-check-input">Education ecosystem
+                        <input type="checkbox" id="check2" name="additional[]" value="g" class="workshop form-check-input">Education ecosystem
                     </label>
                 </div>
                 <div class="form-check">
                     <label class="form-check-label" for="check3">
-                        <input type="checkbox" id="check3" name="additional[]" value="g" class="chkboxlist form-check-input">Training and innovate
+                        <input type="checkbox" id="check3" name="additional[]" value="g" class="workshop form-check-input">Training and innovate
                     </label>
                 </div>
                 <div class="form-group">
                     <div class="float-right">
-                        Event Ticket:
-                    </div>
-                    <div class="float-right">
-                        Additional Workshops:
-                    </div>
-                    <div class="float-right">
-                        -------------------------------
-                    </div>
-                    <div class="float-right">
+                        Event Ticket: <br>
+                        Additional Workshops: <br>
+                        <hr style="color: black "></hr>
                         Total:
+                        <input class=" float-right btn btn-block btn-primary" type="submit" value="Purchase"/>
                     </div>
                 </div>
-                <input class=" float-right btn btn-block btn-primary" type="submit" value="Purchase"/>
+
             </div>
         </form>
     </div>
