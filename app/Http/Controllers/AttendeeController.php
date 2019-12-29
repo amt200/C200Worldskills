@@ -7,12 +7,16 @@ use Illuminate\Http\Request;
 class AttendeeController extends Controller
 {
     public function index()
-    {
+{
 
-    }
+}
 
     public function eventRegister()
     {
         return view('AttendeeEventRegistration');
+    }
+    public  function sessionDetails()
+    {
+        return view('AttendeeSessionDetails');
     }
 }
