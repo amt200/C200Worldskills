@@ -14,8 +14,8 @@ class CreateSessionsTable extends Migration{
     {
         Schema::create('sessions', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('event_id')->unsigned();
             $table->integer('room_id')->unsigned();
+            $table->integer('channel_id')->unsigned();
             $table->integer('session_type_id')->unsigned();
             $table->string('title');
             $table->string('speaker');

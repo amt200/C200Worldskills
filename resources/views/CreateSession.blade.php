@@ -39,14 +39,18 @@
         </div>
 
         <div class="form-group row">
-            <div class="col-4">
-                {!! Form::label('id_room','Room') !!}
-                {!! Form::text('room', null, ['class'=> $errors->has('room') ? 'form-control border-danger': 'form-control', 'id'=>'id_room']) !!}
-                @if ($errors->has('room'))
-                    <p class="text-danger">{{$errors->first('room')}}</p>
-                @endif
-            </div>
+                <div class="col-4">
+                    {!! Form::label('id_room','Room') !!}
+                    {!! Form::select('room_id', $room_names, 1, ['class'=>'form-control', 'id'=>'id_room']) !!}
+                </div>
         </div>
+
+    <div class="form-group row">
+        <div class="col-4">
+            {!! Form::label('id_channel','Channel') !!}
+            {!! Form::select('channel_id', $channels, 1, ['class'=>'form-control', 'id'=>'id_channel']) !!}
+        </div>
+    </div>
 
         <div class="form-group row">
             <div class="col-4">

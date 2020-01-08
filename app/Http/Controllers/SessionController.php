@@ -8,6 +8,8 @@ use App\Session_type;
 use App\Session;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Validator;
+use App\Room;
+use App\Channel;
 
 class SessionController extends Controller
 {
@@ -22,18 +24,50 @@ class SessionController extends Controller
         $types[$key] = $value;
       }
 
-      return view('CreateSession', compact('types'));
+      $channels = [];
+
+      $channel_records = Channel::all();
+      foreach ($channel_records as $channel){
+          $value = $channel->channel_name;
+          $key = $channel->id;
+          $channels[$key] = $value;
+      }
+
+      foreach ($session_type as $type){
+          $value = $type->type;
+          $key = $type->id;
+          $types[$key] = $value;
+      }
+
+
+      $room_names = [];
+
+      $room_records = Room::all();
+
+      foreach ($room_records as $room){
+          $value = $room->room_name;
+          $key = $room->id;
+          $room_names[$key] = $value;
+      }
+
+      return view('CreateSession', compact(['types','room_names','channels']));
   }
+
   public function store(Request $request){
 
+      $previousEndTime = new DateTime('now');
+
+
+      if (Session::all()->last() != null){
+          $previousEndTime = Session::all()->last()->end_time;
+      }
 
       $validator = Validator::make($request->all(), [
-          'title'=>'regex:/^[A-Z][A-Za-z\s]*$/',
-          'speaker'=>'regex:/^[A-Z][A-Za-z\s]*$/',
-          'room'=>'regex:/^[A-Z][A-Za-z\s]*$/',
-          'cost'=>'regex:/^[0-9]+[.][0-9]+$/',
-          'start_time'=>'',
-          'end_time'=>'required|date_format',
+          'title'=>'required|regex:/^[A-Z][A-Za-z\s]*$/',
+          'speaker'=>'required|regex:/^[A-Z][A-Za-z\s]*$/',
+          'cost'=>'required|regex:/^[0-9]+[.]{0,1}[0-9]+$/',
+          'start_time'=>'required|regex:/^[0-9]{4}[-][0-1][0-9][-][0-3][0-9][ ][0-2][0-9][:][0-5][0-9]$/|after_or_equal:'.$previousEndTime->format('Y-m-d H:i'),
+          'end_time'=>'required|regex:/^[0-9]{4}[-][0-1][0-9][-][0-3][0-9][ ][0-2][0-9][:][0-5][0-9]$/',
           'description'=>'required',
       ]);
 
@@ -57,7 +91,7 @@ class SessionController extends Controller
 
       $session->save();
 
-      return redirect('event.details');
+      return redirect('event/details');
   }
 
   public function update(){
