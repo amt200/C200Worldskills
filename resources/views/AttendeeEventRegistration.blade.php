@@ -10,21 +10,24 @@
                 <div class="form-check-inline">
                     <div class="card">
                         <div class="card-body">
-                            <input type="checkbox" id="check1" name="ticket[]" value="normal" class="ticket form-check-input">Normal Ticket
+                            <input type="checkbox" id="check1" name="ticket[]" value={{$ticket->id}} class="ticket form-check-input><label>{{$ticket->ticket_type}}</label>{{$ticket->ticket_price}}
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="form-check-inline">
+                    <div class="card">
+                        <div class="card-body">
+                            <input type="checkbox" id="check2" name="ticket[]" value={{$ticket->id}} class="ticket form-check-input><label>{{$ticket->ticket_type}}</label>{{$ticket->ticket_price}}
+
                         </div>
                     </div>
                 </div>
                 <div class="form-check-inline">
                     <div class="card">
                         <div class="card-body">
-                            <input type="checkbox" id="check2" name="ticket[]" value="earlyBird" class="ticket form-check-input">Early Bird
-                        </div>
-                    </div>
-                </div>
-                <div class="form-check-inline">
-                    <div class="card">
-                        <div class="card-body">
-                            <input type="checkbox" id="check3" name="ticket[]" value="hotelPack" class="ticket form-check-input">Hotel Package
+                            <input type="checkbox" id="check3" name="ticket[]" value={{$ticket->id}} class="ticket form-check-input"><label>{{$ticket->ticket_type}}</label>{{$ticket->ticket_price}}
                         </div>
                     </div>
 
@@ -35,7 +38,7 @@
                 <label>Select Additional Workshops you want to book:</label>
                 <div class="form-check">
                     <label class="form-check-label" for="check1">
-                        <input type="checkbox" id="check1" name="additional[]" value="y" class="workshop form-check-input">Designing Skills path
+                        <input type="checkbox" id="check1" name="additional[]" value={{$event->id}} class="workshop form-check-input">{{ $event->event_name }}
                     </label>
                 </div>
                 <div class="form-check">
@@ -50,7 +53,7 @@
                 </div>
                 <div class="form-group">
                     <div class="float-right">
-                        Event Ticket: <br>
+                        Event Ticket:  <br>
                         Additional Workshops: <br>
                         <hr style="color: black "></hr>
                         Total:

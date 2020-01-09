@@ -69,3 +69,8 @@ Route::group(['prefix' => 'attendee', 'as' => 'attendee.'], function () {
     Route::get('/session_details', 'AttendeeController@sessionDetails')->name('session_details');
 });
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
