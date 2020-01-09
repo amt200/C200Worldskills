@@ -25,6 +25,7 @@ class CreateSessionsTable extends Migration{
             $table->dateTime('end_time');
             $table->timestamps();
         });
+
     }
 
     /**

@@ -13,6 +13,7 @@ class CreateRoomsTable extends Migration
      */
     public function up()
     {
+
         Schema::create('rooms', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('channel_id')->unsigned();
@@ -20,6 +21,7 @@ class CreateRoomsTable extends Migration
             $table->integer('room_capacity');
             $table->timestamps();
         });
+
     }
 
     /**

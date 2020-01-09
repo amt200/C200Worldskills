@@ -1,6 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
+
 <div>
     <h2 class="mt-3 mb-3">WorldSkills Conference 2019</h2>
     <hr/>
@@ -22,8 +23,5 @@
         <a href="{{route('event.details')}}">Cancel</a>
     </div>
     {!! Form::close() !!}
-
-</div>
-
 
 @endsection

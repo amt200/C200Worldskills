@@ -34,7 +34,6 @@
         <a href="{{route('event.details')}}">Cancel</a>
     </div>
     {!! Form::close() !!}
-</div>
 
 
 @endsection

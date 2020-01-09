@@ -9,6 +9,7 @@ Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
 Route::get('/event',  'EventController@index')->name('event');
 Route::group(['prefix' => 'event', 'as' => 'event.'], function () {
 	Route::get('/create', 'EventController@create')->name('create');
+	Route::post('/create', 'EventController@create')->name('create');
 	Route::get('/details', 'EventController@details')->name('details');
 
 	Route::get('/create_session', 'SessionController@index')->name('create_session');
@@ -27,8 +28,9 @@ Route::group(['prefix' => 'event', 'as' => 'event.'], function () {
 // ------------- //
 Route::get('/ticket',  'TicketController@index')->name('ticket');
 Route::group(['prefix' => 'ticket', 'as' => 'ticket.'], function () {
-	Route::get('/create', 'TicketController@create')->name('create');
+    Route::get('/create', 'TicketController@create')->name('create');
 });
+
 // --------------- //
 // Manage session //
 // ------------- //
@@ -45,4 +47,31 @@ Route::get('/room_capacity', function () {
     return view('RoomCapacity');
 });
 
+
+//ATTENDEE
+Route::get('/attendee',  'AttendeeController@index')->name('attendee');
+Route::group(['prefix' => 'attendee', 'as' => 'attendee.'], function () {
+    Route::get('/event_register', 'AttendeeController@eventRegister')->name('event_register');
+});
+
+//ATTENDEE SIGN IN
+Route::get('/sign_in', function() {
+    return view('sign_in');
+});
+Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+//ATTENDEE SESSION DETAILS
+Route::get('/attendee',  'AttendeeController@index')->name('attendee');
+Route::group(['prefix' => 'attendee', 'as' => 'attendee.'], function () {
+    Route::get('/session_details', 'AttendeeController@sessionDetails')->name('session_details');
+});
+
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
 

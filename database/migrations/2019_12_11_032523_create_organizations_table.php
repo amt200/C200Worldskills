@@ -13,12 +13,15 @@ class CreateOrganizationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('organizations', function (Blueprint $table) {
-            $table->bigIncrements('organization_id');
-            $table->string('organization_email', 255) -> unique();
-            $table->string('organization_password', 255);
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('organizations'))
+        {
+            Schema::create('organizations', function (Blueprint $table) {
+                $table->bigIncrements('organization_id');
+                $table->string('organization_email', 255) -> unique();
+                $table->string('organization_password', 255);
+                $table->timestamps();
+            });
+        }
     }
 
     /**
