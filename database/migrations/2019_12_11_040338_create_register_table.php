@@ -13,17 +13,15 @@ class CreateRegisterTable extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('register'))
-        {
-            Schema::create('register', function (Blueprint $table) {
-                $table->bigIncrements('registration_id');
-                $table->integer('attendee_id')->unsigned();
-                $table->integer('ticket_id');
-                $table->integer('session_id')->nullable();
-                $table->string('token');
-                $table->timestamps();
-            });
-        }
+
+        Schema::create('register', function (Blueprint $table) {
+            $table->bigIncrements('registration_id');
+            $table->integer('attendee_id')->unsigned();
+            $table->string('token');
+            $table->timestamps();
+        });
+
+
     }
 
     /**

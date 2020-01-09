@@ -13,18 +13,15 @@ class CreateTicketsTable extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('tickets'))
-        {
-            Schema::create('tickets', function (Blueprint $table) {
-                $table->bigIncrements('ticket_id');
-                $table->string('ticket_name');
-                $table->double('ticket_cost');
-                $table->double('special_validity');
-                $table->integer('max_tickets') ->nullable();
-                $table->dateTime('tickets_sell_by_date') ->nulllable();
-                $table->timestamps();
-            });
-        }
+        Schema::create('tickets', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('ticket_name');
+            $table->double('ticket_cost');
+            $table->double('special_validity');
+            $table->integer('max_tickets') ->nullable();
+            $table->dateTime('tickets_sell_by_date') ->nulllable();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -32,7 +29,7 @@ class CreateTicketsTable extends Migration
      *
      * @return void
      */
-    public function down()  
+    public function down()
     {
         Schema::dropIfExists('tickets');
     }
