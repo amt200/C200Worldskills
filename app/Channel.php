@@ -13,4 +13,7 @@ class Channel extends Model
     public function rooms(){
         $this->hasMany('App\Room');
     }
+    public function event(){
+        $this->belongsTo('App\Event');
+    }
 }

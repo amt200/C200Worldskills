@@ -37,29 +37,29 @@
                 @endif
             </div>
         </div>
+    <div class="form-group row">
+        <div class="col-4">
+            {!! Form::label('id_cost','Cost') !!}
+            {!! Form::text('cost', null, ['class'=> $errors->has('cost') ? 'form-control border-danger': 'form-control', 'id'=>'id_cost', 'value'=>'0']) !!}
+            @if ($errors->has('cost'))
+                <p class="text-danger">{{$errors->first('cost')}}</p>
+            @endif
+        </div>
+    </div>
+        <div class="row">
+            <div class="col-6">
+        <div class="form-group">
 
-        <div class="form-group row">
-                <div class="col-4">
                     {!! Form::label('id_room','Room') !!}
                     {!! Form::select('room_id', $room_names, 1, ['class'=>'form-control', 'id'=>'id_room']) !!}
                 </div>
         </div>
-
-    <div class="form-group row">
-        <div class="col-4">
+            <div class="col-6">
+    <div class="form-group">
             {!! Form::label('id_channel','Channel') !!}
             {!! Form::select('channel_id', $channels, 1, ['class'=>'form-control', 'id'=>'id_channel']) !!}
         </div>
     </div>
-
-        <div class="form-group row">
-            <div class="col-4">
-                {!! Form::label('id_cost','Cost') !!}
-                {!! Form::text('cost', null, ['class'=> $errors->has('cost') ? 'form-control border-danger': 'form-control', 'id'=>'id_cost', 'value'=>'0']) !!}
-                @if ($errors->has('cost'))
-                    <p class="text-danger">{{$errors->first('cost')}}</p>
-                @endif
-            </div>
         </div>
 
         <div class="row">

@@ -33,7 +33,7 @@ class RoomController extends Controller
       ]);
 
       if ($validator->fails()) {
-          return redirect('event/create_channel')
+          return redirect('event/create_room')
               ->withErrors($validator)
               ->withInput();
       }

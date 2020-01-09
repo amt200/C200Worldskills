@@ -17,4 +17,7 @@ class Event extends Model
   public function sessions(){
   	return $this->hasMany('App\Session');
   }
+    public function channels(){
+        return $this->hasMany('App\Channel');
+    }
 }

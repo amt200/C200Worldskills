@@ -14,7 +14,7 @@ class CreateTicketsTable extends Migration
     public function up()
     {
         Schema::create('tickets', function (Blueprint $table) {
-            $table->bigIncrements('ticket_id');
+            $table->bigIncrements('id');
             $table->string('ticket_name');
             $table->double('ticket_cost');
             $table->double('special_validity');
@@ -29,7 +29,7 @@ class CreateTicketsTable extends Migration
      *
      * @return void
      */
-    public function down()  
+    public function down()
     {
         Schema::dropIfExists('tickets');
     }
