@@ -40,4 +40,22 @@ class LoginController extends Controller
     {
         return view('dashboard');
     }
+    public function loginPost(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required',
+            'password' => 'required|CheckHpAndLogin:email|CheckAccountActivated:email'
+        ]);
+        if ($validator->fails()) {
+            return redirect()->route('LoginGet')->withErrors($validator);
+        } else {
+            $email = $request->only('email');
+            $userId = User::select('user_id')->where('email', '=', $email)->firstOrFail();
+            if (Auth::loginUsingId($userId['user_id']) && Log::Log($userId['user_id'])) {
+                return redirect()->intended('dashboard');
+            } else {
+                return redirect()->route('login')->withErrors($validator);
+            }
+        }
+    }
 }

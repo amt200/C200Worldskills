@@ -10,7 +10,7 @@
                 <div class="form-check-inline">
                     <div class="card">
                         <div class="card-body">
-                            <input type="checkbox" id="check1" name="ticket[]" value={{$ticket->id}} class="ticket form-check-input><label>{{$ticket->ticket_type}}</label>{{$ticket->ticket_price}}
+                            <input type="checkbox" id="check1" name="ticket[]" value={{$ticket_name->id}} class="ticket form-check-input><label>{{$ticket_name->ticket_type}}</label>{{$ticket_name->ticket_price}}
                         </div>
 
 
@@ -19,7 +19,7 @@
                 <div class="form-check-inline">
                     <div class="card">
                         <div class="card-body">
-                            <input type="checkbox" id="check2" name="ticket[]" value={{$ticket->id}} class="ticket form-check-input><label>{{$ticket->ticket_type}}</label>{{$ticket->ticket_price}}
+                            <input type="checkbox" id="check2" name="ticket[]" value={{$ticket_name->id}} class="ticket form-check-input><label>{{$ticket_name->ticket_type}}</label>{{$ticket_name->ticket_price}}
 
                         </div>
                     </div>
@@ -27,7 +27,7 @@
                 <div class="form-check-inline">
                     <div class="card">
                         <div class="card-body">
-                            <input type="checkbox" id="check3" name="ticket[]" value={{$ticket->id}} class="ticket form-check-input"><label>{{$ticket->ticket_type}}</label>{{$ticket->ticket_price}}
+                            <input type="checkbox" id="check3" name="ticket[]" value={{$ticket_name->id}} class="ticket form-check-input"><label>{{$ticket_name->ticket_type}}</label>{{$ticket_name->ticket_price}}
                         </div>
                     </div>
 

@@ -17,7 +17,7 @@ class CreateRegisterTable extends Migration
         {
             Schema::create('register', function (Blueprint $table) {
                 $table->bigIncrements('registration_id');
-                $table->integer('attendee_id')->unsigned();
+                $table->integer('attendee_id')->unsigned()->nullable();
                 $table->integer('ticket_id');
                 $table->integer('session_id')->nullable();
                 $table->string('token');

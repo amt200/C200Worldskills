@@ -51,17 +51,18 @@ Route::get('/room_capacity', function () {
 Route::get('/attendee',  'AttendeeController@index')->name('attendee');
 Route::group(['prefix' => 'attendee', 'as' => 'attendee.'], function () {
     Route::get('/event_register', 'AttendeeController@eventRegister')->name('event_register');
+    Route::get('/home', 'AttendeeController@dashboard', function (){
+        $event = events::findOrFail(1);
+        foreach ($event->posts as $post){
+            echo $post->event_name . "<br>";
+        }
+    });
 });
 
 //ATTENDEE SIGN IN
 Route::get('/sign_in', function() {
     return view('sign_in');
 });
-Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
 
 //ATTENDEE SESSION DETAILS
 Route::get('/attendee',  'AttendeeController@index')->name('attendee');
