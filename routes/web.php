@@ -13,7 +13,8 @@ Route::group(['prefix' => 'event', 'as' => 'event.'], function () {
 	Route::get('/details', 'EventController@details')->name('details');
 
 	Route::get('/create_session', 'SessionController@index')->name('create_session');
-    Route::get('/update_session', 'SessionController@update')->name('update_session');
+    Route::get('/update_session/{id}', 'SessionController@update')->name('update_session');
+    Route::post('/store_update_session', 'SessionController@storeUpdate')->name('store_update_session');
     Route::post('/store_session', 'SessionController@store')->name('store_session');
     Route::post('/store_channel', 'ChannelController@store')->name('store_channel');
 	Route::get('/create_channel', 'ChannelController@index')->name('create_channel');

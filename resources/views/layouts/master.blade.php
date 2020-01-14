@@ -15,8 +15,11 @@
     <link href="{{ asset('css/navigation.css') }}" rel="stylesheet">
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/jquery-ui.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet">
     <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
-
+    <script src="{{ asset('js/moment.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 </head>
 <body>
 
@@ -75,4 +78,10 @@
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 </body>
+<script>
+    $(function () {
+        $('#id_start').datetimepicker();
+        $('#id_end').datetimepicker();
+    });
+</script>
 </html>

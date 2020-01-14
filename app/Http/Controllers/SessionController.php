@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use DateTime;
+use DateTimeZone;
 use Illuminate\Http\Request;
 use App\Session_type;
 use App\Session;
@@ -24,22 +25,14 @@ class SessionController extends Controller
         $types[$key] = $value;
       }
 
-      $channels = [];
+      $channels = $this->getAllChannels();
 
-      $channel_records = Channel::all();
-      foreach ($channel_records as $channel){
-          $value = $channel->channel_name;
-          $key = $channel->id;
-          $channels[$key] = $value;
-      }
+      $room_names = $this->getAllRooms();
 
-      foreach ($session_type as $type){
-          $value = $type->type;
-          $key = $type->id;
-          $types[$key] = $value;
-      }
+      return view('CreateSession', compact(['types','room_names','channels']));
+  }
 
-
+  private function getAllRooms(){
       $room_names = [];
 
       $room_records = Room::all();
@@ -49,14 +42,28 @@ class SessionController extends Controller
           $key = $room->id;
           $room_names[$key] = $value;
       }
+      return $room_names;
+  }
 
-      return view('CreateSession', compact(['types','room_names','channels']));
+
+  private function getAllChannels(){
+      $channels = [];
+
+      $channel_records = Channel::all();
+      foreach ($channel_records as $channel){
+          $value = $channel->channel_name;
+          $key = $channel->id;
+          $channels[$key] = $value;
+      }
+      return $channels;
   }
 
   public function store(Request $request){
 
-      $previousEndTime = new DateTime('now');
-
+      $from = new DateTimeZone('GMT');
+      $previousEndTime     = new DateTime('now', $from);
+      $to   = new DateTimeZone('Asia/Singapore');
+      $previousEndTime->setTimezone($to);
 
       if (Session::all()->last() != null){
           $previousEndTime = Session::all()->last()->end_time;
@@ -66,7 +73,7 @@ class SessionController extends Controller
           'title'=>'required|regex:/^[A-Z][A-Za-z\s]*$/',
           'speaker'=>'required|regex:/^[A-Z][A-Za-z\s]*$/',
           'cost'=>'required|regex:/^[0-9]+[.]{0,1}[0-9]+$/',
-          'start_time'=>'required|regex:/^[0-9]{4}[-][0-1][0-9][-][0-3][0-9][ ][0-2][0-9][:][0-5][0-9]$/|after_or_equal:'.$previousEndTime->format('Y-m-d H:i'),
+          'start_time'=>'required|date_format:m-d-Y H:i|after_or_equal:'.$previousEndTime,
           'end_time'=>'required|regex:/^[0-9]{4}[-][0-1][0-9][-][0-3][0-9][ ][0-2][0-9][:][0-5][0-9]$/',
           'description'=>'required',
       ]);
@@ -94,8 +101,29 @@ class SessionController extends Controller
       return redirect('event/details');
   }
 
-  public function update(){
-    return view('UpdateSession');
+  public function update($id){
+      $sessionData = [];
+
+      $sessionById = Session::find($id);
+      $channelData = $this->getAllChannels();
+      $roomData = $this->getAllRooms();
+
+      $channelId = $sessionById->channel->id;
+      $roomId = $sessionById->room->id;
+
+
+      $sessionData['title'] = $sessionById->title;
+      $sessionData['speaker'] = $sessionById->speaker;
+      $sessionData['description'] = $sessionById->description;
+      $sessionData['cost'] = $sessionById->cost;
+      $sessionData['start_time'] = $sessionById->start_time;
+      $sessionData['end_time'] = $sessionById->end_time;
+
+
+      return view('UpdateSession',compact(['sessionData','roomId','channelId','roomData','channelData']));
+  }
+  public function storeUpdate($request){
+
   }
 
 }

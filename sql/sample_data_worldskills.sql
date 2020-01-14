@@ -48,7 +48,6 @@ CREATE TABLE `attendees` (
 CREATE TABLE `channels` (
   `id` int(10) UNSIGNED NOT NULL,
   `channel_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `room_id` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -57,8 +56,8 @@ CREATE TABLE `channels` (
 -- Dumping data for table `channels`
 --
 
-INSERT INTO `channels` (`id`, `channel_name`, `room_id`, `created_at`, `updated_at`) VALUES
-(1, 'Main', 1, '2020-01-15 16:00:00', '2020-01-21 16:00:00');
+INSERT INTO `channels` (`id`, `channel_name`, `created_at`, `updated_at`) VALUES
+(1, 'Main', '2020-01-15 16:00:00', '2020-01-21 16:00:00');
 
 -- --------------------------------------------------------
 
@@ -163,6 +162,7 @@ CREATE TABLE `register` (
 
 CREATE TABLE `rooms` (
   `id` int(10) UNSIGNED NOT NULL,
+  `channel_id` int(10) UNSIGNED NOT NULL,
   `room_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `room_capacity` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -173,8 +173,8 @@ CREATE TABLE `rooms` (
 -- Dumping data for table `rooms`
 --
 
-INSERT INTO `rooms` (`id`, `room_name`, `room_capacity`, `created_at`, `updated_at`) VALUES
-(1, 'Room A', 100, '2020-01-28 16:00:00', '2020-01-29 16:00:00');
+INSERT INTO `rooms` (`id`,'channel_id', `room_name`, `room_capacity`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Room A', 100, '2020-01-28 16:00:00', '2020-01-29 16:00:00');
 
 -- --------------------------------------------------------
 
@@ -186,10 +186,12 @@ CREATE TABLE `sessions` (
   `id` int(10) UNSIGNED NOT NULL,
   `event_id` int(10) UNSIGNED NOT NULL,
   `room_id` int(10) UNSIGNED NOT NULL,
+  `channel_id` int(10) UNSIGNED NOT NULL,
   `session_type_id` int(10) UNSIGNED NOT NULL,
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `speaker` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cost` double NOT NULL,
   `start_time` datetime NOT NULL,
   `end_time` datetime NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -200,8 +202,8 @@ CREATE TABLE `sessions` (
 -- Dumping data for table `sessions`
 --
 
-INSERT INTO `sessions` (`id`, `event_id`, `room_id`, `session_type_id`, `title`, `speaker`, `description`, `start_time`, `end_time`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 1, 'Testing Session', 'AMT', 'Testing Description', '2020-12-12 11:11:00', '2020-12-12 11:11:00', '2020-01-09 01:10:47', '2020-01-09 01:10:47');
+INSERT INTO `sessions` (`id`, `event_id`, `room_id`, 'channel_id', `session_type_id`, `title`, `speaker`, `description`, `start_time`, `end_time`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 1, 1, 'Testing Session', 'AMT', 'Testing Description', '2020-12-12 11:11:00', '2020-12-12 11:11:00', '2020-01-09 01:10:47', '2020-01-09 01:10:47');
 
 -- --------------------------------------------------------
 
