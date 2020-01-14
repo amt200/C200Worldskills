@@ -16,11 +16,10 @@ class CreateTicketsTable extends Migration
         Schema::create('tickets', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('ticket_name');
-            $table->double('ticket_cost') ->unsigned();
-            $table->double('special_validity') ->nullable();
+            $table->double('ticket_cost');
+            $table->double('special_validity');
             $table->integer('max_tickets') ->nullable();
             $table->dateTime('tickets_sell_by_date') ->nulllable();
-            $table->integer('event_id');
             $table->timestamps();
         });
     }
