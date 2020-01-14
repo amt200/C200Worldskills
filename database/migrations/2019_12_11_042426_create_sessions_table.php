@@ -12,21 +12,20 @@ class CreateSessionsTable extends Migration{
      */
     public function up()
     {
-        if (!Schema::hasTable('sessions'))
-        {
-            Schema::create('sessions', function (Blueprint $table) {
-                $table->increments('id');
-                $table->integer('event_id')->unsigned();
-                $table->integer('room_id')->unsigned();
-                $table->integer('session_type_id')->unsigned();
-                $table->string('title');
-                $table->string('speaker');
-                $table->string('description');
-                $table->dateTime('start_time');
-                $table->dateTime('end_time');
-                $table->timestamps();
-            });
-        }
+        Schema::create('sessions', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('event_id')->unsigned();
+            $table->integer('room_id')->unsigned();
+            $table->integer('channel_id')->unsigned();
+            $table->integer('session_type_id')->unsigned();
+            $table->string('title');
+            $table->string('speaker');
+            $table->string('description');
+            $table->dateTime('start_time');
+            $table->dateTime('end_time');
+            $table->timestamps();
+        });
+
     }
 
     /**

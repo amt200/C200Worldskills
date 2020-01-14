@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Room extends Model
 {
     //
-    public function channels(){
-        return $this->hasMany('App\Channel');
-    }
     public function sessions(){
         return $this->hasMany('App\Session');
+    }
+    public function channel(){
+        return $this->belongsTo('App\Channel');
     }
 }

@@ -1,4 +1,6 @@
 <?php
+
+
 Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
 
 // --------------- //
@@ -13,10 +15,12 @@ Route::group(['prefix' => 'event', 'as' => 'event.'], function () {
 	Route::get('/create_session', 'SessionController@index')->name('create_session');
     Route::get('/update_session', 'SessionController@update')->name('update_session');
     Route::post('/store_session', 'SessionController@store')->name('store_session');
+    Route::post('/store_channel', 'ChannelController@store')->name('store_channel');
 	Route::get('/create_channel', 'ChannelController@index')->name('create_channel');
+    Route::post('/store_channel', 'ChannelController@store')->name('store_channel');
 	Route::get('/room_capacity', 'RoomController@index')->name('room_capacity');
 	Route::get('/create_room', 'RoomController@create')->name('create_room');
-
+    Route::post('/store_room', 'RoomController@store')->name('store_room');
 });
 
 // --------------- //
@@ -35,9 +39,6 @@ Route::group(['prefix' => 'ticket', 'as' => 'ticket.'], function () {
 // --------------- //
 // Manage channel //
 // ------------- //
-Route::get('/create_channel', function () {
-    return view('CreateChannel');
-});
 
 Route::get('/create_room', function () {
     return view('CreateRoom');
