@@ -11,9 +11,9 @@
 		<li>
 			<a href="{{ route('event') }}">Manage Events</a>
 		</li>
-		<li>
-			<a href="{{ route('event.details') }}">Events Overview</a>
-		</li>
+{{-- 		<li>
+			<a href="{{ route('event.overview') }}">Events Overview</a>
+		</li> --}}
 		<li>
 			<a href="{{ route('event.create') }}">Create Event</a>
 		</li>

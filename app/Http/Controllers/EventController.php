@@ -36,6 +36,12 @@ class EventController extends Controller
         $event = new Event;
         $event->event_name = $request->event_name;
         $event->event_slug = $request->event_slug;
+        $event->event_registrations = $request->event_registrations;
+        $event->organizer_id = $request->organizer;
+        $event->register_id = $request->register;
+        $event->sessions_id = $request->sessions;
+        $event->ticket_id = $request->ticket;
+        $event->channel_id = $request->channel;
         $event->event_date = $request->event_date;
         $insert = $event->save();
 
@@ -52,8 +58,13 @@ class EventController extends Controller
     return view('CreateEvent');
   }
 
-  public function details()
-  {
-    return view('EventDetail');
+  public function getSlug($slug){
+    // Get slug from database
+    // $event = \DB::table('events')->where('event_slug', $slug)->first();
+    $event = Event::where('event_slug', '=', $slug)->first();
+
+    // Return view
+    return view('EventOverview')->with(['events' => $event]);
+    
   }
 }
