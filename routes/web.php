@@ -55,12 +55,8 @@ Route::get('/room_capacity', function () {
 Route::get('/attendee',  'AttendeeController@index')->name('attendee');
 Route::group(['prefix' => 'attendee', 'as' => 'attendee.'], function () {
     Route::get('/event_register', 'AttendeeController@eventRegister')->name('event_register');
-    Route::get('/home', 'AttendeeController@dashboard', function (){
-        $event = events::findOrFail(1);
-        foreach ($event->posts as $post){
-            echo $post->event_name . "<br>";
-        }
-    });
+    Route::get('/home', 'AttendeeController@dashboard');
+    Route::get('/list', 'AttendeeController@list');
 });
 
 //ATTENDEE SIGN IN
