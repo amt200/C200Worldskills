@@ -25,5 +25,10 @@ class AttendeeController extends Controller
     {
         return view('AttendeeSessionDetails');
     }
+    function list()
+    {
+        $data = Event::all();
+        return view('AttendeeDashBoard', ['data'=>$data]);
+    }
 
 }
