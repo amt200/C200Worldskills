@@ -11,15 +11,38 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/navigation.css') }}" rel="stylesheet">
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/jquery-ui.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/jquery.datetimepicker.min.css') }}" rel="stylesheet">
     <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
-    <script src="{{ asset('js/moment.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.datetimepicker.full.js') }}"></script>
+    <script>
+        $(document).ready(function(){
+            var changeDate = new Date();
+            const time = new Date().toLocaleString("en-US", {timeZone: "Asia/Singapore"});
+            const currentTime = new Date(time);
+            const minStartTime = currentTime.getHours() + 1;
+            const minEndTime = currentTime.getHours() + 2;
+
+            $('#id_start').datetimepicker({
+                onChangeDateTime: function(){
+
+                },
+                format: 'Y-m-d H:i',
+                minDate: currentTime,
+                minTime: ''+minStartTime
+            });
+
+            $('#id_end').datetimepicker({
+                format: 'Y-m-d H:i',
+                minDate: currentTime,
+                minTime: ''+minEndTime
+            });
+
+        });
+    </script>
 </head>
 <body>
 
@@ -75,13 +98,7 @@
 </div><!-- End of wrapper -->
 
 <!-- Scripts -->
-<script src="{{ asset('js/app.js') }}"></script>
-<script src="{{ asset('js/bootstrap.min.js') }}"></script>
+
 </body>
-<script>
-    $(function () {
-        $('#id_start').datetimepicker();
-        $('#id_end').datetimepicker();
-    });
-</script>
+
 </html>

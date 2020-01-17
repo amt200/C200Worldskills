@@ -4,8 +4,7 @@
     <div class="panel-heading">
         <h2 class="mt-3 mb-3">WorldSkills Conference 2019</h2>
         <hr/>
-        <h4 class="mt-3 mb-5">Create Session</h4>
-
+        <h4 class="mt-3 mb-5">Update Session</h4>
 
         {!! Form::open(['method'=>'POST','action'=>'SessionController@storeUpdate']) !!}
 
@@ -14,7 +13,8 @@
         <div class="form-group row">
             <div class="col-4">
                 {!! Form::label('id_type','Type') !!}
-                {!! Form::select('type', $types, 1, ['class'=>'form-control', 'id'=>'id_type']) !!}
+                {!! Form::select('type', $sessionTypeData, $sessionTypeId, ['class'=>'form-control', 'id'=>'id_type']) !!}
+                {{ Form::hidden('id', $id) }}
             </div>
         </div>
 
@@ -92,10 +92,11 @@
         <hr/>
         <div class="form-group form-inline">
             {!! Form::submit('Update Session',['class'=>'btn btn-primary mr-5']) !!}
-            <a href="{{route('event.details')}}">Cancel</a>
+            <a href="{{route('event.details')}}" class="mr-5">Cancel</a>
+            <a href="{{route('event.delete_session',["id"=>$id])}}">Delete Session</a>
         </div>
-
         {!! Form::close() !!}
+
     </div>
 
 
