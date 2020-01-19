@@ -64,11 +64,11 @@ class SessionController extends Controller
 
   public function store(Request $request){
 
-//      $from = new DateTimeZone('GMT');
-//
-//      $previousEndTime     = new DateTime('now', $from);
-//      $to   = new DateTimeZone('Asia/Singapore');
-//      $previousEndTime->setTimezone($to);
+      $from = new DateTimeZone('GMT');
+
+      $currentTime     = new DateTime('now', $from);
+      $to   = new DateTimeZone('Asia/Singapore');
+      $currentTime->setTimezone($to);
 //
 //      if (Session::all()->last() != null){
 //          $previousEndTime = Session::all()->last()->end_time;
@@ -89,24 +89,24 @@ class SessionController extends Controller
               ->withInput();
       }
 
-      $session = new Session;
-      $start_time = new DateTime($request->start_time);
-      $end_time = new DateTime($request->end_time);
-      $session->event_id = 1;
-      $session->room_id = 1;
-      $session->channel_id = $request->channel_id;
-      $session->session_type_id = $request->type;
-      $session->title = $request->title;
-      $session->speaker = $request->speaker;
-      $session->description = $request->description;
-      $session->cost = $request->cost;
-      $session->start_time = $start_time;
-      $session->end_time = $end_time;
+          $session = new Session;
+          $start_time = new DateTime($request->start_time);
+          $end_time = new DateTime($request->end_time);
+          $session->event_id = 1;
+          $session->room_id = 1;
+          $session->channel_id = $request->channel_id;
+          $session->session_type_id = $request->type;
+          $session->title = $request->title;
+          $session->speaker = $request->speaker;
+          $session->description = $request->description;
+          $session->cost = $request->cost;
+          $session->start_time = $start_time;
+          $session->end_time = $end_time;
 
-      $session->save();
+          $session->save();
 
-      return redirect('event/details');
-  }
+          return redirect('event/details');
+      }
 
   public function update($id){
       $sessionData = [];

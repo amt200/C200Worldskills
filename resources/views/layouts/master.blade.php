@@ -20,25 +20,33 @@
     <script src="{{ asset('js/jquery.datetimepicker.full.js') }}"></script>
     <script>
         $(document).ready(function(){
-            var changeDate = new Date();
             const time = new Date().toLocaleString("en-US", {timeZone: "Asia/Singapore"});
             const currentTime = new Date(time);
-            const minStartTime = currentTime.getHours() + 1;
-            const minEndTime = currentTime.getHours() + 2;
 
             $('#id_start').datetimepicker({
-                onChangeDateTime: function(){
-
-                },
                 format: 'Y-m-d H:i',
                 minDate: currentTime,
-                minTime: ''+minStartTime
+                onSelectTime: function (time) {
+                    if(time.getHours() <= currentTime.getHours()){
+                        $('#submit').attr("disabled",true);
+                    }
+                    else {
+                        $('#submit').attr("disabled",false);
+                    }
+                }
             });
 
             $('#id_end').datetimepicker({
                 format: 'Y-m-d H:i',
                 minDate: currentTime,
-                minTime: ''+minEndTime
+                onSelectTime: function (time) {
+                    if(time.getHours() <= currentTime.getHours()+1){
+                        $('#submit').attr("disabled",true);
+                    }
+                    else {
+                        $('#submit').attr("disabled",false);
+                    }
+                }
             });
 
         });

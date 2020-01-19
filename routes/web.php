@@ -37,7 +37,6 @@ Route::group(['prefix' => 'ticket', 'as' => 'ticket.'], function () {
 // Manage session //
 // ------------- //
 
-
 // --------------- //
 // Manage channel //
 // ------------- //
