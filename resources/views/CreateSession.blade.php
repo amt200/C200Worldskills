@@ -63,7 +63,7 @@
         </div>
         <hr/>
         <div class="form-group form-inline">
-            {!! Form::submit('Create Session',['class'=>'btn btn-primary mr-5']) !!}
+            {!! Form::submit('Create Session',['class'=>'btn btn-primary mr-5','id'=>'submit']) !!}
             <a href="{{route('event.details')}}">Cancel</a>
         </div>
 

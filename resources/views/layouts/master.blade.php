@@ -11,12 +11,46 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/navigation.css') }}" rel="stylesheet">
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/jquery.datetimepicker.min.css') }}" rel="stylesheet">
     <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.datetimepicker.full.js') }}"></script>
+    <script>
+        $(document).ready(function(){
+            const time = new Date().toLocaleString("en-US", {timeZone: "Asia/Singapore"});
+            const currentTime = new Date(time);
 
+            $('#id_start').datetimepicker({
+                format: 'Y-m-d H:i',
+                minDate: currentTime,
+                onSelectTime: function (time) {
+                    if(time.getHours() <= currentTime.getHours()){
+                        $('#submit').attr("disabled",true);
+                    }
+                    else {
+                        $('#submit').attr("disabled",false);
+                    }
+                }
+            });
+
+            $('#id_end').datetimepicker({
+                format: 'Y-m-d H:i',
+                minDate: currentTime,
+                onSelectTime: function (time) {
+                    if(time.getHours() <= currentTime.getHours()+1){
+                        $('#submit').attr("disabled",true);
+                    }
+                    else {
+                        $('#submit').attr("disabled",false);
+                    }
+                }
+            });
+
+        });
+    </script>
 </head>
 <body>
 
@@ -77,7 +111,7 @@
 </div><!-- End of wrapper -->
 
 <!-- Scripts -->
-<script src="{{ asset('js/app.js') }}"></script>
-<script src="{{ asset('js/bootstrap.min.js') }}"></script>
+
 </body>
+
 </html>

@@ -21,6 +21,7 @@ class CreateSessionsTable extends Migration{
             $table->string('title');
             $table->string('speaker');
             $table->string('description');
+            $table->double('cost');
             $table->dateTime('start_time');
             $table->dateTime('end_time');
             $table->timestamps();
