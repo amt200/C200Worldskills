@@ -12,8 +12,8 @@ use Illuminate\Support\Facades\Validator;
 use App\Room;
 use App\Channel;
 
-class SessionController extends Controller
-{
+class SessionController extends Controller{
+
   public function index(){
 
       $types = $this->getAllSessionTypes();
@@ -99,9 +99,15 @@ class SessionController extends Controller
               $isValid = true;
           }
           else{
+              $types = $this->getAllSessionTypes();
+
+              $channels = $this->getAllChannels();
+
+              $room_names = $this->getAllRooms();
               $isValid = false;
               $alertmessage = "A session has already been booked. Please try different time.";
-              return redirect(route('event.create_session', compact('alertmessage')));
+
+              return view('CreateSession', compact(['alertmessage','types','room_names','channels']));
           }
       }
       else{
@@ -127,6 +133,9 @@ class SessionController extends Controller
 
           return redirect('event/details');
       }
+  }
+  private function settleSessionConflicts(){
+
   }
 
   public function update($id){
