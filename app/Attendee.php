@@ -1,17 +1,23 @@
 <?php
 
-
 namespace App;
 
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Attendee extends Model
+class Attendee extends Authenticatable
 {
-protected $table = 'attendees';
 
-public function registrations(){
-    return $this->hasMany('App\Register');
-}
-public function events(){
-    return $this->hasMany('App\Event');
-}
+	use Notifiable;
+
+  protected $guard = 'attendee';
+
+  protected $fillable = [
+    'lastName', 'token',
+  ];
+
+  protected $hidden = [
+    'token', 'remember_token',
+  ];
 }

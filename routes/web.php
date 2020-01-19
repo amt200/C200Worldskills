@@ -1,7 +1,7 @@
 <?php
 
 
-Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
+// Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
 
 // --------------- //
 // Manage Events  //
@@ -72,6 +72,16 @@ Route::group(['prefix' => 'attendee', 'as' => 'attendee.'], function () {
 
 
 Auth::routes();
+Route::get('/login/organizer', 'Auth\LoginController@showOrganizerLoginForm');
+Route::get('/login/attendee', 'Auth\LoginController@showAttendeeLoginForm');
+// Route::get('/register/organizer', 'Auth\RegisterController@showOrganizerRegisterForm');
+// Route::get('/register/blogger', 'Auth\RegisterController@showBloggerRegisterForm');
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::post('/login/organizer', 'Auth\LoginController@organizerLogin');
+Route::post('/login/attendee', 'Auth\LoginController@attendeeLogin');
+// Route::post('/register/organizer', 'Auth\RegisterController@createAdmin');
+// Route::post('/register/blogger', 'Auth\RegisterController@createBlogger');
 
+Route::view('/dashboard', 'dashboard')->middleware('auth');
+Route::view('/organizer', 'dashboard');
+Route::view('/attendee', 'Attendee');

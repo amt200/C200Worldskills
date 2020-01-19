@@ -13,7 +13,7 @@
                                 @foreach($data as $i)
                                     {{$i->event_name}}
                                     {{$i->event_date}}<br>
-                                    @endforeach
+                                @endforeach
                         </form>
                     </div>
                 </div>

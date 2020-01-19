@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Auth;
 
 class LoginController extends Controller
 {
@@ -32,30 +34,50 @@ class LoginController extends Controller
      *
      * @return void
      */
+    
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+            $this->middleware('guest')->except('logout');
+            $this->middleware('guest:organizer')->except('logout');
+            $this->middleware('guest:attendee')->except('logout');
     }
-    public function Dashboard()
+
+     public function showOrganizerLoginForm()
     {
-        return view('dashboard');
+        return view('auth.login', ['url' => 'organizer']);
     }
-    public function loginPost(Request $request)
+
+    public function organizerLogin(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required',
-            'password' => 'required|CheckHpAndLogin:email|CheckAccountActivated:email'
+        $this->validate($request, [
+            'email'   => 'required',
+            'password' => 'required'
         ]);
-        if ($validator->fails()) {
-            return redirect()->route('LoginGet')->withErrors($validator);
-        } else {
-            $email = $request->only('email');
-            $userId = User::select('user_id')->where('email', '=', $email)->firstOrFail();
-            if (Auth::loginUsingId($userId['user_id']) && Log::Log($userId['user_id'])) {
-                return redirect()->intended('dashboard');
-            } else {
-                return redirect()->route('login')->withErrors($validator);
-            }
+
+        if (Auth::guard('organizer')->attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) {
+
+            echo "guard";
+            return redirect()->intended('/dashboard');
         }
+        return back()->withInput($request->only('email', 'remember'));
+    }
+
+    public function showAttendeeLoginForm()
+    {
+        return view('auth.login', ['url' => 'attendee']);
+    }
+
+    public function attendeeLogin(Request $request)
+    {
+        $this->validate($request, [
+            'lastName'   => 'required',
+            'token' => 'required'
+        ]);
+
+        if (Auth::guard('attendee')->attempt(['lastName' => $request->lastName, 'token' => $request->token], $request->get('remember'))) {
+
+            return redirect()->intended('/attendee');
+        }
+        return back()->withInput($request->only('lastName', 'remember'));
     }
 }
