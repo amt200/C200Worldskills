@@ -10,7 +10,7 @@ use App\Event;
 
 class EventController extends Controller
 {
-  public function Index()
+  public function index()
   {
     $events = \DB::table('events')->get();
 
@@ -65,6 +65,6 @@ class EventController extends Controller
 
     // Return view
     return view('EventOverview')->with(['events' => $event]);
-    
+
   }
 }

@@ -49,15 +49,16 @@ CREATE TABLE `channels` (
   `id` int(10) UNSIGNED NOT NULL,
   `channel_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `event_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `channels`
 --
 
-INSERT INTO `channels` (`id`, `channel_name`, `created_at`, `updated_at`) VALUES
-(1, 'Main', '2020-01-15 16:00:00', '2020-01-21 16:00:00');
+INSERT INTO `channels` (`id`,'event_id' , `channel_name`, `created_at`, `updated_at`) VALUES
+(1, 'Main', 1, '2020-01-15 16:00:00', '2020-01-21 16:00:00');
 
 -- --------------------------------------------------------
 
@@ -69,12 +70,7 @@ CREATE TABLE `events` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `event_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `event_slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `event_registrations` int(10) NOT NULL,
-  `organizations_id` int(11) NOT NULL,
-  `register_id` int(11) NOT NULL,
-  `sessions_id` int(11) NOT NULL,
-  `ticket_id` int(11) NOT NULL,
-  `channel_id` int(11) NOT NULL,
+  `organizer_id` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -83,8 +79,8 @@ CREATE TABLE `events` (
 -- Dumping data for table `events`
 --
 
-INSERT INTO `events` (`id`, `event_name`, `event_slug`, `event_registrations`, `organizations_id`, `register_id`, `sessions_id`, `ticket_id`, `channel_id`, `created_at`, `updated_at`) VALUES
-(1, 'WorldSkills Conference 2019', 'worldskills-conference-2019', 3546, 1, 1, 1, 1, 1, '2020-01-28 16:00:00', '2020-01-29 16:00:00');
+INSERT INTO `events` (`id`, `event_name`, `event_slug`, 'organizer_id', `created_at`, `updated_at`) VALUES
+(1, 'WorldSkills Conference 2019', 'worldskills-conference-2019', 1, '2020-01-28 16:00:00', '2020-01-29 16:00:00');
 
 -- --------------------------------------------------------
 
@@ -109,7 +105,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (13, '2019_12_11_031906_create_attandee_table', 2),
 (14, '2019_12_11_032452_create_events_table', 2),
 (15, '2019_12_11_032510_create_tickets_table', 2),
-(16, '2019_12_11_032523_create_organizations_table', 2),
+(16, '2019_12_11_032523_create_organizers_table', 2),
 (17, '2019_12_11_040338_create_register_table', 2),
 (18, '2019_12_11_041411_create_session_types_table', 2),
 (19, '2019_12_11_042426_create_sessions_table', 2),
@@ -122,10 +118,11 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 -- Table structure for table `organizations`
 --
 
-CREATE TABLE `organizations` (
-  `organization_id` bigint(20) UNSIGNED NOT NULL,
-  `organization_email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `organization_password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+CREATE TABLE `organizers` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -134,9 +131,9 @@ CREATE TABLE `organizations` (
 -- Dumping data for table `organizations`
 --
 
-INSERT INTO `organizations` (`organization_id`, `organization_email`, `organization_password`, `created_at`, `updated_at`) VALUES
-(1, 'demo1@worldskills.org', 'demopass1', '2019-12-18 03:33:00', '2019-12-18 03:33:00'),
-(2, 'demo2@worldskills.org', 'demopass2', '2019-12-18 03:34:00', '2019-12-18 03:34:00');
+INSERT INTO `organizers` (`id`, `email`, `password`, `created_at`, `updated_at`) VALUES
+(1, 'demo1@worldskills.org', '$2y$10$oXSuhSNfMCMcwWaVSe8Ygudy5BoOBLlifnotzd2XnJH4G6ZuiJp9C', '2019-12-18 03:33:00', '2019-12-18 03:33:00'),
+(2, 'demo2@worldskills.org', '$2y$10$khLiEGT.rXbQ4e2.yk91zuSLcM3m7avTbaWye33afIY6GWF.9ayii', '2019-12-18 03:34:00', '2019-12-18 03:34:00');
 
 -- --------------------------------------------------------
 
@@ -149,6 +146,7 @@ CREATE TABLE `register` (
   `attendee_id` int(10) UNSIGNED NOT NULL,
   `ticket_id` int(11) NOT NULL,
   `session_id` int(11) DEFAULT NULL,
+  `event_id` int(11) NOT NULL,
   `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -202,8 +200,8 @@ CREATE TABLE `sessions` (
 -- Dumping data for table `sessions`
 --
 
-INSERT INTO `sessions` (`id`, `event_id`, `room_id`, 'channel_id', `session_type_id`, `title`, `speaker`, `description`, `start_time`, `end_time`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 1, 1, 'Testing Session', 'AMT', 'Testing Description', '2020-12-12 11:11:00', '2020-12-12 11:11:00', '2020-01-09 01:10:47', '2020-01-09 01:10:47');
+INSERT INTO `sessions` (`id`, `event_id`, `room_id`, 'channel_id', `session_type_id`, `title`, `speaker`, `description`, 'cost',`start_time`, `end_time`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 1, 1, 'Testing Session', 'AMT', 'Testing Description', 25.00, '2020-12-12 11:11:00', '2020-12-12 11:11:00', '2020-01-09 01:10:47', '2020-01-09 01:10:47');
 
 -- --------------------------------------------------------
 
@@ -284,9 +282,9 @@ ALTER TABLE `migrations`
 --
 -- Indexes for table `organizations`
 --
-ALTER TABLE `organizations`
-  ADD PRIMARY KEY (`organization_id`),
-  ADD UNIQUE KEY `organizations_organization_email_unique` (`organization_email`);
+ALTER TABLE `organizers`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `organizations_organization_email_unique` (`email`);
 
 --
 -- Indexes for table `register`
@@ -349,8 +347,8 @@ ALTER TABLE `migrations`
 --
 -- AUTO_INCREMENT for table `organizations`
 --
-ALTER TABLE `organizations`
-  MODIFY `organization_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `organizers`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `register`
