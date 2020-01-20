@@ -347,8 +347,8 @@ ALTER TABLE `migrations`
 --
 -- AUTO_INCREMENT for table `organizations`
 --
-ALTER TABLE `organizations`
-  MODIFY `organization_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `organizers`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `register`
