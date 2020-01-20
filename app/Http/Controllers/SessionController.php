@@ -160,7 +160,7 @@ class SessionController extends Controller{
       $sessionData['end_time'] = $sessionById->end_time;
 
 
-      return view('UpdateSession',compact(['sessionData','roomId','channelId','roomData','channelData','sessionTypeId','sessionTypeData','id']));
+      return view('UpdateSession', compact(['sessionData','roomId','channelId','roomData','channelData','sessionTypeId','sessionTypeData','id']));
   }
   public function storeUpdate(Request $request){
 

@@ -202,8 +202,8 @@ CREATE TABLE `sessions` (
 -- Dumping data for table `sessions`
 --
 
-INSERT INTO `sessions` (`id`, `event_id`, `room_id`, 'channel_id', `session_type_id`, `title`, `speaker`, `description`, `start_time`, `end_time`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 1, 1, 'Testing Session', 'AMT', 'Testing Description', '2020-12-12 11:11:00', '2020-12-12 11:11:00', '2020-01-09 01:10:47', '2020-01-09 01:10:47');
+INSERT INTO `sessions` (`id`, `event_id`, `room_id`, 'channel_id', `session_type_id`, `title`, `speaker`, `description`, 'cost',`start_time`, `end_time`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 1, 1, 'Testing Session', 'AMT', 'Testing Description', 25.00, '2020-12-12 11:11:00', '2020-12-12 11:11:00', '2020-01-09 01:10:47', '2020-01-09 01:10:47');
 
 -- --------------------------------------------------------
 
