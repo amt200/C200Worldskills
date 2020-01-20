@@ -2,7 +2,10 @@
 
 
 
+
 Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
+=======
+
 
 // --------------- //
 // Manage Events  //
@@ -11,7 +14,10 @@ Route::get('/event',  'EventController@index')->name('event');
 Route::group(['prefix' => 'event', 'as' => 'event.'], function () {
 	Route::get('/create', 'EventController@create')->name('create');
 	Route::post('/create', 'EventController@create')->name('create');
-	Route::get('/details', 'EventController@details')->name('details');
+	//Route::get('/overview', 'EventController@overview')->name('overview');
+
+    // event slug
+    Route::get('/{slug}', 'EventController@getSlug')->name('overview');
 
 	Route::get('/create_session', 'SessionController@index')->name('create_session');
     Route::get('/update_session/{id}', 'SessionController@update')->name('update_session');
@@ -54,17 +60,14 @@ Route::get('/room_capacity', function () {
 Route::get('/attendee',  'AttendeeController@index')->name('attendee');
 Route::group(['prefix' => 'attendee', 'as' => 'attendee.'], function () {
     Route::get('/event_register', 'AttendeeController@eventRegister')->name('event_register');
+    Route::get('/home', 'AttendeeController@dashboard');
+    Route::get('/list', 'AttendeeController@list');
 });
 
 //ATTENDEE SIGN IN
 Route::get('/sign_in', function() {
     return view('sign_in');
 });
-Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
 
 //ATTENDEE SESSION DETAILS
 Route::get('/attendee',  'AttendeeController@index')->name('attendee');
@@ -74,6 +77,16 @@ Route::group(['prefix' => 'attendee', 'as' => 'attendee.'], function () {
 
 
 Auth::routes();
+Route::get('/login/organizer', 'Auth\LoginController@showOrganizerLoginForm');
+Route::get('/login/attendee', 'Auth\LoginController@showAttendeeLoginForm');
+// Route::get('/register/organizer', 'Auth\RegisterController@showOrganizerRegisterForm');
+// Route::get('/register/blogger', 'Auth\RegisterController@showBloggerRegisterForm');
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::post('/login/organizer', 'Auth\LoginController@organizerLogin');
+Route::post('/login/attendee', 'Auth\LoginController@attendeeLogin');
+// Route::post('/register/organizer', 'Auth\RegisterController@createAdmin');
+// Route::post('/register/blogger', 'Auth\RegisterController@createBlogger');
 
+Route::view('/dashboard', 'dashboard')->middleware('auth');
+Route::view('/organizer', 'dashboard');
+Route::view('/attendee', 'Attendee');

@@ -25,13 +25,15 @@
 	
 	<div class="grid-container">
 		@foreach($events as $event)
-		<div class="card grid-item" style="width: 18rem;">
-		  <div class="card-body">
-		    <h5 class="card-title">{{ $event->event_name }}</h5>
-		    <h6 class="card-subtitle mb-2 text-muted">{{ $event->event_slug }}</h6>
-		    <hr>
-		    <p class="card-text">{{ $event->id }} registrations</p>
-		  </div>
+			<div class="card grid-item" style="width: 18rem;">
+			<a href="{{ url('event/'.$event->event_slug) }}">
+			  <div class="card-body">
+			    <h5 class="card-title">{{ $event->event_name }}</h5>
+			    <h6 class="card-subtitle mb-2 text-muted">{{ $event->event_slug }}</h6>
+			    <hr>
+			    <p class="card-text">{{ $event->event_registrations }} registrations</p>
+			  </div>
+				</a>
 		</div>
 		@endforeach
 	</div>

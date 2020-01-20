@@ -18,10 +18,10 @@ class CreateAttandeeTable extends Migration
             Schema::create('attendees', function (Blueprint $table) {
                 $table->bigIncrements('id');
                 $table->string('username')->unique();
+                $table->string('email')->unique();
                 $table->string('firstName');
                 $table->string('lastName');
                 $table->string('token');
-                $table->string('email');
                 $table->timestamps();
             });
         }

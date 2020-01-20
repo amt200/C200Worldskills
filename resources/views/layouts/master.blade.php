@@ -62,7 +62,12 @@
   	<nav class="navbar navbar-dark bg-dark">
       <div class="container-fluid">
         <div class="navbar-header">
-          <a class="navbar-brand" href="#">WorldSkills</a>
+          {{-- <a class="navbar-brand" href="#">WorldSkills</a> --}}
+
+          <a class="navbar-brand" href="{{ url('/') }}">
+            {{-- {{ config('app.name', 'Laravel') }} --}}
+            WorldSkills
+          </a>
         </div>
           <ul class="navbar-nav ml-auto">
               <!-- Authentication Links -->
