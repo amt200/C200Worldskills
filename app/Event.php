@@ -23,5 +23,8 @@ class Event extends Model
     public function channels(){
         return $this->hasMany('App\Channel');
     }
+    public function organizer(){
+      return $this->belongsTo('App\Organizer');
+    }
 
 }
