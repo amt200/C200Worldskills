@@ -11,10 +11,49 @@ use App\Event;
 class EventController extends Controller
 {
   public function index()
-  {
+  {    
     $events = \DB::table('events')->get();
+    $data = \DB::table('events')->get();
 
-    return view('ManageEvent')->with(['events' => $events]);
+    $dataCount = \DB::table('events')->count();
+
+    /*$data = DB::table('register')
+          ->join('events', 'events.id', '=', 'register.event_id')
+          ->select('events.event_name')
+          ->where('events.id', '=', 'register.event_id')
+          ->get();*/
+    $data = DB::table('events')
+          ->join('register', 'register.event_id', '=', 'events.id')
+          // ->where('register.event_id', '=', 'events.id')
+          ->get();
+          // ->where('register.event_id', '=', 'events.id')
+          // ->get();
+
+    /*$e = array();
+    $i = 1;
+    foreach($data as $d){
+      $ev = DB::table('events')
+          ->join('register', 'register.event_id', '=', 'event.id')
+          // ->where('register.event_id', '=', 'events.id')
+          ->get();
+          // ->where('register.event_id', '=', 'events.id')
+          // ->get();
+      $e[] = $ev;
+    }*/
+    // $data = DB::table('register')
+    //       ->where('register.event_id', '=', $event_id)
+    //       ->count();
+          // ->where('register.event_id', '=', 'events.id')
+          // ->get();
+
+
+    dd($events,$data);
+    // dd($data);
+
+    return view('ManageEvent', compact('events','data'));
+    // return view('ManageEvent')->with(['events' => $events]);
+    // return view('ManageEvent')->with(['events' => $events]->with(['event_registrations' => $event_registrations]));
+    // return view('ManageEvent')->with('events', ['events' => $events, 'event_registrations' => $event_registrations]);
   }
 
   public function create(Request $request)
@@ -65,6 +104,5 @@ class EventController extends Controller
 
     // Return view
     return view('EventOverview')->with(['events' => $event]);
-
   }
 }

@@ -55,8 +55,6 @@ class LoginController extends Controller
         ]);
 
         if (Auth::guard('organizer')->attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) {
-
-            echo "guard";
             return redirect()->intended('/dashboard');
         }
         return back()->withInput($request->only('email', 'remember'));

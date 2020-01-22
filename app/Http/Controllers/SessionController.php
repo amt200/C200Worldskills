@@ -15,7 +15,6 @@ use App\Channel;
 class SessionController extends Controller{
 
   public function index(){
-
       $types = $this->getAllSessionTypes();
 
       $channels = $this->getAllChannels();
