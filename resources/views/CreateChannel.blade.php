@@ -3,7 +3,7 @@
 @section('content')
 
 <div>
-    <h2 class="mt-3 mb-3">WorldSkills Conference 2019</h2>
+    <h2 class="mt-3 mb-3"></h2>
     <hr/>
     <h4 class="mt-3 mb-5">Create new channel</h4>
 
@@ -20,7 +20,7 @@
     <hr/>
     <div class="form-group form-inline">
         {!! Form::submit('Save channel',['class'=>'btn btn-primary mr-5']) !!}
-        <a href="{{route('event.details')}}">Cancel</a>
+        
     </div>
     {!! Form::close() !!}
 

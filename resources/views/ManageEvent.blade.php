@@ -13,15 +13,16 @@
 	</div>
 	<hr>
 
-	@if(count($data) < 1)
+	@if(count($dataArr) < 1)
 	<div class="alert alert-warning" role="alert">
   	There are no events currently..
 	</div>
 
 	@else
-	<div class="alert alert-primary" role="alert">
-  	TOTAL EVENTS : {{count($data)}}
-	</div>
+	<!-- Count total Events -->
+	<!-- <div class="alert alert-primary" role="alert">
+	  	TOTAL EVENTS : {{count($dataArr)}}
+	</div> -->
 	
 	<div class="grid-container">
 		@foreach($events as $event)
@@ -32,9 +33,11 @@
 				    <h5 class="card-title">{{ $event->event_name }}</h5>
 				    <h6 class="card-subtitle mb-2 text-muted">{{ $event->event_date }}</h6>
 				    <hr>
-				    @foreach($data as $row)
-				    	<p class="card-text">{{ count($data) }} registrations</p>
-					@endforeach
+				    @foreach($dataArr as $row)
+				    	@if($dataArr[key($dataArr)] == $event->id)
+				    	<p class="card-text">{{ $dataArr[key($dataArr)] }} registrations</p>
+				    	@endif
+						@endforeach
 				  </div>
 					</a>
 			</div>

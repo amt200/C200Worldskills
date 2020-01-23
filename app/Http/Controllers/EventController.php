@@ -13,7 +13,7 @@ class EventController extends Controller
   public function index()
   {    
     $events = \DB::table('events')->get();
-    $data = \DB::table('events')->get();
+    // $data = \DB::table('events')->get();
 
     $dataCount = \DB::table('events')->count();
 
@@ -22,10 +22,25 @@ class EventController extends Controller
           ->select('events.event_name')
           ->where('events.id', '=', 'register.event_id')
           ->get();*/
-    $data = DB::table('events')
-          ->join('register', 'register.event_id', '=', 'events.id')
+    $row_count = "";
+    $dataArr = [];
+
+    $data = DB::table('events')->get()->last();
+    for($i = $data->id; $i > 0; $i--){
+      $row_count = DB::table('attendee_register_event')
+      ->select(DB::raw("COUNT(id) as count_row"))
+      ->where("event_id", "=", $i)
+      ->get();
+
+      $value = $row_count[0]->count_row;
+      $key = $i;
+      $dataArr[$key] = $value;
+    }
+    dd($dataArr);
+
+          // ->join('attendee_register_event', 'attendee_register_event.event_id', '=', 'events.id')
           // ->where('register.event_id', '=', 'events.id')
-          ->get();
+          // ->get();
           // ->where('register.event_id', '=', 'events.id')
           // ->get();
 
@@ -47,10 +62,10 @@ class EventController extends Controller
           // ->get();
 
 
-    dd($events,$data);
-    // dd($data);
+    // dd($events,$data);
+    
 
-    return view('ManageEvent', compact('events','data'));
+    return view('ManageEvent', compact('events','dataArr'));
     // return view('ManageEvent')->with(['events' => $events]);
     // return view('ManageEvent')->with(['events' => $events]->with(['event_registrations' => $event_registrations]));
     // return view('ManageEvent')->with('events', ['events' => $events, 'event_registrations' => $event_registrations]);
@@ -77,10 +92,6 @@ class EventController extends Controller
         $event->event_slug = $request->event_slug;
         $event->event_registrations = $request->event_registrations;
         $event->organizer_id = $request->organizer;
-        $event->register_id = $request->register;
-        $event->sessions_id = $request->sessions;
-        $event->ticket_id = $request->ticket;
-        $event->channel_id = $request->channel;
         $event->event_date = $request->event_date;
         $insert = $event->save();
 

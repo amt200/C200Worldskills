@@ -30,11 +30,10 @@ Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
     // ------------- //
     Route::get('/event',  'EventController@index')->name('event');
     Route::group(['prefix' => 'event', 'as' => 'event.'], function () {
-         // event slug
-        Route::get('/{slug}', 'EventController@getSlug')->name('overview');
         
         Route::get('/create', 'EventController@create')->name('create');
         Route::post('/create', 'EventController@create')->name('create');
+        
         Route::get('/overview', 'EventController@overview')->name('overview');
 
        
@@ -50,6 +49,9 @@ Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
         Route::get('/room_capacity', 'RoomController@index')->name('room_capacity');
         Route::get('/create_room', 'RoomController@create')->name('create_room');
         Route::post('/store_room', 'RoomController@store')->name('store_room');
+
+         // event slug
+        Route::get('/{slug}', 'EventController@getSlug')->name('overview');
     });
 
     // --------------- //
