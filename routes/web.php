@@ -1,12 +1,21 @@
 <?php
-
-
-
+use \Illuminate\Support\Facades\DB;
 
 Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
 
 
+Route::get('/getCount', function (){
+    $row_count = "";
+    $last = DB::table('events')->get()->last();
+    for ($i = $last->id; $i > 0; $i--){
+        $row_count = DB::table('attendee_register_event')->select(DB::raw("COUNT(id) as count_row"))
+            ->where('event_id', '=', $i)
+            ->get();
 
+
+        echo "Event id ".$i." has ".$row_count[0]->count_row." occurences in registration table"."<br/>";
+    }
+});
 // --------------- //
 // Manage Events  //
 // ------------- //

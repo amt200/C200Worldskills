@@ -7,7 +7,6 @@ use DateTimeZone;
 use Illuminate\Http\Request;
 use App\Session_type;
 use App\Session;
-use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Validator;
 use App\Room;
 use App\Channel;
@@ -66,13 +65,6 @@ class SessionController extends Controller{
 
   public function store(Request $request){
 
-      $from = new DateTimeZone('GMT');
-      $checkSession = "";
-      $alertmessage = "";
-      $isValid = false;
-      $currentTime     = new DateTime('now', $from);
-      $to   = new DateTimeZone('Asia/Singapore');
-      $currentTime->setTimezone($to);
 
       $validator = Validator::make($request->all(), [
           'title'=>'required|regex:/^[A-Z][A-Za-z\s]*$/',
@@ -89,30 +81,7 @@ class SessionController extends Controller{
               ->withInput();
       }
 
-      if (Session::where([['channel_id','=',$request->channel_id],['room_id','=',$request->room_id]])->get()->last() != null){
-          $checkSession = Session::where([['channel_id','=',$request->channel_id],['room_id','=',$request->room_id]])->get()->last();
-          $endTime = $checkSession->end_time;
-          $requestedHour = (int)substr($request->start_time, 11,13);
-          $storedHour = (int)substr($endTime, 11,13);
-
-          if ($requestedHour >= $storedHour){
-              $isValid = true;
-          }
-          else{
-              $types = $this->getAllSessionTypes();
-
-              $channels = $this->getAllChannels();
-
-              $room_names = $this->getAllRooms();
-              $isValid = false;
-              $alertmessage = "A session has already been booked. Please try different time.";
-
-              return view('CreateSession', compact(['alertmessage','types','room_names','channels']));
-          }
-      }
-      else{
-          $isValid = true;
-      }
+      $isValid = $this->isValidSession($request->channel_id, $request->room_id, $request->start_time);
 
       if ($isValid) {
           $session = new Session;
@@ -133,9 +102,54 @@ class SessionController extends Controller{
 
           return redirect('event/details');
       }
+      else{
+          $this->redirectOnFailure();
+      }
   }
-  private function settleSessionConflicts(){
 
+  private function addRoomToChannel(){
+
+
+
+  }
+
+  private function redirectOnFailure(){
+
+      $types = $this->getAllSessionTypes();
+
+      $channels = $this->getAllChannels();
+
+      $room_names = $this->getAllRooms();
+      $alertmessage = "A session has already been booked. Please try different time.";
+
+      return view('CreateSession', compact(['types','channels','room_names','alertmessage']));
+  }
+
+  private function isValidSession($channel_id, $room_id, $start_time){
+      $from = new DateTimeZone('GMT');
+      $checkSession = "";
+      $isValid = false;
+      $currentTime     = new DateTime('now', $from);
+      $to   = new DateTimeZone('Asia/Singapore');
+      $currentTime->setTimezone($to);
+
+      if (Session::where([['channel_id','=',$channel_id],['room_id','=',$room_id]])->get()->last() != null){
+          $checkSession = Session::where([['channel_id','=',$channel_id],['room_id','=',$room_id]])->get()->last();
+          $endTime = $checkSession->end_time;
+          $requestedHour = (int)substr($start_time, 11,13);
+          $storedHour = (int)substr($endTime, 11,13);
+
+          if ($requestedHour >= $storedHour){
+              $isValid = true;
+          }
+          else{
+              $isValid = false;
+          }
+      }
+      else{
+          $isValid = true;
+      }
+      return $isValid;
   }
 
   public function update($id){
@@ -174,6 +188,7 @@ class SessionController extends Controller{
           'description'=>'required',
       ]);
 
+
       if ($validator->fails()) {
           return redirect('event/create_session')
               ->withErrors($validator)
@@ -181,10 +196,17 @@ class SessionController extends Controller{
       }
       $id = $request->id;
 
-      Session::where('id', $id)->update(['title'=>$request->title, 'speaker'=>$request->speaker,
-          'room_id'=>$request->room_id, 'channel_id'=>$request->channel_id, 'cost'=>$request->cost,
-          'start_time'=>$request->start_time, 'end_time'=>$request->end_time]);
-      return redirect('event/details');
+      $isValid = $this->isValidSession($request->channel_id, $request->room_id, $request->start_time);
+
+      if($isValid){
+          Session::where('id', $id)->update(['title'=>$request->title, 'speaker'=>$request->speaker,
+              'room_id'=>$request->room_id, 'channel_id'=>$request->channel_id, 'cost'=>$request->cost,
+              'start_time'=>$request->start_time, 'end_time'=>$request->end_time]);
+          return redirect('event/details');
+      }
+     else{
+         $this->redirectOnFailure();
+     }
   }
 
   public function delete($id){

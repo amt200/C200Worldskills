@@ -6,7 +6,7 @@
 <div class="panel-heading">
 	<div class="row" style="display: flex">
 		<div class="col-10">
-	    <h2>{{ $events->event_name }}</h2>
+	    <!--<h2>// //$events->event_name </h2>-->
 		</div>
 
 		<div class="col-2">
