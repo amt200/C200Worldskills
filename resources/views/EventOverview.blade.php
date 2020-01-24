@@ -6,12 +6,8 @@
 <div class="panel-heading">
 	<div class="row" style="display: flex">
 		<div class="col-10">
-{{-- 			@if(!empty($events))
-				<h2>{{ $events->event_name ?? ''}}</h2>
-			@endif
- --}}				
- 			<h2>{{ $events->event_name ?? ''}}</h2>
- 			<h5>{{ $events->event_date ?? ''}}</h5>
+ 			<h2>{{ $event->event_name ?? ''}}</h2>
+ 			<h5>{{ $event->event_date ?? ''}}</h5>
 		</div>
 
 		<div class="col-2">
@@ -27,38 +23,30 @@
 			<h2 class="event-detail-title">Tickets</h2>
 		</div>
 		<div class="col-2">
-			<a href="{{route('event.create')}}" class="btn btn-outline-primary" style="float: right">Create new ticket<a href=""></a>
+			<a href="{{ url('event/'.$event->event_slug.'/ticket-create') }}" class="btn btn-outline-primary" style="float: right">Create new ticket<a href=""></a>
 		</div>
 	</div>
 
 	<div class="grid-container-events">
-		<div class="card grid-item">
-		  <div class="card-body">
-		    <h5 class="card-title">Normal</h5>
-		    <h6 class="card-subtitle mb-2 text-muted">200-</h6>
-		  </div>
-		</div>
-
-		<div class="card grid-item">
-		  <div class="card-body">
-		    <h5 class="card-title">Early Bird</h5>
-		    <h6 class="card-subtitle mb-2 text-muted">120-</h6>
-		    <br>
-		    <h6 class="card-subtitle mb-2 text-muted">Available until June 1, 2019</h6>
-		  </div>
-		</div>
-
-		<div class="card grid-item">
-		  <div class="card-body">
-		    <h5 class="card-title">Early Bird</h5>
-		    <h6 class="card-subtitle mb-2 text-muted">120-</h6>
-		    <br>
-		    <h6 class="card-subtitle mb-2 text-muted">Available until June 1, 2019</h6>
-		  </div>
-		</div>
-	</div>
-
-</div>
+		@if(count($ticket) < 1)
+			<div class="alert alert-warning" role="alert">
+		  	There are no tickets currently..
+			</div>
+		@else
+			@foreach($ticket as $ticket)
+			<div class="card grid-item">
+			  <div class="card-body">
+			    <h5 class="card-title">{{ $ticket->ticket_name}}</h5>
+			    <h6 class="card-subtitle mb-2 text-muted">{{ $ticket->ticket_cost}}.-</h6>
+			    <br>
+			    <h6 class="card-subtitle mb-2 text-muted">Available until {{ $ticket->tickets_sell_by_date }}</h6>
+			    <h6 class="card-subtitle mb-2 text-muted">{{ $ticket->tickets_left }} tickets available</h6>
+			  </div>
+			</div>
+			@endforeach
+		@endif
+	</div>{{-- End grid-container-events--}}
+</div>{{-- End ticket row --}}
 
 <div class="col-12 event-detail-sections">
 	<div class="row" style="display: flex">
@@ -66,7 +54,7 @@
 			<h2 class="event-detail-title">Sessions</h2>
 		</div>
 		<div class="col-2">
-			<a href="{{route('event.create')}}" class="btn btn-outline-primary" style="float: right">Create new session<a href=""></a>
+			<a href="{{route('event.create_session')}}" class="btn btn-outline-primary" style="float: right">Create new session<a href=""></a>
 		</div>
 	</div>
 
@@ -83,29 +71,22 @@
 			    </tr>
 			  </thead>
 			  <tbody>
-			    
-			    {{-- EXAMPLE FOR SESSIONS --}}
-			    <tr>
-			      <td>08:30 - 10:00</td>
-			      <td>Talk</td>
-			      <td><a href="">Keynote</a></td>
-			      <td>An important person</td>
-			      <td>Main / Room A</td>
-			    </tr>
 
+					@foreach($session as $session)
 			    <tr>
-			      <td>08:30 - 10:00</td>
-			      <td>Talk</td>
-			      <td><a href="">Keynote</a></td>
-			      <td>An important person</td>
-			      <td>Main / Room A</td>
+			      <td>{{ $session->start_time }} - {{ $session->end_time }}</td>
+			      <td>{{ $session->session_type->type }}</td>
+			      <td><a href="">{{ $session->title }}</a></td>
+			      <td>{{ $session->speaker }}</td>
+			      <td>{{ $session->channel->channel_name }} / {{ $session->room->room_name}}</td>
 			    </tr>
+			    @endforeach
 
 			  </tbody>
 			</table>
-		</div> {{-- End col 12--}}
-	</div> {{-- End row--}}
-</div> {{-- End Session row--}}
+		</div> {{-- End col 12 --}}
+	</div> {{-- End row --}}
+</div> {{-- End Session row --}}
 
 <div class="col-12 event-detail-sections">
 	<div class="row" style="display: flex">
@@ -118,21 +99,16 @@
 	</div>
 
 	<div class="grid-container-events">
+		@foreach($channel as $channel)
 		<div class="card grid-item">
 		  <div class="card-body">
-		    <h5 class="card-title">Normal</h5>
-		    <h6 class="card-subtitle mb-2 text-muted">200-</h6>
+		    <h5 class="card-title">{{ $channel->channel_name }}</h5>
+		    <h6 class="card-subtitle mb-2 text-muted">sessions, rooms</h6>
 		  </div>
-		</div>
-
-		<div class="card grid-item">
-		  <div class="card-body">
-		    <h5 class="card-title">Normal</h5>
-		    <h6 class="card-subtitle mb-2 text-muted">200-</h6>
-		  </div>
-		</div>
+		</div>	
+		@endforeach
 	</div>
-</div>
+</div> {{-- End Channel row --}}
 
 <div class="col-12 event-detail-sections">
 	<div class="row" style="display: flex">
@@ -154,22 +130,13 @@
 			    </tr>
 			  </thead>
 			  <tbody>
-			    
-			    {{-- EXAMPLE FOR SESSIONS --}}
+					
+					@foreach($room as $room)
 			    <tr>
-			      <td>Room A</td>
-			      <td>1,000</td>
+			      <td>{{ $room->room_name }}</td>
+			      <td>{{ $room->room_capacity }}</td>
 			    </tr>
-
-			    <tr>
-			      <td>Room A</td>
-			      <td>1,000</td>
-			    </tr>
-
-			    <tr>
-			      <td>Room A</td>
-			      <td>1,000</td>
-			    </tr>
+			    @endforeach
 
 			  </tbody>
 			</table>
