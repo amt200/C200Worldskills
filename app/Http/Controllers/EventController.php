@@ -11,7 +11,7 @@ use App\Event;
 class EventController extends Controller
 {
   public function index()
-  {    
+  {
     $events = \DB::table('events')->get();
     // $data = \DB::table('events')->get();
 
@@ -36,7 +36,7 @@ class EventController extends Controller
       $key = $i;
       $dataArr[$key] = $value;
     }
-    dd($dataArr);
+    //dd($dataArr);
 
           // ->join('attendee_register_event', 'attendee_register_event.event_id', '=', 'events.id')
           // ->where('register.event_id', '=', 'events.id')
@@ -63,7 +63,7 @@ class EventController extends Controller
 
 
     // dd($events,$data);
-    
+
 
     return view('ManageEvent', compact('events','dataArr'));
     // return view('ManageEvent')->with(['events' => $events]);

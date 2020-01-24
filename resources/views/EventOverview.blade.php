@@ -6,16 +6,16 @@
 <div class="panel-heading">
 	<div class="row" style="display: flex">
 		<div class="col-10">
-{{-- 			@if(!empty($events))
+		@if(!empty($events))
 				<h2>{{ $events->event_name ?? ''}}</h2>
 			@endif
- --}}				
+
  			<h2>{{ $events->event_name ?? ''}}</h2>
  			<h5>{{ $events->event_date ?? ''}}</h5>
 		</div>
 
 		<div class="col-2">
-			<a href="{{route('event.create')}}" class="btn btn-outline-primary" style="float: right">Edit event<a href=""></a>
+            <a href="{{route('event.create')}}" class="btn btn-outline-primary" style="float: right">Edit event<a href=""></a></a>
 		</div>
 	</div>
 	<hr>
@@ -83,7 +83,7 @@
 			    </tr>
 			  </thead>
 			  <tbody>
-			    
+
 			    {{-- EXAMPLE FOR SESSIONS --}}
 			    <tr>
 			      <td>08:30 - 10:00</td>
@@ -140,7 +140,7 @@
 			<h2 class="event-detail-title">Rooms</h2>
 		</div>
 		<div class="col-2">
-			<a href="{{route('event.create_room')}}" class="btn btn-outline-primary" style="float: right">Create new room<a href=""></a>
+            <a href="{{route('event.create_room')}}" class="btn btn-outline-primary" style="float: right">Create new room<a href=""></a></a>
 		</div>
 	</div>
 
@@ -154,7 +154,7 @@
 			    </tr>
 			  </thead>
 			  <tbody>
-			    
+
 			    {{-- EXAMPLE FOR SESSIONS --}}
 			    <tr>
 			      <td>Room A</td>

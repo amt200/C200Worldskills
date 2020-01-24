@@ -14,7 +14,7 @@ class Event extends Model
   }
 
   public function registrations(){
-  	return $this->hasMany('App\Register');
+  	return $this->belongsToMany('App\Attendee', 'attendee_register_event');
   }
 
   public function sessions(){

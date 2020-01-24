@@ -92,7 +92,7 @@
         <hr/>
         <div class="form-group form-inline">
             {!! Form::submit('Update Session',['class'=>'btn btn-primary mr-5']) !!}
-            <a href="{{route('event.details')}}" class="mr-5">Cancel</a>
+            <a href="{{route('event')}}" class="mr-5">Cancel</a>
             <a href="{{route('event.delete_session',["id"=>$id])}}">Delete Session</a>
         </div>
         {!! Form::close() !!}

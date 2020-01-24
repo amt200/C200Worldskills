@@ -99,7 +99,7 @@ class SessionController extends Controller{
 
           $session->save();
 
-          return redirect('event/details');
+          return redirect('event');
       }
       else{
           $this->redirectOnFailure();
@@ -201,7 +201,7 @@ class SessionController extends Controller{
           Session::where('id', $id)->update(['title'=>$request->title, 'speaker'=>$request->speaker,
               'room_id'=>$request->room_id, 'channel_id'=>$request->channel_id, 'cost'=>$request->cost,
               'start_time'=>$request->start_time, 'end_time'=>$request->end_time]);
-          return redirect('event/details');
+          return redirect('event');
       }
      else{
          $this->redirectOnFailure();
@@ -210,6 +210,6 @@ class SessionController extends Controller{
 
   public function delete($id){
       Session::where('id', $id)->delete();
-      return redirect('event/details');
+      return redirect('event');
   }
 }

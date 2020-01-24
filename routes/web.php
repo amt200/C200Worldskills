@@ -4,6 +4,7 @@
 // Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
 
 
+
 Auth::routes();
 
 // Route::get('/', 'Auth\LoginController@showOrganizerLoginForm');
@@ -30,13 +31,13 @@ Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
     // ------------- //
     Route::get('/event',  'EventController@index')->name('event');
     Route::group(['prefix' => 'event', 'as' => 'event.'], function () {
-        
+
         Route::get('/create', 'EventController@create')->name('create');
         Route::post('/create', 'EventController@create')->name('create');
-        
+
         Route::get('/overview', 'EventController@overview')->name('overview');
 
-       
+
 
         Route::get('/create_session', 'SessionController@index')->name('create_session');
         Route::get('/update_session/{id}', 'SessionController@update')->name('update_session');
@@ -97,11 +98,11 @@ Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
         Route::get('/session_details', 'AttendeeController@sessionDetails')->name('session_details');
     });
 
-//Middleware 
+//Middleware
 Route::group(['middleware' => 'auth'], function () {
     // any route here will only be accessible for logged in users
 
-    
+
 
  });
 

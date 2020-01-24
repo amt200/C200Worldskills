@@ -20,8 +20,9 @@
     <hr/>
     <div class="form-group form-inline">
         {!! Form::submit('Save channel',['class'=>'btn btn-primary mr-5']) !!}
-        
+        <a href="{{route('event')}}">Cancel</a>
     </div>
+</div>
     {!! Form::close() !!}
 
 @endsection
