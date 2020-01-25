@@ -2,10 +2,13 @@
 
 @section('content')
     <div class="panel-heading">
-        <h2 class="mt-3 mb-3">WorldSkills Conference 2019</h2>
+        <h2 class="mt-3 mb-3">{{$slug}}</h2>
         <hr/>
         <h4 class="mt-3 mb-5">Update Session</h4>
-
+        @if (session('alertmessage'))
+        <p style="color:red">{{ session('alertmessage') }}
+        </p>
+        @endif
         {!! Form::open(['method'=>'POST','action'=>'SessionController@storeUpdate']) !!}
 
         @csrf

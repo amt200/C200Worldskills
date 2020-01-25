@@ -102,21 +102,11 @@ class SessionController extends Controller{
           return redirect('event');
       }
       else{
-          $types = $this->getAllSessionTypes();
-
-          $channels = $this->getAllChannels();
-
-          $room_names = $this->getAllRooms();
-          $alertmessage = "A session has already been booked. Please try different time.";
-
-          return view('CreateSession', compact(['types','channels','room_names','alertmessage']));
+          return redirect('event/create_session')->with('alertmessage', "A session has already been booked. Please try different time.");
       }
   }
 
-  private function addRoomToChannel(){
-      $newRoom = new Room;
 
-  }
 
 
   private function isValidSession($channel_id, $room_id, $start_time){
@@ -205,7 +195,7 @@ class SessionController extends Controller{
           return redirect('event');
       }
      else{
-         return redirect('event/update_session/'.$request->id);
+         return redirect('event/update_session/'.$request->id)->with('alertmessage', "A session has already been booked. Please try different time.");
      }
   }
 
