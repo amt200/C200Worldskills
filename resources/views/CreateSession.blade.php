@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="panel-heading">
-    <h2 class="mt-3 mb-3">{{$slug}}</h2>
+    <h2 class="mt-3 mb-3">{{$formatted_slug ?? ''}}</h2>
     <hr/>
     <h4 class="mt-3 mb-5">Create Session</h4>
     @if (session('alertmessage'))
@@ -15,6 +15,7 @@
             <div class="col-4">
                 {!! Form::label('id_type','Type') !!}
                 {!! Form::select('type', $types, 1, ['class'=>'form-control', 'id'=>'id_type']) !!}
+                {{ Form::hidden('event_id', $event_id) }}
             </div>
         </div>
 

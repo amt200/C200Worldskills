@@ -65,7 +65,7 @@ class EventController extends Controller
     // dd($events,$data);
 
 
-    return view('ManageEvent', compact('events','dataArr'));
+    return view('ManageEvent', compact(['events','dataArr']));
     // return view('ManageEvent')->with(['events' => $events]);
     // return view('ManageEvent')->with(['events' => $events]->with(['event_registrations' => $event_registrations]));
     // return view('ManageEvent')->with('events', ['events' => $events, 'event_registrations' => $event_registrations]);

@@ -43,7 +43,7 @@ Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
         Route::get('/{slug}/update_session/{id}', 'SessionController@update')->name('update_session');
         Route::post('/{slug}/store_update_session', 'SessionController@storeUpdate')->name('store_update_session');
         Route::get('/{slug}/delete_session/{id}', 'SessionController@delete')->name('delete_session');
-        Route::post('/{slug}/store_session', 'SessionController@store')->name('store_session');
+        Route::post('/store_session', 'SessionController@store')->name('store_session');
         Route::post('/store_channel', 'ChannelController@store')->name('store_channel');
         Route::get('/create_channel', 'ChannelController@index')->name('create_channel');
         Route::post('/store_channel', 'ChannelController@store')->name('store_channel');
