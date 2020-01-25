@@ -22,12 +22,12 @@
 .grid-container {
   display: grid;
   grid-gap: 10px;
-  grid-template-columns: auto auto auto auto;
+  grid-template-columns: 25% 25% 25%;
 }
 
 .grid-container-events {
   display: grid;
-  grid-gap: 10px;
+  grid-gap: 40px;
   grid-template-columns: auto auto auto;
 }
 

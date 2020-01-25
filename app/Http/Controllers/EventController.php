@@ -16,7 +16,7 @@ class EventController extends Controller
 {
   public function index()
   {    
-    $events = \DB::table('events')->get();
+    $events = Event::all();
 
     $row_count = "";
     $dataArr = [];
@@ -89,10 +89,58 @@ class EventController extends Controller
     // Get the ticket data
     $channel = Channel::all();
 
-    // dd($ticket);
+    // Count Sessions
+    $row_count = "";
+    $sessionArr = [];
 
-    // Return view
-    // return view('EventOverview')->with(['events' => $event]);
-    return view('EventOverview', compact('event', 'ticket', 'session', 'room', 'channel'));
+    $data = DB::table('sessions')->get()->last();
+    for($i = $data->id; $i > 0; $i--){
+      $row_count = DB::table('channels')
+      ->select(DB::raw("COUNT(id) as count_row"))
+      ->where("id", "=", $i)
+      ->get();
+
+      $value = $row_count[0]->count_row;
+      $key = $i;
+      $sessionArr[$key] = $value;
+    } 
+
+    // Count Rooms
+    $room_row_count = "";
+    $roomArr = [];
+
+    $data = DB::table('rooms')->get()->last();
+    for($i = $data->id; $i > 0; $i--){
+      $room_row_count = DB::table('channels')
+      ->select(DB::raw("COUNT(id) as count_row"))
+      ->where("id", "=", $i)
+      ->get();
+
+      $roomvalue = $room_row_count[0]->count_row;
+      $key = $i;
+      $roomArr[$key] = $roomvalue;
+    } 
+
+    dd($roomArr);
+
+    // Count Rooms
+    /*$roomArr = DB::table('rooms')
+         ->join('channels', 'channels.id', '=', 'rooms.channel_id')
+         ->select('rooms.channel_id', DB::raw('COUNT(rooms.channel_id) AS total_rooms'))
+         ->groupBy('channel_id')
+         ->get(); */
+
+    /*$roomArr = DB::table('rooms')
+         ->join('channels', 'channels.id', '=', 'rooms.channel_id')
+         ->join('sessions', 'sessions.id', '=', 'channels.channel_id')
+         ->select('rooms.channel_id', DB::raw('COUNT(rooms.channel_id) AS total_rooms'))
+         // ->select('sessions.channel_id', DB::raw('COUNT(sessions.channel_id) AS total_sessions'))
+         ->groupBy('channel_id')
+         ->get();
+
+         dd($roomArr);*/
+
+    return view('EventOverview', compact('event', 'ticket', 'session', 'room', 'channel', 'sessionArr', 'roomArr'));
+    // return view('EventOverview', compact('event', 'ticket', 'session', 'room', 'channel', 'sessionArr'));
   }
 }

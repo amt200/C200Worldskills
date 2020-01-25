@@ -7,7 +7,7 @@
 	<div class="row" style="display: flex">
 		<div class="col-10">
  			<h2>{{ $event->event_name ?? ''}}</h2>
- 			<h5>{{ $event->event_date ?? ''}}</h5>
+ 			<h5>{{ $event->event_date->format('F d, Y') ?? ''}}</h5>
 		</div>
 
 		<div class="col-2">
@@ -39,7 +39,7 @@
 			    <h5 class="card-title">{{ $ticket->ticket_name}}</h5>
 			    <h6 class="card-subtitle mb-2 text-muted">{{ $ticket->ticket_cost}}.-</h6>
 			    <br>
-			    <h6 class="card-subtitle mb-2 text-muted">Available until {{ $ticket->tickets_sell_by_date }}</h6>
+			    <h6 class="card-subtitle mb-2 text-muted">Available until {{ $ticket->tickets_sell_by_date->format('F d, Y') }}</h6>
 			    <h6 class="card-subtitle mb-2 text-muted">{{ $ticket->tickets_left }} tickets available</h6>
 			  </div>
 			</div>
@@ -74,7 +74,7 @@
 
 					@foreach($session as $session)
 			    <tr>
-			      <td>{{ $session->start_time }} - {{ $session->end_time }}</td>
+			      <td>{{ $session->start_time->format('H:i') }} - {{ $session->end_time->format('H:i') }}</td>
 			      <td>{{ $session->session_type->type }}</td>
 			      <td><a href="">{{ $session->title }}</a></td>
 			      <td>{{ $session->speaker }}</td>
@@ -103,7 +103,11 @@
 		<div class="card grid-item">
 		  <div class="card-body">
 		    <h5 class="card-title">{{ $channel->channel_name }}</h5>
-		    <h6 class="card-subtitle mb-2 text-muted">sessions, rooms</h6>
+		    @foreach($sessionArr as $key=>$value)
+		    	@if($key == $event->id)
+			    <h6 class="card-subtitle mb-2 text-muted">{{ $value }} sessions, {{ $roomArr[$key] }} rooms</h6>
+		    	@endif
+		    @endforeach
 		  </div>
 		</div>	
 		@endforeach
