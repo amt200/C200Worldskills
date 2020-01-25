@@ -13,4 +13,7 @@ class Room extends Model
     public function channel(){
         return $this->belongsTo('App\Channel');
     }
+    public function event(){
+        return $this->belongsTo('App\Event');
+    }
 }

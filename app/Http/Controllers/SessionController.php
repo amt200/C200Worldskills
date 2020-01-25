@@ -102,27 +102,22 @@ class SessionController extends Controller{
           return redirect('event');
       }
       else{
-          $this->redirectOnFailure();
+          $types = $this->getAllSessionTypes();
+
+          $channels = $this->getAllChannels();
+
+          $room_names = $this->getAllRooms();
+          $alertmessage = "A session has already been booked. Please try different time.";
+
+          return view('CreateSession', compact(['types','channels','room_names','alertmessage']));
       }
   }
 
   private function addRoomToChannel(){
-
-
+      $newRoom = new Room;
 
   }
 
-  private function redirectOnFailure(){
-
-      $types = $this->getAllSessionTypes();
-
-      $channels = $this->getAllChannels();
-
-      $room_names = $this->getAllRooms();
-      $alertmessage = "A session has already been booked. Please try different time.";
-
-      return view('CreateSession', compact(['types','channels','room_names','alertmessage']));
-  }
 
   private function isValidSession($channel_id, $room_id, $start_time){
       $from = new DateTimeZone('GMT');
@@ -135,10 +130,16 @@ class SessionController extends Controller{
       if (Session::where([['channel_id','=',$channel_id],['room_id','=',$room_id]])->get()->last() != null){
           $checkSession = Session::where([['channel_id','=',$channel_id],['room_id','=',$room_id]])->get()->last();
           $endTime = $checkSession->end_time;
-          $requestedHour = (int)substr($start_time, 11,13);
-          $storedHour = (int)substr($endTime, 11,13);
+          $requestedHour = (int)substr($start_time, 11,2);
+          $requestedMonth = (int)substr($start_time, 6,1);
+          $requestedDay = (int)substr($start_time, 8, 2);
+          $storedHour = (int)substr($endTime, 11,2);
+          $storedMonth = (int)substr($endTime, 6, 1);
+          $storedDay = (int)substr($endTime, 8,2);
 
-          if ($requestedHour >= $storedHour){
+          $isOnSameDay = $requestedMonth == $storedMonth && $requestedDay == $storedDay;
+
+          if ($isOnSameDay && $requestedHour >= $storedHour || $isOnSameDay == false){
               $isValid = true;
           }
           else{
@@ -189,7 +190,7 @@ class SessionController extends Controller{
 
 
       if ($validator->fails()) {
-          return redirect('event/create_session')
+          return redirect('event/update_session/'.$request->id)
               ->withErrors($validator)
               ->withInput();
       }
@@ -204,7 +205,7 @@ class SessionController extends Controller{
           return redirect('event');
       }
      else{
-         $this->redirectOnFailure();
+         return redirect('event/update_session/'.$request->id);
      }
   }
 

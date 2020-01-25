@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Validator;
-use DB;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Support\Facades\DB;
 
 use App\Event;
 
@@ -12,10 +12,10 @@ class EventController extends Controller
 {
   public function index()
   {
-    $events = \DB::table('events')->get();
+    $events = DB::table('events')->get();
     // $data = \DB::table('events')->get();
 
-    $dataCount = \DB::table('events')->count();
+    $dataCount = DB::table('events')->count();
 
     /*$data = DB::table('register')
           ->join('events', 'events.id', '=', 'register.event_id')

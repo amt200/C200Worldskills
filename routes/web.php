@@ -83,8 +83,9 @@ Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
     Route::get('/attendee',  'AttendeeController@index')->name('attendee');
     Route::group(['prefix' => 'attendee', 'as' => 'attendee.'], function () {
         Route::get('/event_register', 'AttendeeController@eventRegister')->name('event_register');
-        Route::get('/home', 'AttendeeController@dashboard');
-        Route::get('/list', 'AttendeeController@list');
+        Route::get('/event_list', 'AttendeeController@dashboard');
+        Route::get('/session_details', 'AttendeeController@sessionDetails')->name('session_details');
+        Route::get('/event_list/{slug}/event_agenda', 'AttendeeController@eventAgenda')->name('event_agenda');
     });
 
     //ATTENDEE SIGN IN
@@ -93,10 +94,7 @@ Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
     });
 
     //ATTENDEE SESSION DETAILS
-    Route::get('/attendee',  'AttendeeController@index')->name('attendee');
-    Route::group(['prefix' => 'attendee', 'as' => 'attendee.'], function () {
-        Route::get('/session_details', 'AttendeeController@sessionDetails')->name('session_details');
-    });
+
 
 //Middleware
 Route::group(['middleware' => 'auth'], function () {

@@ -23,5 +23,7 @@ class Event extends Model
     public function channels(){
         return $this->hasMany('App\Channel');
     }
-
+  public function rooms(){
+      return $this->hasMany('App\Room');
+  }
 }
