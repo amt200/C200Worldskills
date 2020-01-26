@@ -50,17 +50,11 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-6">
+            <div class="col-4">
                 <div class="form-group">
 
                     {!! Form::label('id_room','Room') !!}
                     {!! Form::select('room_id', $roomData, $roomId, ['class'=>'form-control', 'id'=>'id_room']) !!}
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="form-group">
-                    {!! Form::label('id_channel','Channel') !!}
-                    {!! Form::select('channel_id', $channelData, $channelId, ['class'=>'form-control', 'id'=>'id_channel']) !!}
                 </div>
             </div>
         </div>
