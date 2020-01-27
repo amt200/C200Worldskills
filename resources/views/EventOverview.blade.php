@@ -11,7 +11,7 @@
 		</div>
 
 		<div class="col-2">
-            <a href="{{route('event.create')}}" class="btn btn-outline-primary" style="float: right">Edit event<a href=""></a></a>
+        <a href="{{ url('event/'.$event->event_slug.'/manage') }}" class="btn btn-outline-primary" style="float: right">Edit event<a href=""></a></a>
 		</div>
 	</div>
 	<hr>

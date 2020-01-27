@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Special_validity_type;
+use DateTime;
+use DateTimeZone;
 use App\Event;
 use App\Ticket;
 use Validator;
@@ -24,8 +26,11 @@ class TicketController extends Controller
     return view('CreateTicket', compact('event', 'types'));
   }
 
-  public function create(Request $request)
+  public function create(Request $request, $slug)
   {
+    // Get slug
+    $event = Event::where('event_slug', '=', $slug)->first();
+
   	if($request->isMethod('post') )
     {
       $validator = Validator::make($request -> all(), [
@@ -38,31 +43,34 @@ class TicketController extends Controller
 
       if($validator->fails())
       {
-        return redirect()->route('event.ticket_create')->withErrors($validator);
+        return redirect('event/'.$slug.'/create_ticket')->withErrors($validator);
       }
       else
       {
+        $eventId = $event->id;
+
         $ticket = new Ticket;
+        $ticket_end_date = new DateTime($request->ticket_end_date);
         $ticket->ticket_name = $request->ticket_name;
-        $ticket->event_id = 1;
+        $ticket->event_id = $eventId;
         $ticket->ticket_cost = $request->ticket_cost;
-        $ticket->special_validities_id = 2;
-        $ticket->max_tickets= $request->max_tickets;
-        $ticket->tickets_left= $request->max_tickets;
-        $ticket->tickets_sell_by_date= $request->ticket_end_date;
+        $ticket->special_validities_id = $request->special_validity;
+        $ticket->max_tickets = $request->max_tickets;
+        $ticket->tickets_left = $request->max_tickets;
+        $ticket->tickets_sell_by_date = $ticket_end_date;
         $insert = $ticket->save();
 
         if($insert)
         {
-          return redirect()->route('event')->with('success', 'Ticket successfully created');
+          return redirect('event/'.$slug)->with('success', 'Ticket successfully created');
         }
         else
         {
-          return redirect()->route('event.ticket_create')->with('error', 'An error occured while creating ticket');
+          return redirect('event/'.$slug.'/create_ticket')->with('alertmessage', "An error occurred when creating the ticket. Please try again.");
         }
       }
     }
-    return view('CreateTicket');
+    return view('EventOverview');
   }
 
   private function getSpecialValidityTypes(){

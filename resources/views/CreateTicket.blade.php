@@ -13,7 +13,7 @@
 </div>
 	<h4 class="mt-3 mb-5">Create new ticket</h4>
 
-	<form method="POST" action="{{action('TicketController@create')}}">
+	<form method="POST" action="{{action('TicketController@create', ['slug' => $event->event_slug])}}">
 		@csrf
 		<div class="form-group row">
 			<div class="col-4">
@@ -44,7 +44,7 @@
 			<div class="col-4">
 				<div class="form-group">
 					<label for="id_max_tickets">Maximum amount of tickets to be sold</label>
-					<input type="text" class="form-control" id="id_max_tickets" name="max_tickets">
+					<input type="text" class="form-control" id="id_max_tickets" name="max_tickets" placeholder="0">
 				</div>
 			</div>
 		</div>
@@ -53,7 +53,7 @@
 			<div class="col-4">
 				<div class="form-group">
 					<label for="id_ticket_end_date">Tickets can be sold until</label>
-					<input type="text" class="form-control" id="id_ticket_end_date" name="ticket_end_date">
+					<input type="text" class="form-control" id="id_ticket_end_date" name="ticket_end_date" placeholder="yyyy-mm-dd HH:MM">
 				</div>
 			</div>
 		</div>
@@ -62,7 +62,7 @@
 	
 		<div class="form-group form-inline">
 			<input type="hidden" name="_token" value="{{ csrf_token() }}" />
-			<input type="submit" class="btn btn-primary mr-5" value="Save event" />
+			<input type="submit" class="btn btn-primary mr-5" value="Save Ticket" />
 			<a href="{{ url('event/'.$event->event_slug) }}">Cancel</a>
 		</div>
 	</form>

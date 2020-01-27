@@ -26,7 +26,7 @@
 			<div class="col-4">
 				<div class="form-group">
 					<label for="id_event_date">Date</label>
-					<input type="text" class="form-control" id="id_event_date" name="event_date">
+					<input type="text" class="form-control" id="id_event_date" name="event_date" placeholder="yyyy-mm-dd">
 				</div>
 			</div>
 		</div>

@@ -38,3 +38,33 @@
 .event-detail-title{
   padding-bottom: 2%;
 }
+
+.edit-btn{
+  background-color: #2e96d9;
+  color: white;
+  padding: 7px;
+  border-radius: 8%;
+  text-align: center;
+
+}
+
+.delete-btn{
+  background-color: red;
+  color: white;
+  padding: 7px;
+  border-radius: 8%;
+  text-align: center;
+}
+
+.edit-btn:hover{
+  text-decoration: none;
+  color: white;
+  background-color: rgba(46, 150, 217, 0.5);
+}
+
+.delete-btn:hover{
+  text-decoration: none;
+  color: white;
+  background-color: rgba(217, 46, 46, 0.5);
+}
+

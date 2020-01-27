@@ -115,9 +115,30 @@ class EventController extends Controller
     return view('EventOverview', compact('event', 'ticket', 'session', 'room', 'channel', 'data'));
   }
 
-  private function getDetailsByEvent($slug){
+  public function manage($slug){
+     // Get slug from database
+    // $event = \DB::table('events')->where('event_slug', $slug)->first();
+    $event = Event::where('event_slug', '=', $slug)->first();
 
-    // Get the event based on slug
-    $event = DB::table('events')->where('event_slug', '=', $slug)->get();
+    // Get the ticket data
+    $ticket = Ticket::all();
+
+    // Get the ticket data
+    $session = Session::all();
+
+    // Get the ticket data
+    $room = Room::all();
+
+    // Get the ticket data
+    $channel = Channel::all();
+
+    $data = DB::table("channels")
+    ->join('rooms', 'channels.id', '=', 'rooms.channel_id')
+    ->join('sessions', 'rooms.id', '=', 'sessions.room_id')
+    ->select('channels.channel_name', DB::raw('COUNT(sessions.id) AS total_sessions, COUNT(rooms.id) AS total_rooms'))
+    ->groupBy('channels.channel_name')
+    ->get();
+
+    return view('ManageEventDetails', compact('event', 'ticket', 'session', 'room', 'channel', 'data'));
   }
 }

@@ -58,14 +58,18 @@ Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
         Route::get('/create_room', 'RoomController@create')->name('create_room');
         Route::post('/store_room', 'RoomController@store')->name('store_room');
 
-         // event slug
-        // Route::get('/{slug}', 'EventController@getSlug')->name('overview');
+        // event slug
         Route::get('/{slug}', 'EventController@overview')->name('overview');
+
+        // event edit
+        Route::get('/{slug}/manage', 'EventController@manage')->name('manage_event_details');
+
+
         // --------------- //
         // Manage Ticket  //
         // ------------- //
         Route::get('/{slug}/create_ticket', 'TicketController@index')->name('ticket_create');
-        Route::post('/ticket/create', 'TicketController@create')->name('ticket_create_post');
+        Route::post('/{slug}/store_ticket', 'TicketController@create')->name('ticket_create_post');
     });
 
     
