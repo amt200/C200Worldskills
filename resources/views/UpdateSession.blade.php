@@ -2,11 +2,14 @@
 
 @section('content')
     <div class="panel-heading">
-        <h2 class="mt-3 mb-3">WorldSkills Conference 2019</h2>
+        <h2 class="mt-3 mb-3">{{$formatted_slug}}</h2>
         <hr/>
         <h4 class="mt-3 mb-5">Update Session</h4>
-
-        {!! Form::open(['method'=>'POST','action'=>'SessionController@storeUpdate']) !!}
+        @if (session('alertmessage'))
+        <p style="color:red">{{ session('alertmessage') }}
+        </p>
+        @endif
+        {!! Form::open(['method'=>'POST','action'=>['SessionController@storeUpdate',$slug]]) !!}
 
         @csrf
 
@@ -47,17 +50,11 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-6">
+            <div class="col-4">
                 <div class="form-group">
 
                     {!! Form::label('id_room','Room') !!}
                     {!! Form::select('room_id', $roomData, $roomId, ['class'=>'form-control', 'id'=>'id_room']) !!}
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="form-group">
-                    {!! Form::label('id_channel','Channel') !!}
-                    {!! Form::select('channel_id', $channelData, $channelId, ['class'=>'form-control', 'id'=>'id_channel']) !!}
                 </div>
             </div>
         </div>
@@ -91,8 +88,8 @@
         </div>
         <hr/>
         <div class="form-group form-inline">
-            {!! Form::submit('Update Session',['class'=>'btn btn-primary mr-5']) !!}
-            <a href="{{route('event.details')}}" class="mr-5">Cancel</a>
+            {!! Form::submit('Update Session',['class'=>'btn btn-primary mr-5', 'id'=>'update']) !!}
+            <a href="{{route('event')}}" class="mr-5">Cancel</a>
             <a href="{{route('event.delete_session',["id"=>$id])}}">Delete Session</a>
         </div>
         {!! Form::close() !!}

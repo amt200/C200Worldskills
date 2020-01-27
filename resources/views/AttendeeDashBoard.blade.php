@@ -10,7 +10,7 @@
                     <div class="card-body">
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
-                                @foreach($data as $i)
+                                @foreach($data ?? '' as $i)
                                     {{$i->event_name}}
                                     {{$i->event_date}}<br>
                                 @endforeach

@@ -20,4 +20,11 @@ class Attendee extends Authenticatable
   protected $hidden = [
     'token', 'remember_token',
   ];
+  public function sessions(){
+      return $this->belongsToMany('App\Session','attendee_register_event');
+  }
+    public function events(){
+        return $this->belongsToMany('App\Event', 'attendee_register_event');
+    }
+
 }

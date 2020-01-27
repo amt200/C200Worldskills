@@ -15,7 +15,6 @@
 			<a href="{{ route('event.overview') }}">Events Overview</a>
 		</li> --}}
 		<li>
-			<a href="{{ route('event.create_session') }}">Create Session</a>
 		</li>
 		<li>
 			<a href="{{ route('event.create_channel') }}">Create Channel</a>

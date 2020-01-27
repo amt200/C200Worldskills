@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Validator;
-use DB;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Support\Facades\DB;
 
 use App\Event;
 use App\Ticket;
@@ -15,9 +15,17 @@ use App\Session;
 class EventController extends Controller
 {
   public function index()
-  {    
-    $events = Event::all();
+  {
+    $events = DB::table('events')->get();
+    // $data = \DB::table('events')->get();
 
+    $dataCount = DB::table('events')->count();
+
+    /*$data = DB::table('register')
+          ->join('events', 'events.id', '=', 'register.event_id')
+          ->select('events.event_name')
+          ->where('events.id', '=', 'register.event_id')
+          ->get();*/
     $row_count = "";
     $dataArr = [];
 
@@ -32,8 +40,39 @@ class EventController extends Controller
       $key = $i;
       $dataArr[$key] = $value;
     }
+    //dd($dataArr);
 
-    return view('ManageEvent', compact('events','dataArr'));
+          // ->join('attendee_register_event', 'attendee_register_event.event_id', '=', 'events.id')
+          // ->where('register.event_id', '=', 'events.id')
+          // ->get();
+          // ->where('register.event_id', '=', 'events.id')
+          // ->get();
+
+    /*$e = array();
+    $i = 1;
+    foreach($data as $d){
+      $ev = DB::table('events')
+          ->join('register', 'register.event_id', '=', 'event.id')
+          // ->where('register.event_id', '=', 'events.id')
+          ->get();
+          // ->where('register.event_id', '=', 'events.id')
+          // ->get();
+      $e[] = $ev;
+    }*/
+    // $data = DB::table('register')
+    //       ->where('register.event_id', '=', $event_id)
+    //       ->count();
+          // ->where('register.event_id', '=', 'events.id')
+          // ->get();
+
+
+    // dd($events,$data);
+
+
+    return view('ManageEvent', compact(['events','dataArr']));
+    // return view('ManageEvent')->with(['events' => $events]);
+    // return view('ManageEvent')->with(['events' => $events]->with(['event_registrations' => $event_registrations]));
+    // return view('ManageEvent')->with('events', ['events' => $events, 'event_registrations' => $event_registrations]);
   }
 
   public function create(Request $request)

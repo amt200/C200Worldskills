@@ -20,7 +20,4 @@ class Organizer extends Authenticatable
 		'password', 'remember_token',
 	];
 
-	public function events(){
-	    $this->hasMany('App\Event');
-    }
 }

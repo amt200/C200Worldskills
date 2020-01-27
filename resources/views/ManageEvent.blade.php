@@ -8,7 +8,7 @@
 		</div>
 
 		<div class="col-2">
-			<a href="{{route('event.create')}}" class="btn btn-outline-primary" style="float: right">Create new event<a href=""></a>
+            <a href="{{route('event.create')}}" class="btn btn-outline-primary" style="float: right">Create new event<a href=""></a></a>
 		</div>
 	</div>
 	<hr>
@@ -23,9 +23,10 @@
 	<!-- <div class="alert alert-primary" role="alert">
 	  	TOTAL EVENTS : {{count($dataArr)}}
 	</div> -->
-	
+
 	<div class="grid-container">
 		@foreach($events as $event)
+
 				<div class="card grid-item" style="width: 18rem;">
 				<a href="{{ url('event/'.$event->event_slug) }}">
 				  <div class="card-body">
@@ -36,13 +37,13 @@
 				    	@if($key == $event->id)
 				    	<p class="card-text">{{ $value }} registrations</p>
 				    	@endif
-						@endforeach
+            @endforeach
 				  </div>
 					</a>
 			</div>
 		@endforeach
 	</div>
-	
+
 
 	@endif
 </div>

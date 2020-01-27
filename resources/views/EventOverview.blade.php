@@ -11,7 +11,7 @@
 		</div>
 
 		<div class="col-2">
-			<a href="{{route('event.create')}}" class="btn btn-outline-primary" style="float: right">Edit event<a href=""></a>
+            <a href="{{route('event.create')}}" class="btn btn-outline-primary" style="float: right">Edit event<a href=""></a></a>
 		</div>
 	</div>
 	<hr>
@@ -71,7 +71,7 @@
 			    </tr>
 			  </thead>
 			  <tbody>
-
+        
 					@foreach($session as $session)
 			    <tr>
 			      <td>{{ $session->start_time->format('H:i') }} - {{ $session->end_time->format('H:i') }}</td>
@@ -120,7 +120,7 @@
 			<h2 class="event-detail-title">Rooms</h2>
 		</div>
 		<div class="col-2">
-			<a href="{{route('event.create_room')}}" class="btn btn-outline-primary" style="float: right">Create new room<a href=""></a>
+            <a href="{{route('event.create_room')}}" class="btn btn-outline-primary" style="float: right">Create new room<a href=""></a></a>
 		</div>
 	</div>
 

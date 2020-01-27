@@ -10,4 +10,8 @@ class Ticket extends Model
     public function event(){
         return $this->belongsTo('App\Event');
     }
+
+    public function validity(){
+        return $this->belongsTo('App\SpecialValidities');
+    }
 }
