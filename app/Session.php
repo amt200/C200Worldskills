@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Session extends Model{
 
+    protected $dates = ['start_time', 'end_time'];
+
     public function session_type(){
         return $this->belongsTo('App\Session_type');
     }

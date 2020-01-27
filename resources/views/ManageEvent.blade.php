@@ -31,14 +31,13 @@
 				<a href="{{ url('event/'.$event->event_slug) }}">
 				  <div class="card-body">
 				    <h5 class="card-title">{{ $event->event_name }}</h5>
-				    <h6 class="card-subtitle mb-2 text-muted">{{ $event->event_date }}</h6>
+				    <h6 class="card-subtitle mb-2 text-muted">{{ $event->event_date->format('F d, Y') }}</h6>
 				    <hr>
 				    @foreach($dataArr as $key=>$value)
-
 				    	@if($key == $event->id)
 				    	<p class="card-text">{{ $value }} registrations</p>
 				    	@endif
-                    @endforeach
+            @endforeach
 				  </div>
 					</a>
 			</div>

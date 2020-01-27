@@ -38,13 +38,19 @@ Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
 
         Route::get('/overview', 'EventController@overview')->name('overview');
 
-
+        // --------------- //
+        // Manage session //
+        // ------------- //
 
         Route::get('/{slug}/create_session', 'SessionController@index')->name('create_session');
         Route::get('/{slug}/update_session/{id}', 'SessionController@update')->name('update_session');
         Route::post('/{slug}/store_update_session', 'SessionController@storeUpdate')->name('store_update_session');
         Route::get('/delete_session/{id}', 'SessionController@delete')->name('delete_session');
         Route::post('/{slug}/store_session', 'SessionController@store')->name('store_session');
+
+        // --------------- //
+        // Manage channel //
+        // ------------- //
         Route::post('/store_channel', 'ChannelController@store')->name('store_channel');
         Route::get('/create_channel', 'ChannelController@index')->name('create_channel');
         Route::post('/store_channel', 'ChannelController@store')->name('store_channel');
@@ -53,24 +59,20 @@ Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
         Route::post('/store_room', 'RoomController@store')->name('store_room');
 
          // event slug
-        Route::get('/{slug}', 'EventController@getSlug')->name('overview');
+        // Route::get('/{slug}', 'EventController@getSlug')->name('overview');
+        Route::get('/{slug}', 'EventController@overview')->name('overview');
+        // --------------- //
+        // Manage Ticket  //
+        // ------------- //
+        Route::get('/{slug}/ticket-create', 'TicketController@index')->name('ticket_create');
+        Route::post('/ticket/create', 'TicketController@create')->name('ticket_create_post');
     });
 
-    // --------------- //
-    // Manage Ticket  //
-    // ------------- //
-    Route::get('/ticket',  'TicketController@index')->name('ticket');
-    Route::group(['prefix' => 'ticket', 'as' => 'ticket.'], function () {
-        Route::get('/create', 'TicketController@create')->name('create');
-    });
+    
 
-    // --------------- //
-    // Manage session //
-    // ------------- //
+    
 
-    // --------------- //
-    // Manage channel //
-    // ------------- //
+    
 
     Route::get('/create_room', function () {
         return view('CreateRoom');
