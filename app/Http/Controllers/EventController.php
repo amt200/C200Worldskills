@@ -89,7 +89,7 @@ class EventController extends Controller
     // Get the ticket data
     $channel = Channel::all();
 
-    // Count Sessions
+    /*// Count Sessions
     $row_count = "";
     $sessionArr = [];
 
@@ -110,7 +110,6 @@ class EventController extends Controller
     $roomArr = [];
 
     $data = DB::table('rooms')->get()->last();
-    for($i = $data->id; $i > 0; $i--){
       $room_row_count = DB::table('channels')
       ->select(DB::raw("COUNT(id) as count_row"))
       ->where("id", "=", $i)
@@ -121,26 +120,44 @@ class EventController extends Controller
       $roomArr[$key] = $roomvalue;
     } 
 
-    dd($roomArr);
+    dd($roomArr);*/
 
     // Count Rooms
-    /*$roomArr = DB::table('rooms')
-         ->join('channels', 'channels.id', '=', 'rooms.channel_id')
-         ->select('rooms.channel_id', DB::raw('COUNT(rooms.channel_id) AS total_rooms'))
-         ->groupBy('channel_id')
-         ->get(); */
+    // $row_count = "";
+    // $roomArr = [];
 
-    /*$roomArr = DB::table('rooms')
-         ->join('channels', 'channels.id', '=', 'rooms.channel_id')
-         ->join('sessions', 'sessions.id', '=', 'channels.channel_id')
-         ->select('rooms.channel_id', DB::raw('COUNT(rooms.channel_id) AS total_rooms'))
-         // ->select('sessions.channel_id', DB::raw('COUNT(sessions.channel_id) AS total_sessions'))
-         ->groupBy('channel_id')
-         ->get();
+    // Works for room 26/1/2019
+    $data = DB::table('rooms')
+      ->select('channel_id', DB::raw('COUNT(rooms.channel_id) AS total_rooms'))
+      ->groupBy('channel_id')
+      ->get(); 
 
-         dd($roomArr);*/
+    // $data = DB::table('sessions')
+    //   ->join('rooms', 'sessions.channel_id', '=', 'rooms.channel_id')
+    //   ->select('sessions.channel_id', 'rooms.channel_id', DB::raw('COUNT(sessions.channel_id) AS total_sessions, COUNT(rooms.channel_id) AS total_rooms'))
+    //   ->groupBy('sessions.channel_id', 'rooms.channel_id')
+    //   ->get(); 
+    //   
+    /*$data = DB::table("channels")
+    ->join('rooms', 'channels.id', '=', 'rooms.channel_id')
+    ->join('sessions', 'rooms.id', '=', 'sessions.room_id')
+    ->select('channels.channel_name', DB::raw('COUNT(sessions.id) AS total_sessions, COUNT(rooms.id) AS total_rooms'))
+    ->groupBy('channels.channel_name')
+    ->get();*/
 
-    return view('EventOverview', compact('event', 'ticket', 'session', 'room', 'channel', 'sessionArr', 'roomArr'));
+
+   
+        // dd($data);
+
+      /*$roomArr = DB::table('rooms')
+           ->join('channels', 'channels.id', '=', 'rooms.channel_id')
+           ->join('sessions', 'sessions.id', '=', 'channels.channel_id')
+           ->select('rooms.channel_id', DB::raw('COUNT(rooms.channel_id) AS total_rooms'))
+           // ->select('sessions.channel_id', DB::raw('COUNT(sessions.channel_id) AS total_sessions'))
+           ->groupBy('channel_id')
+           ->get();*/
+
+    return view('EventOverview', compact('event', 'ticket', 'session', 'room', 'channel', 'data'));
     // return view('EventOverview', compact('event', 'ticket', 'session', 'room', 'channel', 'sessionArr'));
   }
 }

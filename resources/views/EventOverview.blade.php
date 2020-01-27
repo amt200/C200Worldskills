@@ -103,10 +103,10 @@
 		<div class="card grid-item">
 		  <div class="card-body">
 		    <h5 class="card-title">{{ $channel->channel_name }}</h5>
-		    @foreach($sessionArr as $key=>$value)
-		    	@if($key == $event->id)
-			    <h6 class="card-subtitle mb-2 text-muted">{{ $value }} sessions, {{ $roomArr[$key] }} rooms</h6>
-		    	@endif
+		    @foreach($data as $d)
+			    @if($d->channel_id == $channel->id) 
+			    <h6 class="card-subtitle mb-2 text-muted"> sessions, {{ $d->total_rooms }} rooms</h6>
+			    @endif
 		    @endforeach
 		  </div>
 		</div>	
@@ -138,7 +138,7 @@
 					@foreach($room as $room)
 			    <tr>
 			      <td>{{ $room->room_name }}</td>
-			      <td>{{ $room->room_capacity }}</td>
+			      <td>{{ number_format($room->room_capacity) }}</td>
 			    </tr>
 			    @endforeach
 
