@@ -23,30 +23,28 @@
 			<h2 class="event-detail-title">Tickets</h2>
 		</div>
 		<div class="col-2">
-			<a href="{{ url('event/'.$event->event_slug.'/ticket-create') }}" class="btn btn-outline-primary" style="float: right">Create new ticket<a href=""></a>
+			<a href="{{ url('event/'.$event->event_slug.'/create_ticket') }}" class="btn btn-outline-primary" style="float: right">Create new ticket<a href=""></a>
 		</div>
 	</div>
 
 	<div class="grid-container-events">
-		@if(count($ticket) < 1)
-			<div class="alert alert-warning" role="alert">
-		  	There are no tickets currently..
-			</div>
-		@else
-			@foreach($ticket as $ticket)
-			<div class="card grid-item">
-			  <div class="card-body">
-			    <h5 class="card-title">{{ $ticket->ticket_name}}</h5>
-			    <h6 class="card-subtitle mb-2 text-muted">{{ $ticket->ticket_cost}}.-</h6>
-			    <br>
-			    <h6 class="card-subtitle mb-2 text-muted">Available until {{ $ticket->tickets_sell_by_date->format('F d, Y') }}</h6>
-			    <h6 class="card-subtitle mb-2 text-muted">{{ $ticket->tickets_left }} tickets available</h6>
-			  </div>
-			</div>
-			@endforeach
-		@endif
+		@foreach($ticket as $ticket)
+			@if($ticket->event_id == $event->id)
+				<div class="card grid-item">
+				  <div class="card-body">
+				    <h5 class="card-title">{{ $ticket->ticket_name}}</h5>
+				    <h6 class="card-subtitle mb-2 text-muted">{{ $ticket->ticket_cost}}.-</h6>
+				    <br>
+				    <h6 class="card-subtitle mb-2 text-muted">Available until {{ $ticket->tickets_sell_by_date->format('F d, Y') }}</h6>
+				    <h6 class="card-subtitle mb-2 text-muted">{{ $ticket->tickets_left }} tickets available</h6>
+				  </div>
+				</div>
+			@endif
+		@endforeach
 	</div>{{-- End grid-container-events--}}
 </div>{{-- End ticket row --}}
+
+
 
 <div class="col-12 event-detail-sections">
 	<div class="row" style="display: flex">
@@ -54,7 +52,7 @@
 			<h2 class="event-detail-title">Sessions</h2>
 		</div>
 		<div class="col-2">
-			<a href="{{route('event.create_session')}}" class="btn btn-outline-primary" style="float: right">Create new session<a href=""></a>
+			<a href="{{ url('event/'.$event->event_slug.'/create_session') }}" class="btn btn-outline-primary" style="float: right">Create new session<a href=""></a>
 		</div>
 	</div>
 
@@ -73,13 +71,15 @@
 			  <tbody>
         
 					@foreach($session as $session)
-			    <tr>
-			      <td>{{ $session->start_time->format('H:i') }} - {{ $session->end_time->format('H:i') }}</td>
-			      <td>{{ $session->session_type->type }}</td>
-			      <td><a href="">{{ $session->title }}</a></td>
-			      <td>{{ $session->speaker }}</td>
-			      <td>{{ $session->channel->channel_name }} / {{ $session->room->room_name}}</td>
-			    </tr>
+						@if($session->event_id == $event->id)
+				    <tr>
+				      <td>{{ $session->start_time->format('H:i') }} - {{ $session->end_time->format('H:i') }}</td>
+				      <td>{{ $session->session_type->type }}</td>
+				      <td><a href="">{{ $session->title }}</a></td>
+				      <td>{{ $session->speaker }}</td>
+				      <td>{{ $session->channel->channel_name }} / {{ $session->room->room_name}}</td>
+				    </tr>
+				    @endif
 			    @endforeach
 
 			  </tbody>
@@ -100,16 +100,18 @@
 
 	<div class="grid-container-events">
 		@foreach($channel as $channel)
+		@if($channel->event_id == $event->id)
 		<div class="card grid-item">
 		  <div class="card-body">
 		    <h5 class="card-title">{{ $channel->channel_name }}</h5>
 		    @foreach($data as $d)
-			    @if($d->channel_id == $channel->id) 
-			    <h6 class="card-subtitle mb-2 text-muted"> sessions, {{ $d->total_rooms }} rooms</h6>
+			    @if($d->channel_name == $channel->channel_name) 
+			    <h6 class="card-subtitle mb-2 text-muted"> {{ $d->total_sessions }} sessions, {{ $d->total_rooms }} rooms</h6>
 			    @endif
 		    @endforeach
 		  </div>
 		</div>	
+		@endif
 		@endforeach
 	</div>
 </div> {{-- End Channel row --}}
@@ -136,10 +138,12 @@
 			  <tbody>
 					
 					@foreach($room as $room)
+					@if($room->event_id == $event->id)
 			    <tr>
 			      <td>{{ $room->room_name }}</td>
 			      <td>{{ number_format($room->room_capacity) }}</td>
 			    </tr>
+			    @endif
 			    @endforeach
 
 			  </tbody>

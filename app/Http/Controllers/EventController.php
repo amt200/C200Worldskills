@@ -16,16 +16,10 @@ class EventController extends Controller
 {
   public function index()
   {
-    $events = DB::table('events')->get();
-    // $data = \DB::table('events')->get();
+    $events = Event::all();
 
     $dataCount = DB::table('events')->count();
 
-    /*$data = DB::table('register')
-          ->join('events', 'events.id', '=', 'register.event_id')
-          ->select('events.event_name')
-          ->where('events.id', '=', 'register.event_id')
-          ->get();*/
     $row_count = "";
     $dataArr = [];
 
@@ -40,39 +34,8 @@ class EventController extends Controller
       $key = $i;
       $dataArr[$key] = $value;
     }
-    //dd($dataArr);
-
-          // ->join('attendee_register_event', 'attendee_register_event.event_id', '=', 'events.id')
-          // ->where('register.event_id', '=', 'events.id')
-          // ->get();
-          // ->where('register.event_id', '=', 'events.id')
-          // ->get();
-
-    /*$e = array();
-    $i = 1;
-    foreach($data as $d){
-      $ev = DB::table('events')
-          ->join('register', 'register.event_id', '=', 'event.id')
-          // ->where('register.event_id', '=', 'events.id')
-          ->get();
-          // ->where('register.event_id', '=', 'events.id')
-          // ->get();
-      $e[] = $ev;
-    }*/
-    // $data = DB::table('register')
-    //       ->where('register.event_id', '=', $event_id)
-    //       ->count();
-          // ->where('register.event_id', '=', 'events.id')
-          // ->get();
-
-
-    // dd($events,$data);
-
 
     return view('ManageEvent', compact(['events','dataArr']));
-    // return view('ManageEvent')->with(['events' => $events]);
-    // return view('ManageEvent')->with(['events' => $events]->with(['event_registrations' => $event_registrations]));
-    // return view('ManageEvent')->with('events', ['events' => $events, 'event_registrations' => $event_registrations]);
   }
 
   public function create(Request $request)
@@ -128,75 +91,33 @@ class EventController extends Controller
     // Get the ticket data
     $channel = Channel::all();
 
-    /*// Count Sessions
-    $row_count = "";
-    $sessionArr = [];
-
-    $data = DB::table('sessions')->get()->last();
-    for($i = $data->id; $i > 0; $i--){
-      $row_count = DB::table('channels')
-      ->select(DB::raw("COUNT(id) as count_row"))
-      ->where("id", "=", $i)
-      ->get();
-
-      $value = $row_count[0]->count_row;
-      $key = $i;
-      $sessionArr[$key] = $value;
-    } 
-
-    // Count Rooms
-    $room_row_count = "";
-    $roomArr = [];
-
-    $data = DB::table('rooms')->get()->last();
-      $room_row_count = DB::table('channels')
-      ->select(DB::raw("COUNT(id) as count_row"))
-      ->where("id", "=", $i)
-      ->get();
-
-      $roomvalue = $room_row_count[0]->count_row;
-      $key = $i;
-      $roomArr[$key] = $roomvalue;
-    } 
-
-    dd($roomArr);*/
-
-    // Count Rooms
-    // $row_count = "";
-    // $roomArr = [];
-
-    // Works for room 26/1/2019
-    $data = DB::table('rooms')
+    // Works for room 
+    /*$data = DB::table('rooms')
       ->select('channel_id', DB::raw('COUNT(rooms.channel_id) AS total_rooms'))
       ->groupBy('channel_id')
-      ->get(); 
+      ->get(); */
 
-    // $data = DB::table('sessions')
-    //   ->join('rooms', 'sessions.channel_id', '=', 'rooms.channel_id')
-    //   ->select('sessions.channel_id', 'rooms.channel_id', DB::raw('COUNT(sessions.channel_id) AS total_sessions, COUNT(rooms.channel_id) AS total_rooms'))
-    //   ->groupBy('sessions.channel_id', 'rooms.channel_id')
-    //   ->get(); 
-    //   
-    /*$data = DB::table("channels")
+    $data = DB::table("channels")
     ->join('rooms', 'channels.id', '=', 'rooms.channel_id')
     ->join('sessions', 'rooms.id', '=', 'sessions.room_id')
     ->select('channels.channel_name', DB::raw('COUNT(sessions.id) AS total_sessions, COUNT(rooms.id) AS total_rooms'))
     ->groupBy('channels.channel_name')
-    ->get();*/
+    ->get();
+
+    // dd($ticketevent_id);
 
 
-   
-        // dd($data);
+      // / Get the event based on slug
+    // $test = DB::table('events')->where('event_slug', '=', $slug)->get();
 
-      /*$roomArr = DB::table('rooms')
-           ->join('channels', 'channels.id', '=', 'rooms.channel_id')
-           ->join('sessions', 'sessions.id', '=', 'channels.channel_id')
-           ->select('rooms.channel_id', DB::raw('COUNT(rooms.channel_id) AS total_rooms'))
-           // ->select('sessions.channel_id', DB::raw('COUNT(sessions.channel_id) AS total_sessions'))
-           ->groupBy('channel_id')
-           ->get();*/
+    // dd($test);
 
     return view('EventOverview', compact('event', 'ticket', 'session', 'room', 'channel', 'data'));
-    // return view('EventOverview', compact('event', 'ticket', 'session', 'room', 'channel', 'sessionArr'));
+  }
+
+  private function getDetailsByEvent($slug){
+
+    // Get the event based on slug
+    $event = DB::table('events')->where('event_slug', '=', $slug)->get();
   }
 }

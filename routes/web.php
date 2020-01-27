@@ -64,7 +64,7 @@ Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
         // --------------- //
         // Manage Ticket  //
         // ------------- //
-        Route::get('/{slug}/ticket-create', 'TicketController@index')->name('ticket_create');
+        Route::get('/{slug}/create_ticket', 'TicketController@index')->name('ticket_create');
         Route::post('/ticket/create', 'TicketController@create')->name('ticket_create_post');
     });
 

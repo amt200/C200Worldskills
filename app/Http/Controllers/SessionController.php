@@ -26,8 +26,6 @@ class SessionController extends Controller{
 
       $types = $this->getAllSessionTypes();
 
-
-
       return view('CreateSession', compact(['types','room_names','formatted_slug','event_id','slug']));
   }
   private function formatSlug($slug){

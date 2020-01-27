@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Special_validity_type;
 use App\Event;
+use App\Ticket;
 use Validator;
 use DB;
 
@@ -45,9 +46,10 @@ class TicketController extends Controller
         $ticket->ticket_name = $request->ticket_name;
         $ticket->event_id = 1;
         $ticket->ticket_cost = $request->ticket_cost;
-        $ticket->special_validity_id = $request->id;
+        $ticket->special_validities_id = 2;
         $ticket->max_tickets= $request->max_tickets;
         $ticket->tickets_left= $request->max_tickets;
+        $ticket->tickets_sell_by_date= $request->ticket_end_date;
         $insert = $ticket->save();
 
         if($insert)

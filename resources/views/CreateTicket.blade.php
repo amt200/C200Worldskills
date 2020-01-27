@@ -6,7 +6,7 @@
 	<div class="row" style="display: flex">
 		<div class="col-12">
  			<h2>{{ $event->event_name ?? ''}}</h2>
- 			<h5>{{ $event->event_date ?? ''}}</h5>
+ 			<h5>{{ $event->event_date->format('F d, Y') ?? ''}}</h5>
 		</div>
 	</div>
 	<hr>
@@ -63,7 +63,7 @@
 		<div class="form-group form-inline">
 			<input type="hidden" name="_token" value="{{ csrf_token() }}" />
 			<input type="submit" class="btn btn-primary mr-5" value="Save event" />
-			<a href="{{route('event')}}">Cancel</a>
+			<a href="{{ url('event/'.$event->event_slug) }}">Cancel</a>
 		</div>
 	</form>
 </div>
