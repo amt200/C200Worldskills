@@ -18,4 +18,7 @@ class Session extends Model{
     public function event(){
         return $this->belongsTo('App\Event');
     }
+    public function registrations(){
+        return $this->belongsToMany('App\AttendeeRegisterEvent', 'attendee_register_event');
+    }
 }

@@ -8,36 +8,43 @@
 		</div>
 
 		<div class="col-2">
-			<a href="{{route('event.create')}}" class="btn btn-outline-primary" style="float: right">Create new event<a href=""></a>
+            <a href="{{route('event.create')}}" class="btn btn-outline-primary" style="float: right">Create new event<a href=""></a></a>
 		</div>
 	</div>
 	<hr>
 
-	@if(count($events) < 1)
+	@if(count($dataArr) < 1)
 	<div class="alert alert-warning" role="alert">
   	There are no events currently..
 	</div>
 
 	@else
-	<div class="alert alert-primary" role="alert">
-  	TOTAL EVENTS : {{count($events)}}
-	</div>
-	
+	<!-- Count total Events -->
+	<!-- <div class="alert alert-primary" role="alert">
+	  	TOTAL EVENTS : {{count($dataArr)}}
+	</div> -->
+
 	<div class="grid-container">
 		@foreach($events as $event)
-			<div class="card grid-item" style="width: 18rem;">
-			<a href="{{ url('event/'.$event->event_slug) }}">
-			  <div class="card-body">
-			    <h5 class="card-title">{{ $event->event_name }}</h5>
-			    <h6 class="card-subtitle mb-2 text-muted">{{ $event->event_slug }}</h6>
-			    <hr>
-			    <p class="card-text">{{ $event->event_registrations }} registrations</p>
-			  </div>
-				</a>
-		</div>
+
+				<div class="card grid-item" style="width: 18rem;">
+				<a href="{{ url('event/'.$event->event_slug) }}">
+				  <div class="card-body">
+				    <h5 class="card-title">{{ $event->event_name }}</h5>
+				    <h6 class="card-subtitle mb-2 text-muted">{{ $event->event_date }}</h6>
+				    <hr>
+				    @foreach($dataArr as $key=>$value)
+
+				    	@if($key == $event->id)
+				    	<p class="card-text">{{ $value }} registrations</p>
+				    	@endif
+                    @endforeach
+				  </div>
+					</a>
+			</div>
 		@endforeach
 	</div>
-	
+
 
 	@endif
 </div>

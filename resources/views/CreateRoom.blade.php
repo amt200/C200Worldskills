@@ -31,9 +31,10 @@
     <hr/>
     <div class="form-group form-inline">
         {!! Form::submit('Save room',['class'=>'btn btn-primary mr-5']) !!}
-        <a href="{{route('event.details')}}">Cancel</a>
+        <a href="{{route('event')}}">Cancel</a>
     </div>
-    {!! Form::close() !!}
+</div>
+{!! Form::close() !!}
 
 
 @endsection

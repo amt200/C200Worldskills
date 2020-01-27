@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -19,6 +19,7 @@ class LoginController extends Controller
     | to conveniently provide its functionality to your applications.
     |
     */
+
 
     use AuthenticatesUsers;
 
@@ -34,7 +35,7 @@ class LoginController extends Controller
      *
      * @return void
      */
-    
+
     public function __construct()
     {
             $this->middleware('guest')->except('logout');
@@ -55,8 +56,6 @@ class LoginController extends Controller
         ]);
 
         if (Auth::guard('organizer')->attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) {
-
-            echo "guard";
             return redirect()->intended('/dashboard');
         }
         return back()->withInput($request->only('email', 'remember'));

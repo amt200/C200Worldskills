@@ -24,9 +24,6 @@
 			<a href="{{ route('ticket.create') }}">Create Ticket</a>
 		</li>
 		<li>
-			<a href="{{ route('event.create_session') }}">Create Session</a>
-		</li>
-		<li>
 			<a href="{{ route('event.create_channel') }}">Create Channel</a>
 		</li>
 		<li>

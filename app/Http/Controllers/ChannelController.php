@@ -13,7 +13,7 @@ class ChannelController extends Controller
     return view('CreateChannel');
   }
 
-  public function store(Request $request){
+  public function store(Request $request, $slug){
       $validator = Validator::make($request->all(), [
           'channel_name'=>'required|regex:/^[A-Z][A-Za-z\s]*$/'
       ]);
@@ -28,6 +28,9 @@ class ChannelController extends Controller
       $channel->channel_name = $request->channel_name;
 
       $channel->save();
-      return redirect('event/details');
+
+      $event = Event::where('event_slug', '=', $slug)->first();
+      
+      return redirect('event/{$slug}');
   }
 }

@@ -25,7 +25,7 @@ class RedirectIfAuthenticated
             return redirect('/attendee');
         }
         if (Auth::guard($guard)->check()) {
-            return redirect('/dashboard');
+            return redirect('/home');
         }
 
         return $next($request);

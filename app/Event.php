@@ -14,7 +14,7 @@ class Event extends Model
   }
 
   public function registrations(){
-  	return $this->hasMany('App\Register');
+  	return $this->belongsToMany('App\Attendee', 'attendee_register_event');
   }
 
   public function sessions(){
@@ -23,8 +23,7 @@ class Event extends Model
     public function channels(){
         return $this->hasMany('App\Channel');
     }
-    public function organizer(){
-      return $this->belongsTo('App\Organizer');
-    }
-
+  public function rooms(){
+      return $this->hasMany('App\Room');
+  }
 }
