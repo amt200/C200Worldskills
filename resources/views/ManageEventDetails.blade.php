@@ -24,7 +24,7 @@
 			<label for="id_event_name">Event Name</label>
 			<input type="text" class="form-control" id="id_event_name" name="event_name" value="{{ $event->event_name }}">
 		</div>
-	
+
 		<div class="col-4">
 			<label for="id_event_slug">Event Slug</label>
 			<input type="text" class="form-control" id="id_event_slug" name="event_slug" value="{{ $event->event_slug }}">
@@ -46,7 +46,7 @@
 			    <input onclick="return confirm('Are you sure you want to delete event: {{ $event->event_name }}?')" type="submit" class="btn btn-danger" value="Delete"/>
 			</form>
 			<input type="submit" class="btn btn-primary mr-5" value="Save" style="float: right;"/>
-		</div>		
+		</div>
 	</div>
 </form>
 
@@ -58,7 +58,7 @@
 			<h2 class="event-detail-title">Tickets</h2>
 		</div>
 	</div>
-	
+
 	<form method="POST" action="{{action('EventController@updateEvent',['slug' => $event->event_slug])}}">
 	<table class="table table-striped">
 	  <thead>
@@ -71,7 +71,7 @@
 	    </tr>
 	  </thead>
 	  <tbody>
-    
+
 			@foreach($ticket as $ticket)
 				@if($ticket->event_id == $event->id)
 		    <tr>
@@ -89,6 +89,7 @@
 
 	  </tbody>
 	</table>
+    </form>
 
 </div>{{-- End ticket row --}}
 
@@ -114,7 +115,7 @@
 			    </tr>
 			  </thead>
 			  <tbody>
-        
+
 					@foreach($session as $session)
 						@if($session->event_id == $event->id)
 				    <tr>
@@ -124,8 +125,8 @@
 				      <td>{{ $session->speaker }}</td>
 				      <td>{{ $session->channel->channel_name }} / {{ $session->room->room_name}}</td>
 				      <td>
-				      	<a href="" class="edit-btn"><i class="fas fa-edit"></i> Edit</a> 
-				      	<a href="" class="delete-btn"><i class="fas fa-trash"></i> Delete</a>
+				      	<a href="{{route('event.update_session',["slug"=>$event->event_slug, "id"=>$session->id])}}" class="edit-btn"><i class="fas fa-edit"></i> Edit</a>
+				      	<a href="{{route('event.delete_session',["id"=>$session->id])}}" class="delete-btn"><i class="fas fa-trash"></i> Delete</a>
 				      </td>
 				    </tr>
 				    @endif
@@ -148,27 +149,15 @@
 	  <thead>
 	    <tr>
 	      <th class="w-10">Channel Name</th>
-	      <th class="w-10">Total Sessions</th>
-	      <th class="w-30">Session Name</th>
-	      <th class="w-10">Total Rooms</th>
-	      <th class="w-10">Room Names</th>
 	      <th class="w-10">Actions</th>
 	    </tr>
 	  </thead>
 	  <tbody>
-    
+
 			@foreach($channel as $channel)
 				@if($channel->event_id == $event->id)
 		    <tr>
 		      <td>{{ $channel->channel_name }}</td>
-		      @foreach($data as $d)
-			    @if($d->channel_name == $channel->channel_name) 
-			    <td> {{ $d->total_sessions }} </td>
-			    <td> SessionsA, B, C </td>
-			    <td> {{ $d->total_rooms }} </td>
-			    <td> Room A, B, C </td>
-			    @endif
-		    	@endforeach
 		    	<td><a href="" class="edit-btn"><i class="fas fa-edit"></i> Edit</a> <a href="" class="delete-btn"><i class="fas fa-trash"></i> Delete</a></td>
 		    </tr>
 		    @endif
@@ -196,7 +185,7 @@
 			    </tr>
 			  </thead>
 			  <tbody>
-					
+
 					@foreach($room as $room)
 					@if($room->event_id == $event->id)
 			    <tr>

@@ -11,6 +11,7 @@
     @endif
 
     {!! Form::open(['method'=>'POST','action'=>['SessionController@store', $slug]]) !!}
+    @csrf
         <div class="form-group row">
             <div class="col-4">
                 {!! Form::label('id_type','Type') !!}

@@ -23,7 +23,7 @@
 			<h2 class="event-detail-title">Tickets</h2>
 		</div>
 		<div class="col-2">
-			<a href="{{ url('event/'.$event->event_slug.'/create_ticket') }}" class="btn btn-outline-primary" style="float: right">Create new ticket<a href=""></a>
+            <a href="{{ url('event/'.$event->event_slug.'/create_ticket') }}" class="btn btn-outline-primary" style="float: right">Create new ticket<a href=""></a></a>
 		</div>
 	</div>
 
@@ -52,7 +52,7 @@
 			<h2 class="event-detail-title">Sessions</h2>
 		</div>
 		<div class="col-2">
-			<a href="{{ url('event/'.$event->event_slug.'/create_session') }}" class="btn btn-outline-primary" style="float: right">Create new session<a href=""></a>
+            <a href="{{ url('event/'.$event->event_slug.'/create_session') }}" class="btn btn-outline-primary" style="float: right">Create new session<a href=""></a></a>
 		</div>
 	</div>
 
@@ -69,7 +69,7 @@
 			    </tr>
 			  </thead>
 			  <tbody>
-        
+
 					@foreach($session as $session)
 						@if($session->event_id == $event->id)
 				    <tr>
@@ -94,7 +94,7 @@
 			<h2 class="event-detail-title">Channels</h2>
 		</div>
 		<div class="col-2">
-			<a href="{{route('event.create_channel')}}" class="btn btn-outline-primary" style="float: right">Create new channel<a href=""></a>
+            <a href="{{route('event.create_channel')}}" class="btn btn-outline-primary" style="float: right">Create new channel<a href=""></a></a>
 		</div>
 	</div>
 
@@ -105,12 +105,12 @@
 		  <div class="card-body">
 		    <h5 class="card-title">{{ $channel->channel_name }}</h5>
 		    @foreach($data as $d)
-			    @if($d->channel_name == $channel->channel_name) 
+			    @if($d->channel_name == $channel->channel_name)
 			    <h6 class="card-subtitle mb-2 text-muted"> {{ $d->total_sessions }} sessions, {{ $d->total_rooms }} rooms</h6>
 			    @endif
 		    @endforeach
 		  </div>
-		</div>	
+		</div>
 		@endif
 		@endforeach
 	</div>
@@ -136,7 +136,7 @@
 			    </tr>
 			  </thead>
 			  <tbody>
-					
+
 					@foreach($room as $room)
 					@if($room->event_id == $event->id)
 			    <tr>

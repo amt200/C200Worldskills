@@ -110,7 +110,7 @@ private function findRoomByEventId($event_id){
 
           $session->save();
 
-          return redirect('event/');
+          return redirect('event/'.$slug);
       }
   }
 
@@ -225,8 +225,8 @@ private function findRoomByEventId($event_id){
          DB::table('sessions')->where('id','=', $id)->update(['title'=>$request->title, 'speaker'=>$request->speaker,
              'room_id'=>$request->room_id, 'channel_id'=>$findChannelByRoomId[0]->id, 'cost'=>$request->cost,
              'start_time'=>$request->start_time, 'end_time'=>$request->end_time]);
-         return redirect('event');
-     }s
+         return redirect('event/'.$slug);
+     }
   }
 
   public function delete($id){
