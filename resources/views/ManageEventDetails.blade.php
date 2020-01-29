@@ -9,9 +9,7 @@
 		</div>
 
 		<div class="col-4">
-      <input type="hidden" name="_token" value="{{ csrf_token() }}" />
       <div class="right" style="float: right;">
-      	<input type="submit" class="btn btn-primary mr-5" value="Save Ticket" />
 				<a href="{{ url('event/'.$event->event_slug) }}">Cancel</a>
       </div>
 		</div>
@@ -19,7 +17,7 @@
 	<hr>
 </div>
 
-<form method="POST" action="">
+<form method="POST" action="{{action('EventController@updateEvent',['slug' => $event->event_slug])}}">
 	@csrf
 	<div class="form-group row event-detail-sections">
 		<div class="col-4">
@@ -37,6 +35,22 @@
 			<input type="text" class="form-control" id="id_event_slug" name="event_slug" value="{{ $event->event_date }}" disabled="">
 		</div>
 	</div>
+	<div class="row">
+		<div class="left col-6" >
+		</div>
+		<div class="right col-6" >
+      <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+			<form action="{{action('EventController@deleteEvent',['slug' => $event->event_slug])}}" method="POST">
+			    <input type="hidden" name="_method" value="DELETE">
+			    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+			    <input onclick="return confirm('Are you sure you want to delete event: {{ $event->event_name }}?')" type="submit" class="btn btn-danger" value="Delete"/>
+			</form>
+			<input type="submit" class="btn btn-primary mr-5" value="Save" style="float: right;"/>
+		</div>		
+	</div>
+</form>
+
+	<hr>
 
 	<div class="col-12 event-detail-sections">
 	<div class="row" style="display: flex">
@@ -44,13 +58,14 @@
 			<h2 class="event-detail-title">Tickets</h2>
 		</div>
 	</div>
-
+	
+	<form method="POST" action="{{action('EventController@updateEvent',['slug' => $event->event_slug])}}">
 	<table class="table table-striped">
 	  <thead>
 	    <tr>
 	      <th class="w-10">Ticket Name</th>
-	      <th class="w-10">Cost</th>
-	      <th class="w-30">Sell By</th>
+	      <th class="w-20">Cost</th>
+	      <th class="w-20">Sell By</th>
 	      <th class="w-10">Tickets Left</th>
 	      <th class="w-10">Actions</th>
 	    </tr>
@@ -64,7 +79,10 @@
 		      <td>{{ $ticket->ticket_cost }}</td>
 		      <td>{{ $ticket->tickets_sell_by_date->format('F d, Y') }}</td>
 		      <td>{{ $ticket->tickets_left }}</td>
-		      <td><a href="" class="edit-btn"><i class="fas fa-edit"></i> Edit</a> <a href="" class="delete-btn"><i class="fas fa-trash"></i> Delete</a></td>
+		      <td>
+		      	<a href="" class="edit-btn"><i class="fas fa-edit"></i> Edit</a>
+		      	<a onclick="return confirm('Are you sure you want to delete ticket: {{ $ticket->ticket_name }}?')" href="{{ route('event.delete_ticket', ['slug' => $event->event_slug, 'id' => $ticket->id]) }}" class="delete-btn"><i class="fas fa-trash"></i> Delete</a>
+		      </td>
 		    </tr>
 		    @endif
 	    @endforeach
@@ -89,9 +107,9 @@
 			    <tr>
 			      <th class="w-10">Time</th>
 			      <th class="w-10">Type</th>
-			      <th class="w-50">Title</th>
+			      <th class="w-20">Title</th>
 			      <th class="w-10">Speaker</th>
-			      <th class="w-10">Channel</th>
+			      <th class="w-30">Channel(s)</th>
 			      <th class="w-10">Actions</th>
 			    </tr>
 			  </thead>
@@ -105,7 +123,10 @@
 				      <td><a href="">{{ $session->title }}</a></td>
 				      <td>{{ $session->speaker }}</td>
 				      <td>{{ $session->channel->channel_name }} / {{ $session->room->room_name}}</td>
-				      <td><a href="" class="edit-btn"><i class="fas fa-edit"></i> Edit</a> <a href="" class="delete-btn"><i class="fas fa-trash"></i> Delete</a></td>
+				      <td>
+				      	<a href="" class="edit-btn"><i class="fas fa-edit"></i> Edit</a> 
+				      	<a href="" class="delete-btn"><i class="fas fa-trash"></i> Delete</a>
+				      </td>
 				    </tr>
 				    @endif
 			    @endforeach
@@ -191,6 +212,5 @@
 		</div> {{-- End col 12--}}
 	</div> {{-- End row--}}
 </div> {{-- End Session row--}}
-</form>
 
 @endsection

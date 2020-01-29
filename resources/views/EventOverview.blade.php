@@ -65,7 +65,7 @@
 			      <th class="w-10">Type</th>
 			      <th class="w-50">Title</th>
 			      <th class="w-10">Speaker</th>
-			      <th class="w-10">Channel</th>
+			      <th class="w-10">Channels / Rooms</th>
 			    </tr>
 			  </thead>
 			  <tbody>

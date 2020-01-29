@@ -38,6 +38,11 @@ Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
 
         Route::get('/overview', 'EventController@overview')->name('overview');
 
+        // Update event
+        Route::post('/{slug}/manage', 'EventController@updateEvent')->name('update_event');
+        // Delete event
+        Route::delete('/{slug}/manage', 'EventController@deleteEvent')->name('delete_event');
+
         // --------------- //
         // Manage session //
         // ------------- //
@@ -70,6 +75,8 @@ Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
         // ------------- //
         Route::get('/{slug}/create_ticket', 'TicketController@index')->name('ticket_create');
         Route::post('/{slug}/store_ticket', 'TicketController@create')->name('ticket_create_post');
+        // Delete ticket
+        Route::get('{slug}/delete-ticket/{id}', 'TicketController@deleteTicket')->name('delete_ticket');
     });
 
     

@@ -66,8 +66,6 @@ private function findRoomByEventId($event_id){
 }
 
   public function store(Request $request, $slug){
-
-
       $validator = Validator::make($request->all(), [
           'title'=>'required|regex:/^[A-Z][A-Za-z\s]*$/',
           'speaker'=>'required|regex:/^[A-Z][A-Za-z\s]*$/',
@@ -188,7 +186,7 @@ private function findRoomByEventId($event_id){
 
 
       if ($validator->fails()) {
-          return redirect('event/'.$slug.'/update_session/'.$request->id)
+          return redirect('event/'.$slug.'/manage/'.$request->id)
               ->withErrors($validator)
               ->withInput();
       }
@@ -207,7 +205,7 @@ private function findRoomByEventId($event_id){
           return redirect('event');
       }
      else{
-         return redirect('event/'.$slug.'/update_session/'.$request->id)->with('alertmessage', "A session has already been booked. Please try different time.");
+         return redirect('event/'.$slug.'/manage'.$request->id)->with('alertmessage', "A session has already been booked. Please try different time.");
      }
   }
 
