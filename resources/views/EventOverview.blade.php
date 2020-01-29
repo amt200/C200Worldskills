@@ -94,7 +94,7 @@
 			<h2 class="event-detail-title">Channels</h2>
 		</div>
 		<div class="col-2">
-            <a href="{{route('event.create_channel')}}" class="btn btn-outline-primary" style="float: right">Create new channel<a href=""></a></a>
+            <a href="{{route('event.create_channel',["slug"=>$event->event_slug])}}" class="btn btn-outline-primary" style="float: right">Create new channel<a href=""></a></a>
 		</div>
 	</div>
 

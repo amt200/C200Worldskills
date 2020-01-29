@@ -229,8 +229,8 @@ private function findRoomByEventId($event_id){
      }
   }
 
-  public function delete($id){
+  public function delete($slug, $id){
       DB::table('sessions')->where('id','=', $id)->delete();
-      return redirect('event');
+      return redirect('event/'.$slug);
   }
 }

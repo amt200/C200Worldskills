@@ -50,15 +50,20 @@ Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
         Route::get('/{slug}/create_session', 'SessionController@index')->name('create_session');
         Route::get('/{slug}/update_session/{id}', 'SessionController@update')->name('update_session');
         Route::post('/{slug}/store_update_session', 'SessionController@storeUpdate')->name('store_update_session');
-        Route::get('/delete_session/{id}', 'SessionController@delete')->name('delete_session');
+        Route::get('{slug}/delete_session/{id}', 'SessionController@delete')->name('delete_session');
         Route::post('/{slug}/store_session', 'SessionController@store')->name('store_session');
 
         // --------------- //
         // Manage channel //
         // ------------- //
-        Route::post('/store_channel', 'ChannelController@store')->name('store_channel');
-        Route::get('/create_channel', 'ChannelController@index')->name('create_channel');
-        Route::post('/store_channel', 'ChannelController@store')->name('store_channel');
+        Route::get('/{slug}/create_channel', 'ChannelController@index')->name('create_channel');
+        Route::post('/{slug}/store_channel', 'ChannelController@store')->name('store_channel');
+        Route::get('/{slug}/update_channel/{id}', 'ChannelController@update')->name('update_channel');
+        Route::post('/{slug}/store_update_channel', 'ChannelController@storeUpdate')->name('store_update_channel');
+        Route::get('/{slug}/delete_channel/{id}', 'ChannelController@delete')->name('delete_channel');
+
+        //----------------- //
+        //  Manage Room  //
         Route::get('/room_capacity', 'RoomController@index')->name('room_capacity');
         Route::get('/create_room', 'RoomController@create')->name('create_room');
         Route::post('/store_room', 'RoomController@store')->name('store_room');
@@ -79,11 +84,11 @@ Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
         Route::get('{slug}/delete-ticket/{id}', 'TicketController@deleteTicket')->name('delete_ticket');
     });
 
-    
 
-    
 
-    
+
+
+
 
     Route::get('/create_room', function () {
         return view('CreateRoom');

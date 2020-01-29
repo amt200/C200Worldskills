@@ -126,7 +126,7 @@
 				      <td>{{ $session->channel->channel_name }} / {{ $session->room->room_name}}</td>
 				      <td>
 				      	<a href="{{route('event.update_session',["slug"=>$event->event_slug, "id"=>$session->id])}}" class="edit-btn"><i class="fas fa-edit"></i> Edit</a>
-				      	<a href="{{route('event.delete_session',["id"=>$session->id])}}" class="delete-btn"><i class="fas fa-trash"></i> Delete</a>
+				      	<a href="{{route('event.delete_session',["slug"=>$event->event_slug,"id"=>$session->id])}}" class="delete-btn"><i class="fas fa-trash"></i> Delete</a>
 				      </td>
 				    </tr>
 				    @endif
@@ -158,7 +158,8 @@
 				@if($channel->event_id == $event->id)
 		    <tr>
 		      <td>{{ $channel->channel_name }}</td>
-		    	<td><a href="" class="edit-btn"><i class="fas fa-edit"></i> Edit</a> <a href="" class="delete-btn"><i class="fas fa-trash"></i> Delete</a></td>
+		    	<td><a href="{{route('event.update_channel',["slug"=>$event->event_slug, "id"=>$channel->id])}}" class="edit-btn"><i class="fas fa-edit"></i> Edit</a>
+                    <a href="{{route('event.delete_channel',["slug"=>$event->event_slug, "id"=>$channel->id])}}" class="delete-btn"><i class="fas fa-trash"></i> Delete</a></td>
 		    </tr>
 		    @endif
 	    @endforeach
