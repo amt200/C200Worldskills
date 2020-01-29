@@ -84,9 +84,16 @@ private function findRoomByEventId($event_id){
 
       $findChannelByRoomId = DB::table('channels')->where('id','=', $findRoomById[0]->channel_id)->get();
 
-      $isValid = $this->isValidSession($findChannelByRoomId[0]->id, $request->room_id, $request->start_time);
+      $isValid = $this->isValidSession($findChannelByRoomId[0]->id, $request->room_id, $request->start_time, $request->end_time);
 
-      if ($isValid) {
+      if (in_array(false, $isValid)) {
+
+          $enteredData = [$request->title, $request->speaker, $request->cost,
+              $request->start_time, $request->end_time, $request->description];
+
+          return redirect('event/'.$slug.'/create_session')->with(session(['alertmessage' => 'A session has already been booked. Please try different time.', 'enteredData'=>$enteredData]));
+      }
+      else{
           $session = new Session;
           $start_time = new DateTime($request->start_time);
           $end_time = new DateTime($request->end_time);
@@ -103,45 +110,55 @@ private function findRoomByEventId($event_id){
 
           $session->save();
 
-          return redirect('event');
-      }
-      else{
-          return redirect('event/'.$slug.'create_session')->with('alertmessage', "A session has already been booked. Please try different time.");
+          return redirect('event/');
       }
   }
 
-  private function isValidSession($channel_id, $room_id, $start_time){
+  private function isValidSession($channel_id, $room_id, $start_time, $end_time){
       $from = new DateTimeZone('GMT');
       $checkSession = "";
       $isValid = false;
+      $boolean_array = [];
       $currentTime     = new DateTime('now', $from);
       $to   = new DateTimeZone('Asia/Singapore');
       $currentTime->setTimezone($to);
 
 
-      if (DB::table('sessions')->where([['channel_id','=',$channel_id],['room_id','=',$room_id]])->get()->last() != null){
-          $checkSession = DB::table('sessions')->where([['channel_id','=',$channel_id],['room_id','=',$room_id]])->get()->last();
-          $endTime = $checkSession->end_time;
-          $requestedHour = (int)substr($start_time, 11,2);
+      if (DB::table('sessions')->where([['channel_id','=',$channel_id],['room_id','=',$room_id]])->get() != null){
+          $checkSession = DB::table('sessions')->where([['channel_id','=',$channel_id],['room_id','=',$room_id]])->get();
+          $requestedStartTime = (int)substr($start_time, 11,2);
+          $requestedEndTime = (int)substr($end_time, 11, 2);
           $requestedMonth = (int)substr($start_time, 6,1);
           $requestedDay = (int)substr($start_time, 8, 2);
-          $storedHour = (int)substr($endTime, 11,2);
-          $storedMonth = (int)substr($endTime, 6, 1);
-          $storedDay = (int)substr($endTime, 8,2);
+          $requestedYear = (int)substr($start_time, 0, 4);
 
-          $isOnSameDay = $requestedMonth == $storedMonth && $requestedDay == $storedDay;
+          foreach ($checkSession as $session) {
+              $endTime = $session->end_time;
+              $startTime = $session->start_time;
+              $storedEndHour = (int)substr($endTime, 11, 2);
+              $storedStartHour = (int)substr($startTime, 11, 2);
+              $storedMonth = (int)substr($endTime, 6, 1);
+              $storedDay = (int)substr($endTime, 8, 2);
+              $storedYear = (int)substr($endTime, 0, 4);
 
-          if ($isOnSameDay && $requestedHour >= $storedHour || $isOnSameDay == false){
-              $isValid = true;
-          }
-          else{
-              $isValid = false;
+              $isOnSameDay = $requestedYear == $storedYear && $requestedMonth == $storedMonth && $requestedDay == $storedDay;
+
+              if ($isOnSameDay && $requestedStartTime >= $storedEndHour || $isOnSameDay && $requestedEndTime <= $storedStartHour || $isOnSameDay == false){
+                  $isValid = true;
+                  array_push($boolean_array, $isValid);
+              }
+              else{
+                  $isValid = false;
+                  array_push($boolean_array, $isValid);
+                  break;
+              }
           }
       }
       else{
           $isValid = true;
+          array_push($boolean_array, $isValid);
       }
-      return $isValid;
+      return $boolean_array;
   }
 
   public function update($slug, $id){
@@ -196,17 +213,20 @@ private function findRoomByEventId($event_id){
 
       $findChannelByRoomId = DB::table('channels')->where('id','=', $findRoomById[0]->channel_id)->get();
 
-      $isValid = $this->isValidSession($findChannelByRoomId[0]->id, $request->room_id, $request->start_time);
+      $isValid = $this->isValidSession($findChannelByRoomId[0]->id, $request->room_id, $request->start_time, $request->end_time);
 
-      if($isValid){
-          DB::table('sessions')->where('id','=', $id)->update(['title'=>$request->title, 'speaker'=>$request->speaker,
-              'room_id'=>$request->room_id, 'channel_id'=>$findChannelByRoomId[0]->id, 'cost'=>$request->cost,
-              'start_time'=>$request->start_time, 'end_time'=>$request->end_time]);
-          return redirect('event');
+
+
+      if(in_array(false, $isValid)){
+
+          return redirect('event/'.$slug.'/update_session/'.$request->id)->with('alertmessage', "A session has already been booked. Please try different time.");
       }
      else{
-         return redirect('event/'.$slug.'/manage'.$request->id)->with('alertmessage', "A session has already been booked. Please try different time.");
-     }
+         DB::table('sessions')->where('id','=', $id)->update(['title'=>$request->title, 'speaker'=>$request->speaker,
+             'room_id'=>$request->room_id, 'channel_id'=>$findChannelByRoomId[0]->id, 'cost'=>$request->cost,
+             'start_time'=>$request->start_time, 'end_time'=>$request->end_time]);
+         return redirect('event');
+     }s
   }
 
   public function delete($id){
