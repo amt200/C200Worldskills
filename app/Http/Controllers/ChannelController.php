@@ -71,9 +71,9 @@ class ChannelController extends Controller
   public function delete($slug, $id){
       $eventBySlug = DB::table('events')->where('event_slug', '=', $slug)->get();
       $eventId = $eventBySlug[0]->id;
-      DB::table('sessions')->where(['channel_id','=', $id],['event_id','=', $eventId])->delete();
-      DB::table('rooms')->where(['channel_id','=', $id],['event_id','=', $eventId])->delete();
-      DB::table('channels')->where(['channel_id','=', $id],['event_id','=', $eventId])->delete();
+      DB::table('sessions')->where([['channel_id','=', $id],['event_id','=',$eventId]])->delete();
+      DB::table('rooms')->where([['channel_id','=', $id],['event_id','=',$eventId]])->delete();
+      DB::table('channels')->where([['id','=', $id],['event_id','=',$eventId]])->delete();
       return redirect('event/'.$slug);
   }
 }

@@ -76,7 +76,7 @@ private function findRoomByEventId($event_id){
       ]);
 
       if ($validator->fails()) {
-          return redirect('event/'.$slug.'create_session')
+          return redirect('event/'.$slug.'/create_session')
               ->withErrors($validator)
               ->withInput();
       }

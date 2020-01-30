@@ -74,10 +74,17 @@ class TicketController extends Controller
   }
 
   public function deleteTicket($slug, $id){
-    // Get event from slug
+    // Get ticket from id
     $ticket = Ticket::where('id', '=', $id)->delete();
 
     return redirect('event/'.$slug.'/manage');
+  }
+
+  public function displayUpdateTicket($slug, $id){
+    //  Get ticket from id
+    $ticket = Ticket::where('id', '=', $id)->delete();
+    
+    return view('UpdateChannel', compact(['channelData', 'event_name','slug','id']));
   }
 
   private function getSpecialValidityTypes(){
