@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserTestTable extends Migration
+class CreateSpecialValidities extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateUserTestTable extends Migration
      */
     public function up()
     {
-        Schema::create('usertest', function (Blueprint $table) {
-            $table->bigIncrements('user_id');
-            $table->string('name');
+        Schema::create('special_validities', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('validity_type');
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ class CreateUserTestTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('usertest');
+        Schema::dropIfExists('special_validities');
     }
 }

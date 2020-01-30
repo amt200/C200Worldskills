@@ -15,8 +15,15 @@ class RedirectIfAuthenticated
      * @param  string|null  $guard
      * @return mixed
      */
+
     public function handle($request, Closure $next, $guard = null)
     {
+        if ($guard == "organizer" && Auth::guard($guard)->check()) {
+            return redirect('/dashboard');
+        }
+        if ($guard == "attendee" && Auth::guard($guard)->check()) {
+            return redirect('/attendee');
+        }
         if (Auth::guard($guard)->check()) {
             return redirect('/home');
         }
