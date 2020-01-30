@@ -75,8 +75,6 @@ Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
         Route::get('/{slug}', 'EventController@overview')->name('overview');
 
         
-
-
         // --------------- //
         // Manage Ticket  //
         // ------------- //
@@ -86,7 +84,7 @@ Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
         Route::get('{slug}/delete-ticket/{id}', 'TicketController@deleteTicket')->name('delete_ticket');
         // Edit ticket
         Route::get('/{slug}/update-ticket/{id}', 'TicketController@displayUpdateTicket')->name('update_ticket');
-        Route::post('/{slug}/store-update-ticket/{id}', 'TicketController@storeUpdateTicket')->name('store_update_ticket');
+        Route::post('/{slug}/store-update-ticket', 'TicketController@storeUpdateTicket')->name('store_update_ticket');
 
     });
 

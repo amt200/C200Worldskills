@@ -89,7 +89,7 @@
 
 	  </tbody>
 	</table>
-    </form>
+  </form>
 
 </div>{{-- End ticket row --}}
 

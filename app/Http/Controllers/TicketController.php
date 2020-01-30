@@ -82,9 +82,58 @@ class TicketController extends Controller
 
   public function displayUpdateTicket($slug, $id){
     //  Get ticket from id
-    $ticket = Ticket::where('id', '=', $id)->delete();
+    $ticket = Ticket::where('id', '=', $id)->first();
+
+    // Get slug
+    $event = Event::where('event_slug', '=', $slug)->first();
     
-    return view('UpdateChannel', compact(['channelData', 'event_name','slug','id']));
+    return view('UpdateTicket', compact(['ticket', 'event','id']));
+  }
+
+  public function storeUpdateTicket(Request $request, $slug){
+     // Get slug
+    $event = Event::where('event_slug', '=', $slug)->first();
+
+    // $ticket = Ticket::where('id', '=', $request->id)->first();
+    $ticketId = $request->input('ticketID');
+
+    if($request->isMethod('post') )
+    {
+      $validator = Validator::make($request -> all(), [
+        'ticket_name' => 'required',
+        'ticket_cost' => 'required',
+        // 'special_validity' => 'required',
+        'tickets_left' => 'required',
+        'ticket_end_date' => 'required'
+      ]);
+
+      if($validator->fails())
+      {
+        return redirect('event/'.$slug.'/update-ticket/'.$request->id)->withErrors($validator);
+      }
+      else
+      {
+        DB::table('tickets')
+        ->where('id', '=', $ticketId)
+        ->update([
+          'ticket_name'=>$request->ticket_name,
+          'ticket_cost'=>$request->ticket_cost,
+          'tickets_left'=>$request->tickets_left,
+          'tickets_sell_by_date'=>$request->ticket_end_date,
+        ]);
+
+        return redirect('event/'.$slug.'/manage/');
+        // if($insert)
+        // {
+        //   return redirect('event/'.$slug)->with('success', 'Ticket successfully created');
+        // }
+        // else
+        // {
+        //   return redirect('event/'.$slug.'/manage')->with('alertmessage', "An error occurred when creating the ticket. Please try again.");
+        // }
+      }
+    }
+    return view('EventOverview');
   }
 
   private function getSpecialValidityTypes(){
