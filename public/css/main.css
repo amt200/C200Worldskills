@@ -19,6 +19,52 @@
     width: 100%;
 }
 
-.panel-heading{
-	border-bottom: 1px solid grey;	
+.grid-container {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: 25% 25% 25%;
 }
+
+.grid-container-events {
+  display: grid;
+  grid-gap: 40px;
+  grid-template-columns: auto auto auto;
+}
+
+.event-detail-sections{
+  padding-bottom: 3%;
+}
+
+.event-detail-title{
+  padding-bottom: 2%;
+}
+
+.edit-btn{
+  background-color: #2e96d9;
+  color: white;
+  padding: 7px;
+  border-radius: 8%;
+  text-align: center;
+
+}
+
+.delete-btn{
+  background-color: red;
+  color: white;
+  padding: 7px;
+  border-radius: 8%;
+  text-align: center;
+}
+
+.edit-btn:hover{
+  text-decoration: none;
+  color: white;
+  background-color: rgba(46, 150, 217, 0.5);
+}
+
+.delete-btn:hover{
+  text-decoration: none;
+  color: white;
+  background-color: rgba(217, 46, 46, 0.5);
+}
+

@@ -2,7 +2,50 @@
 
 @section('content')
 <div class="panel-heading">
-    <h1>Manage Events</h1>
+	<div class="row" style="display: flex">
+		<div class="col-10">
+	    <h2>Manage Events</h2>
+		</div>
+
+		<div class="col-2">
+            <a href="{{route('event.create')}}" class="btn btn-outline-primary" style="float: right">Create new event<a href=""></a></a>
+		</div>
+	</div>
+	<hr>
+
+	@if(count($dataArr) < 1)
+	<div class="alert alert-warning" role="alert">
+  	There are no events currently..
+	</div>
+
+	@else
+	<!-- Count total Events -->
+	<!-- <div class="alert alert-primary" role="alert">
+	  	TOTAL EVENTS : {{count($dataArr)}}
+	</div> -->
+
+	<div class="grid-container">
+		@foreach($events as $event)
+
+				<div class="card grid-item" style="width: 18rem;">
+				<a href="{{ url('event/'.$event->event_slug) }}">
+				  <div class="card-body">
+				    <h5 class="card-title">{{ $event->event_name }}</h5>
+				    <h6 class="card-subtitle mb-2 text-muted">{{ $event->event_date->format('F d, Y') }}</h6>
+				    <hr>
+				    @foreach($dataArr as $key=>$value)
+				    	@if($key == $event->id)
+				    	<p class="card-text">{{ $value }} registrations</p>
+				    	@endif
+            @endforeach
+				  </div>
+					</a>
+			</div>
+		@endforeach
+	</div>
+
+
+	@endif
 </div>
 
 

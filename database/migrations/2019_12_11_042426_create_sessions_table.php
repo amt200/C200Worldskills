@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSessionsTable extends Migration
-{
+class CreateSessionsTable extends Migration{
     /**
      * Run the migrations.
      *
@@ -17,11 +16,17 @@ class CreateSessionsTable extends Migration
             $table->increments('id');
             $table->integer('event_id')->unsigned();
             $table->integer('room_id')->unsigned();
+            $table->integer('channel_id')->unsigned();
             $table->integer('session_type_id')->unsigned();
+            $table->string('title');
+            $table->string('speaker');
+            $table->string('description');
+            $table->double('cost');
             $table->dateTime('start_time');
             $table->dateTime('end_time');
             $table->timestamps();
         });
+
     }
 
     /**

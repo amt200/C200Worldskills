@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOrganizationsTable extends Migration
+class CreateAttendeeRegisterEvent extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateOrganizationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('organizations', function (Blueprint $table) {
-            $table->bigIncrements('organization_id');
-            $table->string('organization_email', 255) -> unique();
-            $table->string('organization_password', 255);
+        Schema::create('attendee_register_event', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->integer('attendee_id')->unsigned();
+            $table->integer('event_id')->unsigned();
+            $table->integer('sessions_id')->unsigned();
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ class CreateOrganizationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('organizations');
+        Schema::dropIfExists('attendee_register_event');
     }
 }

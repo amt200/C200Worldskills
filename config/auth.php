@@ -46,6 +46,16 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+
+        'organizer' => [
+            'driver' => 'session',
+            'provider' => 'organizers',
+        ],
+
+        'attendee' => [
+            'driver' => 'session',
+            'provider' => 'attendees',
+        ],
     ],
 
     /*
@@ -69,6 +79,16 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\User::class,
+        ],
+
+        'organizers' => [
+            'driver' => 'eloquent',
+            'model' => App\Organizer::class,
+        ],
+
+        'attendees' => [
+            'driver' => 'eloquent',
+            'model' => App\Attendee::class,
         ],
 
         // 'users' => [

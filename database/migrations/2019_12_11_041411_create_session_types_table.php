@@ -13,11 +13,14 @@ class CreateSessionTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('session_types', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('type');
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('session_types'))
+        {
+            Schema::create('session_types', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('type');
+                $table->timestamps();
+            });
+        }
     }
 
     /**

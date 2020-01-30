@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserTestTable extends Migration
+class CreateOrganizerTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class CreateUserTestTable extends Migration
      */
     public function up()
     {
-        Schema::create('usertest', function (Blueprint $table) {
-            $table->bigIncrements('user_id');
-            $table->string('name');
+        Schema::create('organizers', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('organizer_name');
+            $table->string('organizer_email');
+            $table->string('organizer_password');
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ class CreateUserTestTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('usertest');
+        Schema::dropIfExists('organizers');
     }
 }

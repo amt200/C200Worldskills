@@ -1,0 +1,49 @@
+/*REGISTER EVENT*/
+.ticketCB{
+    border-style: solid;
+    border-width: 1px;
+    padding: 50px;
+
+    align-items: center;
+}
+.title{
+    font-size: 20px;
+    font-weight: bold;
+    padding-left: 10px;
+}
+.options{
+    margin: 15px;
+    padding-left: 10px;
+}
+
+/*SESSION DETAILS*/
+#description{
+  font-size: 20px;
+    padding: 10px;
+}
+
+.data{
+    font-size: 20px;
+}
+#title{
+    padding: 10px;
+}
+.details{
+    padding: 10px;
+}
+
+/*DashBoard*/
+.eventsDetails{
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    margin-bottom: 20px;
+}
+
+.title{
+    font-weight: bold;
+}
+
+.row{
+    display: flex;
+}
