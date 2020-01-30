@@ -9,7 +9,6 @@
             @csrf
 
             <div class="grid-container-events">
-                @csrf
                 <div class="row" style="display: flex">
 
                     <div class="grid-container-events">
@@ -23,7 +22,9 @@
                                     <div class="card-body">
                                         <h5 class="card-title">{{ $ticket->ticket_name}}</h5>
                                         {{--                                        <h6 class="card-subtitle mb-2 text-muted"> {{Form::checkbox('name', $ticket->id}}<span>{{ $ticket->ticket_cost}}.-</span></h6>--}}
-                                        <h6>{{Form::checkbox('ticketCostCB[]', $ticket->id)}}{{$ticket->ticket_cost}}</h6>
+                                        <h6>{{Form::checkbox('ticketCostCB', $ticket->id)}}<span>{{$ticket->ticket_cost}}</span>
+                                        {{Form::hidden($ticket->id, $ticket->ticket_cost)}}
+                                        </h6>
                                         <br>
                                         <h6 class="card-subtitle mb-2 text-muted">{{ $ticket->tickets_left }} tickets available</h6>
                                     </div>
