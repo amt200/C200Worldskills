@@ -109,15 +109,23 @@ class AttendeeController extends Controller
 
     public function eventAgenda($slug)
     {
+        $event = DB::table('events')->where('event_slug','=', $slug)->get();
+        $session = DB::table('sessions')->where('event_id','=', $event[0]->id)->get();
+        $ticket = DB::table('tickets')->where('event_id','=', $event[0]->id)->get();
+        $room = DB::table('rooms')->where('event_id','=', $event[0]->id)->get();
+        $channel = DB::table('channels')->where('event_id','=', $event[0]->id)->get();
+        $timings = [];
+        $tickets_left = [];
+        foreach ($ticket as $t) {
+            $tickets_left[$t->id] = $t->tickets_left;
+        }
+        foreach ($session as $s){
+            $format_time = substr($s->start_time, 11, 5);
+            array_push($timings, $format_time);
+        }
+        sort($timings);
 
-        $session = \DB::table('sessions')->get();
-        $room = \DB::table('rooms')->get();
-        $channel = \DB::table('channels')->get();
-        $sessionData = $session;
-        $roomData = $room;
-        $channelData = $channel;
-        $event = Event::where('event_slug', '=', $slug)->first();
-        return view('AttendeeEventAgenda', compact(['sessionData', 'roomData', 'channelData', 'event']));
+        return view('AttendeeEventAgenda', compact(['timings','session', 'room', 'channel', 'event', 'tickets_left']));
     }
 //    public function eventAgenda($slug){
 //        $getEventIdBySlug = DB::table('events')->select('id')->where('event_slug','=', $slug)->get();
