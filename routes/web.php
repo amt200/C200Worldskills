@@ -29,7 +29,7 @@ Route::group(['prefix' => 'event', 'as' => 'event.'], function () {
     Route::get('/create_channel', 'ChannelController@index')->name('create_channel');
     Route::post('/store_channel', 'ChannelController@store')->name('store_channel');
     Route::get('/room_capacity', 'RoomController@index')->name('room_capacity');
-    Route::get('/create_room', 'RoomController@create')->name('create_room');
+    Route::get('{slug}/create_room', 'RoomController@create')->name('create_room');
     Route::post('/store_room', 'RoomController@store')->name('store_room');
 });
 

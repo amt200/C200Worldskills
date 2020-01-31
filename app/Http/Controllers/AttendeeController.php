@@ -41,7 +41,7 @@ class AttendeeController extends Controller
 
         $findEventBySlug = DB::table('events')->where('event_slug', '=', $slug)->get();
         $eventName = $findEventBySlug[0]->event_name;
-        $findSessionByEvent = DB::table('sessions')->where('event_id', '=', $findEventBySlug[0]->id)->get();
+        $findSessionByEvent = DB::table('sessions')->where([['event_id', '=', $findEventBySlug[0]->id],['session_type_id', '=', 2]])->get();
         $findTicketByEvent = DB::table('tickets')->where('event_id', '=', $findEventBySlug[0]->id)->get();
 
         return view('AttendeeEventRegistration', compact(['slug','eventName','findSessionByEvent','findTicketByEvent']));
@@ -53,6 +53,7 @@ class AttendeeController extends Controller
         $getEventIdBySlug = DB::table('events')->where('event_slug', '=', $slug)->get();
         $ticket = DB::table('tickets')->select('*')->where('event_id', '=', $getEventIdBySlug[0]->id)->get();
         $selectedTickets = $request->ticketCostCB;
+        dd($selectedTickets);
         foreach ($selectedTickets as $t) {
             $ticketLeft = DB::table('tickets')->where('id', '=', (int)$t )->get();
             $tl= $ticketLeft[0]->tickets_left - 1;

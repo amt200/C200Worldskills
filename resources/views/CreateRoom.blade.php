@@ -2,15 +2,16 @@
 
 @section('content')
 <div>
-    <h2 class="mt-3 mb-3">WorldSkills Conference 2019</h2>
+    <h2 class="mt-3 mb-3">{{$findEventBySlug[0]->event_name}}</h2>
     <hr/>
     <h4 class="mt-3 mb-5">Create new room</h4>
 
-    {!! Form::open(['method'=>'POST','action'=>'RoomController@store']) !!}
+    {!! Form::open(['method'=>'POST','action'=>['RoomController@store', $slug]]) !!}
     <div class="form-group row">
         <div class="col-4">
             {!! Form::label('id_room_name','Room Name') !!}
             {!! Form::text('room_name', null, ['class'=> $errors->has('room_name') ? 'form-control border-danger': 'form-control', 'id'=>'id_room_name']) !!}
+            {{ Form::hidden('event_id', $findEventBySlug[0]->id) }}
             @if ($errors->has('room_name'))
                 <p class="text-danger">{{$errors->first('room_name')}}</p>
             @endif

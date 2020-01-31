@@ -30,25 +30,28 @@
         $(document).ready(function() {
             var ticket = 0;
             var total = 0;
+            var ticket_name = "";
             // $("#btnSubmit").prop('disabled', true);
             // if ($ticket=>ticket_left <= 0){
             //
             // }
             $("[name=ticketCostCB]").change(function () {
                 ticket = 0;
+                ticket_name = "";
                 $("[name=ticketCostCB]:checked").each(function() {
                     var int = $(this).val();
-                    var hiddenValue = parseInt($("span hidden").val());
+                    var hiddenValue = parseInt($("#"+int).val());
                     $("#btnSubmit").prop('disabled', false);
                     ticket += hiddenValue;
+                    ticket_name += $("#"+int).attr("name")+" ";
                 });
-                $("#ticketPrice").html(ticket);
+                $("#ticketName").html(ticket_name);
                 $("#totalCost").html(ticket);
             });
             $("[name=session]").change(function () {
-                sessionTicket = 0;
+                var sessionTicket = 0;
                 $("[name=session]:checked").each(function () {
-                    var int = parseInt($('.sessionCost').html());
+                    var int = parseInt($(this).val());
                     sessionTicket += int;
                 });
                 $("#sessionCost").html(sessionTicket);
