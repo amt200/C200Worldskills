@@ -68,9 +68,11 @@ Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
         //  Manage Room    //
         //----------------//
         Route::get('/room_capacity', 'RoomController@index')->name('room_capacity');
-        Route::get('/create_room', 'RoomController@create')->name('create_room');
-        Route::post('/store_room', 'RoomController@store')->name('store_room');
-
+        Route::get('/{slug}/create_room', 'RoomController@create')->name('create_room');
+        Route::post('/{slug}/store_room', 'RoomController@store')->name('store_room');
+        Route::get('/{slug}/update_room/{id}', 'RoomController@edit')->name('update_room');
+        Route::post('/{slug}/store_update_room', 'RoomController@update')->name('store_update_room');
+        Route::get('/{slug}/delete_room/{id}', 'RoomController@delete')->name('delete_room');
         // event slug
         Route::get('/{slug}', 'EventController@overview')->name('overview');
 
