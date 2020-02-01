@@ -25,11 +25,27 @@ Route::get('/logout', function(){
    return Redirect::to('login');
 });
 
-Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
+    //ATTENDEE SIGN IN
+    Route::get('/sign_in', function() {
+        return view('sign_in');
+    });
 
-    // --------------- //
-    // Manage Events  //
-    // ------------- //
+    //ATTENDEE SESSION DETAILS
+
+//Middleware
+// Route::group(['middleware' => ['guest']], function () {
+    // any route here will only be accessible for logged in users
+    // 
+    // 
+    
+
+
+ // });
+
+Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
+    //--------------- //
+    //Manage Events  //
+    //------------- //
     Route::get('/event',  'EventController@index')->name('event');
     Route::group(['prefix' => 'event', 'as' => 'event.'], function () {
 
@@ -45,9 +61,9 @@ Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
         // Delete event
         Route::delete('/{slug}/manage', 'EventController@deleteEvent')->name('delete_event');
 
-        // --------------- //
-        // Manage session //
-        // ------------- //
+    //     // --------------- //
+    //     // Manage session //
+    //     // ------------- //
 
         Route::get('/{slug}/create_session', 'SessionController@index')->name('create_session');
         Route::get('/{slug}/update_session/{id}', 'SessionController@update')->name('update_session');
@@ -55,18 +71,18 @@ Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
         Route::get('{slug}/delete_session/{id}', 'SessionController@delete')->name('delete_session');
         Route::post('/{slug}/store_session', 'SessionController@store')->name('store_session');
 
-        // --------------- //
-        // Manage channel //
-        // ------------- //
+    //     // --------------- //
+    //     // Manage channel //
+    //     // ------------- //
         Route::get('/{slug}/create_channel', 'ChannelController@index')->name('create_channel');
         Route::post('/{slug}/store_channel', 'ChannelController@store')->name('store_channel');
         Route::get('/{slug}/update_channel/{id}', 'ChannelController@update')->name('update_channel');
         Route::post('/{slug}/store_update_channel', 'ChannelController@storeUpdate')->name('store_update_channel');
         Route::get('/{slug}/delete_channel/{id}', 'ChannelController@delete')->name('delete_channel');
 
-        //----------------- //
-        //  Manage Room    //
-        //----------------//
+    //     //----------------- //
+    //     //  Manage Room    //
+    //     //----------------//
         Route::get('/room_capacity', 'RoomController@index')->name('room_capacity');
         Route::get('/create_room', 'RoomController@create')->name('create_room');
         Route::post('/store_room', 'RoomController@store')->name('store_room');
@@ -110,22 +126,6 @@ Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
         Route::get('/session_details', 'AttendeeController@sessionDetails')->name('session_details');
         Route::get('/event_list/{slug}/event_agenda', 'AttendeeController@eventAgenda')->name('event_agenda');
     });
-
-    //ATTENDEE SIGN IN
-    Route::get('/sign_in', function() {
-        return view('sign_in');
-    });
-
-    //ATTENDEE SESSION DETAILS
-
-
-//Middleware
-Route::group(['middleware' => 'auth'], function () {
-    // any route here will only be accessible for logged in users
-
-
-
- });
 
 /*Route::view('/dashboard', 'dashboard')->middleware('auth');
 Route::view('/organizer', 'dashboard');

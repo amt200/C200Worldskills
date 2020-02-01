@@ -59,7 +59,8 @@ class EventController extends Controller
         $event = new Event;
         $event->event_name = $request->event_name;
         $event->event_slug = $request->event_slug;
-        $event->organizer_id = $request->organizer;
+        // $event->organizer_id = $request->organizer;
+        $event->organizer_id = 1;
         $event->event_date = $request->event_date;
         $insert = $event->save();
 
