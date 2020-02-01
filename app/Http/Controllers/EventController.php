@@ -14,6 +14,8 @@ use App\Session;
 
 class EventController extends Controller
 {
+
+
   // Page to display all events that organizer has
   public function index()
   {
