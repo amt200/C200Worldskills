@@ -2,17 +2,17 @@
 
 @section('content')
     <div>
-        <h2 class="mt-3 mb-3">{{$findEventBySlug[0]->event_name}}</h2>
+        <h2 class="mt-3 mb-3">{{$event[0]->event_name}}</h2>
         <hr/>
-        <h4 class="mt-3 mb-5">Create new room</h4>
+        <h4 class="mt-3 mb-5">Update room</h4>
 
         {!! Form::open(['method'=>'POST','action'=>['RoomController@store', $slug]]) !!}
         @csrf
         <div class="form-group row">
             <div class="col-4">
                 {!! Form::label('id_room_name','Room Name') !!}
-                {!! Form::text('room_name', null, ['class'=> $errors->has('room_name') ? 'form-control border-danger': 'form-control', 'id'=>'id_room_name']) !!}
-                {{ Form::hidden('event_id', $findEventBySlug[0]->id) }}
+                {!! Form::text('room_name', $room_data['room_name'], ['class'=> $errors->has('room_name') ? 'form-control border-danger': 'form-control', 'id'=>'id_room_name']) !!}
+                {{ Form::hidden('id', $id) }}
                 @if ($errors->has('room_name'))
                     <p class="text-danger">{{$errors->first('room_name')}}</p>
                 @endif
@@ -21,19 +21,20 @@
         <div class="form-group row">
             <div class="col-4">
                 {!! Form::label('id_channel','Channel') !!}
-                {!! Form::select('channel', $channel_names, array_key_first($channel_names), ['class'=>'form-control', 'id'=>'id_channel']) !!}
+                {!! Form::select('channel', $channel_data, $room_data['channel_id'], ['class'=>'form-control', 'id'=>'id_channel']) !!}
             </div>
         </div>
         <div class="form-group row mb-5">
             <div class="col-4">
                 {!! Form::label('id_room_capacity','Capacity') !!}
-                {!! Form::number('room_capacity', null, ['class' => 'number form-control', 'id' => 'id_room_capacity']) !!}
+                {!! Form::number('room_capacity', $room_data['room_capacity'], ['class' => 'number form-control', 'id' => 'id_room_capacity']) !!}
             </div>
         </div>
         <hr/>
         <div class="form-group form-inline">
             {!! Form::submit('Save room',['class'=>'btn btn-primary mr-5']) !!}
-            <a href="{{route('event')}}">Cancel</a>
+            <a href="{{route('event')}}" class="mr-5">Cancel</a>
+            <a href="{{route('event.delete_session',["slug"=>$slug,"id"=>$id])}}">Delete Session</a>
         </div>
     </div>
     {!! Form::close() !!}

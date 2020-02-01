@@ -122,7 +122,7 @@
 			<h2 class="event-detail-title">Rooms</h2>
 		</div>
 		<div class="col-2">
-            <a href="{{route('event.create_room')}}" class="btn btn-outline-primary" style="float: right">Create new room<a href=""></a></a>
+            <a href="{{route('event.create_room', ["slug"=>$event->event_slug])}}" class="btn btn-outline-primary" style="float: right">Create new room<a href=""></a></a>
 		</div>
 	</div>
 

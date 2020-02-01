@@ -192,7 +192,7 @@
 			    <tr>
 			      <td>{{ $room->room_name }}</td>
 			      <td>{{ number_format($room->room_capacity) }}</td>
-			      <td><a href="" class="edit-btn"><i class="fas fa-edit"></i> Edit</a> <a href="" class="delete-btn"><i class="fas fa-trash"></i> Delete</a></td>
+			      <td><a href="{{route('event.update_room',["slug"=>$event->event_slug, "id"=>$room->id])}}" class="edit-btn"><i class="fas fa-edit"></i> Edit</a> <a href={{route('event.delete_room',["slug"=>$event->event_slug, "id"=>$room->id])}}"" class="delete-btn"><i class="fas fa-trash"></i> Delete</a></td>
 			    </tr>
 			    @endif
 			    @endforeach
