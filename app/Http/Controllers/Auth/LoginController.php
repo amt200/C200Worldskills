@@ -28,7 +28,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/dashboard';
+    protected $redirectTo = '/event';
 
     /**
      * Create a new controller instance.
@@ -40,7 +40,7 @@ class LoginController extends Controller
     {
             $this->middleware('guest')->except('logout');
             $this->middleware('guest:organizer')->except('logout');
-            $this->middleware('guest:attendee')->except('logout');
+            // $this->middleware('guest:attendee')->except('logout');
     }
 
      public function showOrganizerLoginForm()
@@ -55,9 +55,17 @@ class LoginController extends Controller
             'password' => 'required'
         ]);
 
-        if (Auth::guard('organizer')->attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) {
-            return redirect()->intended('/dashboard');
+        if (Auth::guard('organizer')->attempt(['email' => $request->email, 'password' => $request->password])) {
+            // dd($this);
+            return redirect()->intended('event');
+            // Auth::guard('organizer')->user();
+            // return redirect('/event');/
             // return 'adasdasd';
+        }
+        else{
+            // return redirect()->route('login');
+            // Auth::logout(); // user must logout before redirect them
+            // return redirect()->guest('login');
         }
         return back()->withInput($request->only('email', 'remember'));
     }

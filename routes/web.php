@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 // Route::get('/', 'Auth\LoginController@showOrganizerLoginForm');
+// Route::get('/login', 'Auth\LoginController@showOrganizerLoginForm');
 Route::get('/login/organizer', 'Auth\LoginController@showOrganizerLoginForm');
 Route::get('/login/attendee', 'Auth\LoginController@showAttendeeLoginForm');
 // Route::get('/register/organizer', 'Auth\RegisterController@showOrganizerRegisterForm');
@@ -22,7 +23,8 @@ Route::post('/login/attendee', 'Auth\LoginController@attendeeLogin');
 
 Route::get('/logout', function(){
    Auth::logout();
-   return Redirect::to('login');
+Session::forget('user');
+return Redirect::to('/login/organizer');
 });
 
     //ATTENDEE SIGN IN
@@ -33,15 +35,10 @@ Route::get('/logout', function(){
     //ATTENDEE SESSION DETAILS
 
 //Middleware
-// Route::group(['middleware' => ['guest']], function () {
+Route::group(['middleware' => 'auth'], function () {
     // any route here will only be accessible for logged in users
     // 
     // 
-    
-
-
- // });
-
 Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
     //--------------- //
     //Manage Events  //
@@ -92,7 +89,7 @@ Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
         // event slug
         Route::get('/{slug}', 'EventController@overview')->name('overview');
 
-
+        
         // --------------- //
         // Manage Ticket  //
         // ------------- //
@@ -105,17 +102,36 @@ Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
         Route::post('/{slug}/store-update-ticket', 'TicketController@storeUpdateTicket')->name('store_update_ticket');
 
     });
+    // Route::get('/create_room', function () {
+    //     return view('CreateRoom');
+    // });
+    // Route::get('/room_capacity', function () {
+    //     return view('RoomCapacity');
+    // });
+    
+    
 
-
-Route::get('/attendee',  'AttendeeController@index')->name('attendee');
-Route::group(['prefix' => 'attendee', 'as' => 'attendee.'], function () {
-    Route::get('/event_register/{slug}', 'AttendeeController@eventRegister')->name('event_register');
-    Route::post('/home/{slug}', 'AttendeeController@update')->name('ticket_purchase');
-    Route::get('/home', 'AttendeeController@dashboard')->name('attendee_home');
-    Route::get('/event_agenda/{slug}', 'AttendeeController@eventAgenda')->name('event_agenda');
-//    Route::get('/{slug}', 'AttendeeController@getSlug');
+    
 });
+
+
+
+
+
+
+    //ATTENDEE
+    Route::get('/attendee',  'AttendeeController@index')->name('attendee');
+    Route::group(['prefix' => 'attendee', 'as' => 'attendee.'], function () {
+        Route::get('/event_register', 'AttendeeController@eventRegister')->name('event_register');
+        Route::get('/event_list', 'AttendeeController@dashboard');
+        Route::get('/session_details', 'AttendeeController@sessionDetails')->name('session_details');
+        Route::get('/event_list/{slug}/event_agenda', 'AttendeeController@eventAgenda')->name('event_agenda');
+    });
 
 /*Route::view('/dashboard', 'dashboard')->middleware('auth');
 Route::view('/organizer', 'dashboard');
 Route::view('/attendee', 'Attendee');*/
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
