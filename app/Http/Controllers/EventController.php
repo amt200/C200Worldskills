@@ -42,6 +42,8 @@ class EventController extends Controller
   // Create method for event creation
   public function create(Request $request)
   {
+    // $event = DB::table('events')->first();
+
     if($request->isMethod('post') )
     {
       $validator = Validator::make($request -> all(), [
