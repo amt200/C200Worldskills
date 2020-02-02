@@ -22,7 +22,7 @@ Route::post('/login/attendee', 'Auth\LoginController@attendeeLogin');
 
 Route::get('/logout', function(){
    Auth::logout();
-   return Redirect::to('login');
+    return Redirect::to('/login/organizer');
 });
 
     //ATTENDEE SIGN IN
@@ -37,10 +37,7 @@ Route::get('/logout', function(){
     // any route here will only be accessible for logged in users
     // 
     // 
-    
 
-
- // });
 
 Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
     //--------------- //
@@ -105,11 +102,6 @@ Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
         Route::post('/{slug}/store-update-ticket', 'TicketController@storeUpdateTicket')->name('store_update_ticket');
 
     });
-
-
-
-
-
 
 
     Route::get('/create_room', function () {

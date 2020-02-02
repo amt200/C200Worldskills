@@ -12,7 +12,8 @@
 		</div>
 	</div>
 	<hr>
-
+	@include('layouts.flash-messages')
+	
 	@if(count($dataArr) < 1)
 	<div class="alert alert-warning" role="alert">
   	There are no events currently..

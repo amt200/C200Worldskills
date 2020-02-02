@@ -52,7 +52,7 @@ class EventController extends Controller
 
       if($validator->fails())
       {
-        return redirect()->route('event.create')->withErrors($validator);
+        return redirect()->route('event.create')->withErrors($validator)->withInput();
       }
       else
       {
@@ -173,7 +173,7 @@ class EventController extends Controller
 
         // change redirection to the newSlug saved
         $newSlug = $request->event_slug;
-        return redirect('event/'.$newSlug.'/manage/');
+        return redirect('event/'.$newSlug.'/manage/')->with('success', 'Event successfully updated');
 
         // if($update)
         // {
@@ -194,6 +194,6 @@ class EventController extends Controller
 
     $event->delete();
 
-    return redirect('event');
+    return redirect('event')->with('success', 'Event deleted');
   }
 }
