@@ -38,6 +38,8 @@ Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
 
         Route::get('/overview', 'EventController@overview')->name('overview');
 
+        // event edit
+        Route::get('/{slug}/manage', 'EventController@manage')->name('manage_event_details');
         // Update event
         Route::post('/{slug}/manage', 'EventController@updateEvent')->name('update_event');
         // Delete event
@@ -63,7 +65,8 @@ Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
         Route::get('/{slug}/delete_channel/{id}', 'ChannelController@delete')->name('delete_channel');
 
         //----------------- //
-        //  Manage Room  //
+        //  Manage Room    //
+        //----------------//
         Route::get('/room_capacity', 'RoomController@index')->name('room_capacity');
         Route::get('/{slug}/create_room', 'RoomController@create')->name('create_room');
         Route::post('/{slug}/store_room', 'RoomController@store')->name('store_room');
@@ -73,10 +76,7 @@ Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
         // event slug
         Route::get('/{slug}', 'EventController@overview')->name('overview');
 
-        // event edit
-        Route::get('/{slug}/manage', 'EventController@manage')->name('manage_event_details');
-
-
+        
         // --------------- //
         // Manage Ticket  //
         // ------------- //
@@ -84,6 +84,10 @@ Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
         Route::post('/{slug}/store_ticket', 'TicketController@create')->name('ticket_create_post');
         // Delete ticket
         Route::get('{slug}/delete-ticket/{id}', 'TicketController@deleteTicket')->name('delete_ticket');
+        // Edit ticket
+        Route::get('/{slug}/update-ticket/{id}', 'TicketController@displayUpdateTicket')->name('update_ticket');
+        Route::post('/{slug}/store-update-ticket', 'TicketController@storeUpdateTicket')->name('store_update_ticket');
+
     });
 
 

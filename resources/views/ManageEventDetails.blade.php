@@ -43,7 +43,7 @@
 			<form action="{{action('EventController@deleteEvent',['slug' => $event->event_slug])}}" method="POST">
 			    <input type="hidden" name="_method" value="DELETE">
 			    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-			    <input onclick="return confirm('Are you sure you want to delete event: {{ $event->event_name }}?')" type="submit" class="btn btn-danger" value="Delete"/>
+			    <input onclick="return confirm('Are you sure you want to delete event: {{ $event->event_name }}?')" type="submit" class="btn btn-danger" value="Delete" style="float: right;"/>
 			</form>
 			<input type="submit" class="btn btn-primary mr-5" value="Save" style="float: right;"/>
 		</div>
@@ -80,7 +80,7 @@
 		      <td>{{ $ticket->tickets_sell_by_date->format('F d, Y') }}</td>
 		      <td>{{ $ticket->tickets_left }}</td>
 		      <td>
-		      	<a href="" class="edit-btn"><i class="fas fa-edit"></i> Edit</a>
+		      	<a href="{{route('event.update_ticket',['slug'=>$event->event_slug, 'id'=>$ticket->id])}}" class="edit-btn"><i class="fas fa-edit"></i> Edit</a>
 		      	<a onclick="return confirm('Are you sure you want to delete ticket: {{ $ticket->ticket_name }}?')" href="{{ route('event.delete_ticket', ['slug' => $event->event_slug, 'id' => $ticket->id]) }}" class="delete-btn"><i class="fas fa-trash"></i> Delete</a>
 		      </td>
 		    </tr>
@@ -89,7 +89,7 @@
 
 	  </tbody>
 	</table>
-    </form>
+  </form>
 
 </div>{{-- End ticket row --}}
 
@@ -125,8 +125,8 @@
 				      <td>{{ $session->speaker }}</td>
 				      <td>{{ $session->channel->channel_name }} / {{ $session->room->room_name}}</td>
 				      <td>
-				      	<a href="{{route('event.update_session',["slug"=>$event->event_slug, "id"=>$session->id])}}" class="edit-btn"><i class="fas fa-edit"></i> Edit</a>
-				      	<a href="{{route('event.delete_session',["slug"=>$event->event_slug,"id"=>$session->id])}}" class="delete-btn"><i class="fas fa-trash"></i> Delete</a>
+				      	<a href="{{route('event.update_session',['slug'=>$event->event_slug, 'id'=>$session->id])}}" class="edit-btn"><i class="fas fa-edit"></i> Edit</a>
+				      	<a onclick="return confirm('Are you sure you want to delete session: {{ $session->title }}?')" href="{{route('event.delete_session',['slug'=>$event->event_slug,'id'=>$session->id])}}" class="delete-btn"><i class="fas fa-trash"></i> Delete</a>
 				      </td>
 				    </tr>
 				    @endif
@@ -158,8 +158,8 @@
 				@if($channel->event_id == $event->id)
 		    <tr>
 		      <td>{{ $channel->channel_name }}</td>
-		    	<td><a href="{{route('event.update_channel',["slug"=>$event->event_slug, "id"=>$channel->id])}}" class="edit-btn"><i class="fas fa-edit"></i> Edit</a>
-                    <a href="{{route('event.delete_channel',["slug"=>$event->event_slug, "id"=>$channel->id])}}" class="delete-btn"><i class="fas fa-trash"></i> Delete</a></td>
+		    	<td><a href="{{route('event.update_channel',['slug'=>$event->event_slug, 'id'=>$channel->id])}}" class="edit-btn"><i class="fas fa-edit"></i> Edit</a>
+                    <a href="{{route('event.delete_channel',['slug'=>$event->event_slug, 'id'=>$channel->id])}}" class="delete-btn"><i class="fas fa-trash"></i> Delete</a></td>
 		    </tr>
 		    @endif
 	    @endforeach
