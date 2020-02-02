@@ -4,32 +4,92 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
+                <h2>{{$event[0]->event_name}}</h2>
 {{--                <h1>{{$event->event_name}}</h1>--}}
-                {!! Form::open(['method'=>'POST','action'=>['AttendeeController@eventRegister', $event[0]->event_slug]]) !!}
-                @foreach($tickets_left as $id=>$qty)
-                {!! Form::hidden($id, $qty) !!}
-                @endforeach
-                {!! Form::submit('Register for this event',['class'=>'btn btn-primary float-right']) !!}
-                {!! Form::close() !!}
-                <table class="table table-striped tg">
+                <a class="btn btn-primary float-right" href="{{route('attendee.event_register', ["slug"=>$event[0]->event_slug])}}">Register for this event</a>
+                <h5 class="font-weight-bold mt-5 mb-3">Channels</h5>
+                <table class="table table-striped mb-5">
+                    <thead>
                     <tr>
-                        <th class="tg-0lax" colspan="{{count($channel)}}">Channel</th>
-                        <th class="tg-0lax" colspan="{{count($room)}}">Rooms</th>
-                        <th class="tg-0lax" colspan="{{count($session)}}">Timings</th>
+                        <th>Channel names</th>
                     </tr>
-                    <tr>
-                        @foreach($channel as $c)
-                        <td class="tg-0lax">{{$c->channel_name}}</td>
-                        @endforeach
-                        @foreach($room as $r)
-                        <td class="tg-0lax">{{$r->room_name}}</td>
-                        @endforeach
-                        @foreach($session as $s)
-                        <td class="tg-0lax">{{$s->title}}</td>
-                        @endforeach
-                    </tr>
+                    </thead>
+                    <tbody>
+                            @foreach($channel as $c)
+                                <tr>
+                            <td>
+                                {{$c->channel_name}}
+                            </td>
+                                </tr>
+                            @endforeach
+                    </tbody>
                 </table>
-
+                <h5 class="font-weight-bold mb-3">Rooms</h5>
+                <table class="table table-striped mb-5">
+                    <thead>
+                    <tr>
+                        <th>Room names</th>
+                        <th>Room capacity</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($room as $r)
+                        <tr>
+                            <td>
+                                {{$r->room_name}}
+                            </td>
+                            <td>
+                                {{$r->room_capacity}}
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+                <h5 class="font-weight-bold mb-3">Sessions</h5>
+                <table class="table table-striped mb-5" style="width: 780px">
+                    <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Channel Name</th>
+                        <th>Room Name</th>
+                        <th>Speaker</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($session as $s)
+                        <tr>
+                            <td>
+                                {{$s->title}}
+                            </td>
+                            <td>
+                                {{$s->channel_name}}
+                            </td>
+                            <td>
+                                {{$s->room_name}}
+                            </td>
+                            <td>
+                                {{$s->speaker}}
+                            </td>
+                            <td>
+                                {{$s->type}}
+                            </td>
+                            <td>
+                                {{$s->description}}
+                            </td>
+                            <td>
+                                {{substr($s->start_time, 0, 16)}}
+                            </td>
+                            <td>
+                                {{substr($s->end_time, 0 , 16)}}
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
 
 {{--                            <table class="table">--}}
 {{--                                @foreach($channelData -> $channel)--}}

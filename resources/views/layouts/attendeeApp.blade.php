@@ -35,10 +35,10 @@
             // if ($ticket=>ticket_left <= 0){
             //
             // }
-            $("[name=ticketCostCB]").change(function () {
+            $("h6 [type=checkbox]").change(function () {
                 ticket = 0;
                 ticket_name = "";
-                $("[name=ticketCostCB]:checked").each(function() {
+                $("h6 [type=checkbox]:checked").each(function() {
                     var int = $(this).val();
                     var hiddenValue = parseInt($("#"+int).val());
                     $("#btnSubmit").prop('disabled', false);
