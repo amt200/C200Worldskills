@@ -40,15 +40,15 @@
 		</div>
 		<div class="right col-6" >
       <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+			<input type="submit" class="btn btn-primary mr-5" value="Save" style="float: right;"/>
+</form>
 			<form action="{{action('EventController@deleteEvent',['slug' => $event->event_slug])}}" method="POST">
 			    <input type="hidden" name="_method" value="DELETE">
 			    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-			    <input onclick="return confirm('Are you sure you want to delete event: {{ $event->event_name }}?')" type="submit" class="btn btn-danger" value="Delete" style="float: right;"/>
+			    <input onclick="return confirm('Are you sure you want to delete event: {{ $event->event_name }}?')" type="submit" class="btn btn-danger mr-5" value="Delete" style="float: right;"/>
 			</form>
-			<input type="submit" class="btn btn-primary mr-5" value="Save" style="float: right;"/>
 		</div>
 	</div>
-</form>
 
 	<hr>
 
