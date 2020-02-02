@@ -64,30 +64,35 @@ a:focus {
     background: #1b1e21;
 }
 
-#sidebar ul.components {
-    padding: 20px 0;
+.group{
+    margin-bottom: 14%;
 }
 
+
 #sidebar ul p {
-    color: black;
+    color: #5e5e5e;
+    text-transform: uppercase;
+    font-weight: bold;
     padding: 10px;
+    padding-bottom: 0;
 }
 
 #sidebar ul li a {
     padding: 10px;
+    padding-top: 0;
     font-size: 1.1em;
     display: block;
+    color: black;
+    font-weight: bold;
 }
 
 #sidebar ul li a:hover {
-    color: black;
+    color: blue;
     text-decoration: none;
 }
 
-#sidebar ul li.active>a,
-a[aria-expanded="true"] {
-    color: black;
-    background: #6d7fcc;
+.active{
+    color: blue !important;
 }
 
 ul ul a {
