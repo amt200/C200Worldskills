@@ -76,7 +76,7 @@ Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
         // event slug
         Route::get('/{slug}', 'EventController@overview')->name('overview');
 
-        
+
         // --------------- //
         // Manage Ticket  //
         // ------------- //
@@ -91,27 +91,14 @@ Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
     });
 
 
-
-
-
-
-
-    Route::get('/create_room', function () {
-        return view('CreateRoom');
-    });
-    Route::get('/room_capacity', function () {
-        return view('RoomCapacity');
-    });
-
-
-    //ATTENDEE
-    Route::get('/attendee',  'AttendeeController@index')->name('attendee');
-    Route::group(['prefix' => 'attendee', 'as' => 'attendee.'], function () {
-        Route::get('/event_register', 'AttendeeController@eventRegister')->name('event_register');
-        Route::get('/event_list', 'AttendeeController@dashboard');
-        Route::get('/session_details', 'AttendeeController@sessionDetails')->name('session_details');
-        Route::get('/event_list/{slug}/event_agenda', 'AttendeeController@eventAgenda')->name('event_agenda');
-    });
+Route::get('/attendee',  'AttendeeController@index')->name('attendee');
+Route::group(['prefix' => 'attendee', 'as' => 'attendee.'], function () {
+    Route::get('/event_register/{slug}', 'AttendeeController@eventRegister')->name('event_register');
+    Route::post('/home/{slug}', 'AttendeeController@update')->name('ticket_purchase');
+    Route::get('/home', 'AttendeeController@dashboard')->name('attendee_home');
+    Route::get('/event_agenda/{slug}', 'AttendeeController@eventAgenda')->name('event_agenda');
+//    Route::get('/{slug}', 'AttendeeController@getSlug');
+});
 
     //ATTENDEE SIGN IN
     Route::get('/sign_in', function() {
