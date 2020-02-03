@@ -87,7 +87,7 @@ private function findRoomByEventId($event_id){
 
       $findChannelByRoomId = DB::table('channels')->where('id','=', $findRoomById[0]->channel_id)->get();
 
-      $isValid = $this->isValidSession($findChannelByRoomId[0]->id, $request->room_id, $request->start_time, $request->end_time);
+      $isValid = $this->isValidSession(0, $findChannelByRoomId[0]->id, $request->room_id, $request->start_time, $request->end_time);
 
       if (in_array(false, $isValid)) {
 
@@ -165,6 +165,7 @@ private function findRoomByEventId($event_id){
   }
 
   public function update($slug, $id){
+      $event = Event::where('event_slug', '=', $slug)->first();
       $sessionData = [];
 
       $eventBySlug = DB::table('events')->where('event_slug', '=', $slug)->get();
@@ -190,7 +191,7 @@ private function findRoomByEventId($event_id){
       $sessionData['start_time'] = $sessionById[0]->start_time;
       $sessionData['end_time'] = $sessionById[0]->end_time;
 
-      return view('UpdateSession', compact(['slug','sessionData','roomData','roomId','sessionTypeId','sessionTypeData','id','formatted_slug','event_id']));
+      return view('UpdateSession', compact(['slug','sessionData','roomData','roomId','sessionTypeId','sessionTypeData','id','formatted_slug','event_id', 'event']));
   }
   public function storeUpdate(Request $request, $slug){
 
@@ -206,7 +207,7 @@ private function findRoomByEventId($event_id){
 
 
       if ($validator->fails()) {
-          return redirect('event/'.$slug.'/manage/'.$request->id)
+          return redirect('event/'.$slug.'/update_session/'.$request->id)
               ->withErrors($validator)
               ->withInput();
       }
@@ -216,7 +217,7 @@ private function findRoomByEventId($event_id){
 
       $findChannelByRoomId = DB::table('channels')->where('id','=', $findRoomById[0]->channel_id)->get();
 
-      $isValid = $this->isValidSession($findChannelByRoomId[0]->id, $request->room_id, $request->start_time, $request->end_time);
+      $isValid = $this->isValidSession($id, $findChannelByRoomId[0]->id, $request->room_id, $request->start_time, $request->end_time);
 
 
 

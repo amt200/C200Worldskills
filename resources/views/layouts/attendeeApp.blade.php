@@ -27,40 +27,38 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script>
-        $(document).ready(function() {
-            var ticket = 0;
-            var total = 0;
-            var ticket_name = "";
-            // $("#btnSubmit").prop('disabled', true);
-            // if ($ticket=>ticket_left <= 0){
-            //
-            // }
-            $("h6 [type=checkbox]").change(function () {
-                ticket = 0;
-                ticket_name = "";
-                $("h6 [type=checkbox]:checked").each(function() {
-                    var int = $(this).val();
-                    var hiddenValue = parseInt($("#"+int).val());
-                    $("#btnSubmit").prop('disabled', false);
-                    ticket += hiddenValue;
-                    ticket_name += $("#"+int).attr("name")+" ";
-                });
-                $("#ticketName").html(ticket_name);
-                $("#totalCost").html(ticket);
+    $(document).ready(function() {
+        var ticket = 0;
+        var total = 0;
+        var ticket_name = "";
+        $("#btnSubmit").prop('disabled', true);
+        // if ($ticket=>ticket_left <= 0){
+        //
+        // }
+        $("h6 [type=checkbox]").change(function() {
+            ticket = 0;
+            $("h6 [type=checkbox]:checked").each(function() {
+                var int = $(this).val();
+                var hiddenValue = parseInt($("#"+int).val());
+                $("#btnSubmit").prop('disabled', false);
+                ticket += hiddenValue;
+                // ticket_name += $("#"+int).attr("name")+" ";
             });
-            $("[name=session]").change(function () {
-                var sessionTicket = 0;
-                $("[name=session]:checked").each(function () {
-                    var int = parseInt($(this).val());
-                    sessionTicket += int;
-                });
-                $("#sessionCost").html(sessionTicket);
-                total = sessionTicket + ticket;
-                $("#totalCost").html(sessionTicket + ticket);
-            });
-
+            $("#ticketName").html(ticket);
+            $("#totalCost").html(ticket);
         });
-    </script>
+        $("[name=session]").change(function () {
+            var sessionTicket = 0;
+            $("[name=session]:checked").each(function () {
+                var int = parseInt($(this).val());
+                sessionTicket += int;
+            });
+            $("#sessionCost").html(sessionTicket);
+            total = sessionTicket + ticket;
+            $("#totalCost").html(sessionTicket + ticket);
+        });
+    });
+</script>
     <style>
         .tg  {border-collapse:collapse;border-spacing:0;}
         .tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}

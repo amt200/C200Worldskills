@@ -15,8 +15,7 @@ class AttendeeController extends Controller
             ->join('events', 'organizers.id', 'events.organizer_id')
             ->get();
 
-        $data = $list;
-        return view('AttendeeDashBoard')->with(['event_name' => $data,'event_date' => $data, 'name' => $data]);
+        return view('AttendeeDashBoard',compact('list'));
 
     }
 
@@ -33,22 +32,20 @@ class AttendeeController extends Controller
     }
     public function update(Request $request, $slug)
     {
+                 $result = "";
+                $getEventIdBySlug = DB::table('events')->where('event_slug', '=', $slug)->get();
+                $ticket = DB::table('tickets')->select('*')->where('event_id', '=', $getEventIdBySlug[0]->id)->get();
+                $selectedTickets = $request->ticketCostCB;
+                foreach ($selectedTickets as $t) {
+                    $ticketLeft = DB::table('tickets')->where('id', '=', (int)$t)->get();
+                    $tl = $ticketLeft[0]->tickets_left - 1;
+                    DB::table('tickets')->where('id', '=', (int)$t)->update(['tickets_left' => $tl]);
+                }
+                $result = "Purchase success!";
+                return redirect('/attendee/home')->with('alertmessage', $result);
+            
 
-        $getEventIdBySlug = DB::table('events')->where('event_slug', '=', $slug)->get();
-        $ticket = DB::table('tickets')->select('*')->where('event_id', '=', $getEventIdBySlug[0]->id)->get();
-        $selectedTickets = $request->ticketCostCB;
-        dd($selectedTickets);
-        foreach ($selectedTickets as $t) {
-            $ticketLeft = DB::table('tickets')->where('id', '=', (int)$t )->get();
-            $tl= $ticketLeft[0]->tickets_left - 1;
-
-
-
-            DB::table('tickets')->where('id', '=', (int)$t)->update(['tickets_left' => $tl]);
-
-        }
-        return redirect('/attendee/home');
-
+            
     }
 
 

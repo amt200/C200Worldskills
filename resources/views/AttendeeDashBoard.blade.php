@@ -4,19 +4,16 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">{{ __('Event List') }}</div>
+                @foreach($list as $i)
+                <div class="card mb-5">
+                    <div class="card-header"><a href="{{route('attendee.event_agenda',["slug"=>$i->event_slug])}}"><b>{{$i->event_name}}</b></a></div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('login') }}">
-                            @csrf
-                                @foreach($data ?? '' as $i)
-                                    {{$i->event_name}}
-                                    {{$i->event_date}}<br>
-                                @endforeach
-                        </form>
+
+                       Organizer {{$i->name}}, {{$i->event_date}}
                     </div>
                 </div>
+                @endforeach
             </div>
         </div>
     </div>

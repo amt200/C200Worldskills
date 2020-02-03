@@ -16,14 +16,14 @@ Route::get('/login/attendee', 'Auth\LoginController@showAttendeeLoginForm');
 
 Route::post('/login/organizer', 'Auth\LoginController@organizerLogin');
 Route::post('/login/attendee', 'Auth\LoginController@attendeeLogin');
-// Route::post('/register/organizer', 'Auth\RegisterController@createAdmin');
+// Route::post('/register/organiser', 'Auth\RegisterController@createAdmin');
 // Route::post('/register/blogger', 'Auth\RegisterController@createBlogger');
 
 
 Route::get('/logout', function(){
    Auth::logout();
     return Redirect::to('/login/organizer');
-});
+})->name('organizerLogout');
 
     //ATTENDEE SIGN IN
     Route::get('/sign_in', function() {
@@ -99,6 +99,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/{slug}/update-ticket/{id}', 'TicketController@displayUpdateTicket')->name('update_ticket');
         Route::post('/{slug}/store-update-ticket', 'TicketController@storeUpdateTicket')->name('store_update_ticket');
     });
+});
 
 
 Route::get('/attendee',  'AttendeeController@index')->name('attendee');

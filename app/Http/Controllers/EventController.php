@@ -166,7 +166,8 @@ class EventController extends Controller
     {
       $validator = Validator::make($request -> all(), [
         'event_name' => 'required',
-        'event_slug' => 'required'
+        'event_slug' => 'required',
+        'event_date' => 'required'
       ]);
 
       if($validator->fails())
@@ -180,21 +181,13 @@ class EventController extends Controller
         ->where('id', '=', $id) 
         ->update([
           'event_name'=>$request->event_name,
-          'event_slug'=>$request->event_slug
+          'event_slug'=>$request->event_slug,
+          'event_date'=>$request->event_date
         ]);
 
         // change redirection to the newSlug saved
         $newSlug = $request->event_slug;
         return redirect('event/'.$newSlug.'/manage/')->with('success', 'Event successfully updated');
-
-        // if($update)
-        // {
-        //   return redirect()->route('event')->with('success', 'Event successfully created');
-        // }
-        // else
-        // {
-        //   return redirect()->route('event')->with('error', 'An error occured while creating event');
-        // }
       }
     }
     return view('event');

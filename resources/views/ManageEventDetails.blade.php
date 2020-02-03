@@ -42,7 +42,7 @@
 
 		<div class="col-4">
 			<label for="id_event_date">Event Date</label>
-			<input type="text" class="form-control" id="id_event_date" name="event_slug" value="{{ $event->event_date->format('F d, Y') }}">
+			<input type="text" class="form-control" id="id_event_date" name="event_date" value="{{ $event->event_date->format('Y-m-d') }}">
 			@if ($errors->has('event_date'))
           <p class="text-danger">{{$errors->first('event_date')}}</p>
         @endif
