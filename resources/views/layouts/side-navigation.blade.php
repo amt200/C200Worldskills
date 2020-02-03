@@ -10,7 +10,7 @@
 		</li>
 	</ul>
 	
-	@if (Request::is('event/{slug}/*'))
+
 	<ul class="list-unstyled group">
 		<p class="side-nav-header">{{ $event->event_name }}</p>
 
@@ -25,7 +25,5 @@
 			<a href="#">Room Capacity</a>
 		</li>
   </ul>
-	@else
-	<ul></ul>
-	@endif
+
 </nav>

@@ -74,15 +74,16 @@ class RoomController extends Controller
         return view('UpdateRoom', compact(['room_data','channel_data', 'event', 'slug', 'id']));
     }
 
-    public function update(Request $request, $slug, $id) {
-        $request->validate([
-            'room_name' => 'required|regex:/^[A-Z][A-Za-z\s]*$/',
+    public function update(Request $request, $slug) {
+        $validator = Validator::make($request->all(), [
+            'room_name'=>'required|regex:/^[A-Z][A-Za-z\s]*$/',
             'room_capacity' => 'required'
         ]);
 
-        if ($request->fails()) {
-            return redirect('event/'.$slug.'/update_room'.$request->id)
-                ->withErrors($request)
+
+        if ($validator->fails()) {
+            return redirect('event/'.$slug.'/update_room/'.$request->id)
+                ->withErrors($validator)
                 ->withInput();
 
         }

@@ -6,7 +6,7 @@
         <hr/>
         <h4 class="mt-3 mb-5">Update room</h4>
 
-        {!! Form::open(['method'=>'POST','action'=>['RoomController@store', $slug]]) !!}
+        {!! Form::open(['method'=>'POST','action'=>['RoomController@update', $slug]]) !!}
         @csrf
         <div class="form-group row">
             <div class="col-4">
@@ -32,9 +32,9 @@
         </div>
         <hr/>
         <div class="form-group form-inline">
-            {!! Form::submit('Save room',['class'=>'btn btn-primary mr-5']) !!}
+            {!! Form::submit('Update room',['class'=>'btn btn-primary mr-5']) !!}
             <a href="{{route('event')}}" class="mr-5">Cancel</a>
-            <a href="{{route('event.delete_session',["slug"=>$slug,"id"=>$id])}}">Delete Session</a>
+            <a href="{{route('event.delete_room',["slug"=>$slug,"id"=>$id])}}">Delete Room</a>
         </div>
     </div>
     {!! Form::close() !!}
