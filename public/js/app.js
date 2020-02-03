@@ -49613,8 +49613,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! B:\xampp\htdocs\C200Worldskills\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! B:\xampp\htdocs\C200Worldskills\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! c:\xampp2\htdocs\C200Worldskills\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! c:\xampp2\htdocs\C200Worldskills\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

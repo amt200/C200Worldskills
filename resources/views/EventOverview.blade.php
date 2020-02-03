@@ -17,6 +17,9 @@
 	<hr>
 </div>
 
+@include('layouts.flash-messages')
+
+
 <div class="col-12 event-detail-sections">
 	<div class="row" style="display: flex">
 		<div class="col-10">
@@ -35,8 +38,15 @@
 				    <h5 class="card-title">{{ $ticket->ticket_name}}</h5>
 				    <h6 class="card-subtitle mb-2 text-muted">{{ $ticket->ticket_cost}}.-</h6>
 				    <br>
-				    <h6 class="card-subtitle mb-2 text-muted">Available until {{ $ticket->tickets_sell_by_date->format('F d, Y') }}</h6>
-				    <h6 class="card-subtitle mb-2 text-muted">{{ $ticket->tickets_left }} tickets available</h6>
+
+				    @if($ticket->special_validities_id == 2)
+				    	<h6 class="card-subtitle mb-2 text-muted">Available until {{ $ticket->tickets_sell_by_date->format('F d, Y') }}</h6>
+				    @elseif($ticket->special_validities_id == 3)
+					    <h6 class="card-subtitle mb-2 text-muted">{{ $ticket->tickets_left }} tickets available</h6>
+					  @else
+
+					  @endif
+
 				  </div>
 				</div>
 			@endif
@@ -65,7 +75,7 @@
 			      <th class="w-10">Type</th>
 			      <th class="w-50">Title</th>
 			      <th class="w-10">Speaker</th>
-			      <th class="w-10">Channels / Rooms</th>
+			      <th class="w-10">Channels</th>
 			    </tr>
 			  </thead>
 			  <tbody>
