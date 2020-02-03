@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Channel;
+use App\Event;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -11,12 +12,13 @@ use Illuminate\Support\Facades\Validator;
 class ChannelController extends Controller
 {
   public function index($slug){
+      $event = Event::where('event_slug', '=', $slug)->first();
       $findEventBySlug = DB::table('events')->where('event_slug','=', $slug)->get();
       $event_id = $findEventBySlug[0]->id;
       $event_name = $findEventBySlug[0]->event_name;
 
 
-    return view('CreateChannel', compact(['event_id','event_name','slug']));
+    return view('CreateChannel', compact(['event_id','event_name','slug', 'event']));
   }
 
   public function store(Request $request, $slug){

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Room;
 use App\Channel;
+use App\Event;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
@@ -18,6 +19,8 @@ class RoomController extends Controller
     }
 
     public function create($slug){
+        $event = Event::where('event_slug', '=', $slug)->first();
+
         $channel_names = [];
         $findEventBySlug = DB::table('events')->where('event_slug','=', $slug)->get();
 
@@ -29,7 +32,7 @@ class RoomController extends Controller
             $channel_names[$key] = $value;
         }
 
-        return view('CreateRoom', compact(['channel_names','findEventBySlug','slug']));
+        return view('CreateRoom', compact(['channel_names','findEventBySlug','slug','event']));
     }
     public function store(Request $request, $slug){
         $validator = Validator::make($request->all(), [

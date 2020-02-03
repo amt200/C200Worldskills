@@ -7,6 +7,7 @@ use DateTimeZone;
 use Illuminate\Http\Request;
 use App\Session_type;
 use App\Session;
+use App\Event;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
@@ -14,6 +15,8 @@ use Illuminate\Support\Facades\Validator;
 class SessionController extends Controller{
 
   public function index($slug){
+
+      $event = Event::where('event_slug', '=', $slug)->first();
 
       $eventBySlug = DB::table('events')->where('event_slug', '=', $slug)->get();
 
@@ -26,7 +29,7 @@ class SessionController extends Controller{
 
       $types = $this->getAllSessionTypes();
 
-      return view('CreateSession', compact(['types','room_names','formatted_slug','event_id','slug']));
+      return view('CreateSession', compact(['types','room_names','formatted_slug','event_id','slug', 'event']));
   }
   private function formatSlug($slug){
       $splited_slug = explode("-", $slug[0]->event_slug);
