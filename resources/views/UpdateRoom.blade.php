@@ -2,7 +2,7 @@
 
 @section('content')
     <div>
-        <h2 class="mt-3 mb-3">{{$event[0]->event_name}}</h2>
+        <h2 class="mt-3 mb-3">{{$events[0]->event_name}}</h2>
         <hr/>
         <h4 class="mt-3 mb-5">Update room</h4>
 

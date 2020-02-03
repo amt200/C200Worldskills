@@ -43,6 +43,7 @@ class ChannelController extends Controller
   }
   public function update($slug, $id){
 
+      $event = Event::where('event_slug', '=', $slug)->first();
       $findEventBySlug = DB::table('events')->where('event_slug','=', $slug)->get();
       $event_name = $findEventBySlug[0]->event_name;
 
@@ -53,7 +54,7 @@ class ChannelController extends Controller
       $channelData['channel_name'] = $findChannelById[0]->channel_name;
 
 
-      return view('UpdateChannel', compact(['channelData', 'event_name','slug','id']));
+      return view('UpdateChannel', compact(['channelData', 'event_name','slug','id', 'event']));
 
   }
   public function storeUpdate(Request $request, $slug){

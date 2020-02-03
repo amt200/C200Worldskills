@@ -57,10 +57,11 @@ class RoomController extends Controller
     }
 
     public function edit($slug, $id)
-    {
-        $event = DB::table('events')->where('event_slug','=', $slug)->get();
+    {   
+        $event = Event::where('event_slug', '=', $slug)->first();
+        $events = DB::table('events')->where('event_slug','=', $slug)->get();
         $room = DB::table('rooms')->where('id','=', $id)->get();
-        $channel = DB::table('channels')->where('event_id','=', $event[0]->id)->get();
+        $channel = DB::table('channels')->where('event_id','=', $events[0]->id)->get();
         $room_data = [];
         $channel_data = [];
 
@@ -74,7 +75,7 @@ class RoomController extends Controller
         $room_data['channel_id'] = $room[0]->channel_id;
         $room_data['room_capacity'] = $room[0]->room_capacity;
 
-        return view('UpdateRoom', compact(['room_data','channel_data', 'event', 'slug', 'id']));
+        return view('UpdateRoom', compact(['room_data','channel_data', 'events', 'slug', 'id', 'event']));
     }
 
     public function update(Request $request, $slug) {

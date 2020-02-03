@@ -7,16 +7,18 @@
         <hr/>
         {!! Form::open(['method'=>'POST','action'=>['AttendeeController@update', $slug]]) !!}
         @csrf
+
         <div class="grid-container-events">
             <div class="row">
                 <div class="col-8 mb-5" style="display: flex">
+
                     <div class="grid-container-events">
-                        @if(count($findTicketByEvent) < 1)
+                        @if(count($findTicketsLeftByEvent) < 1)
                             <div class="alert alert-warning" role="alert">
                                 All tickets are sold out..
                             </div>
                         @else
-                            @foreach($findTicketByEvent as $ticket)
+                            @foreach($findTicketsLeftByEvent as $ticket)
                                 <div class="card grid-item" >
                                     <div class="card-body">
                                         <h5 class="card-title">{{ $ticket->ticket_name}}</h5>
@@ -31,7 +33,13 @@
                                 </div>
                             @endforeach
                         @endif
+
+                        {{--                            <input type="hidden" name="_token" value="{{ csrf_token() }}" />--}}
+                        {{--                            <input type="submit" class="btn btn-primary mr-5" value="Save" style="float: right;"/>--}}
+
+
                     </div>
+
                 </div>
                 <div class="col-5 mt-3">
                     <div class="card grid-item">
@@ -61,4 +69,3 @@
     </div>
     {!! Form::close() !!}
 @endsection
-
