@@ -32,12 +32,17 @@
   	<nav class="navbar navbar-dark bg-dark">
       <div class="container-fluid">
         <div class="navbar-header">
-          {{-- <a class="navbar-brand" href="#">WorldSkills</a> --}}
+          <a class="navbar-brand" style="color: white">WorldSkills</a> 
 
-          <a class="navbar-brand" href="{{ url('/') }}">
+          <!-- <a class="navbar-brand" href="{{ url('/') }}">
             {{-- {{ config('app.name', 'Laravel') }} --}}
+
             WorldSkills
           </a>
+
+
+          </a> -->
+
         </div>
           <ul class="navbar-nav ml-auto">
               <!-- Authentication Links -->
@@ -68,6 +73,24 @@
                           </form>
                       </div>
                   </li>
+
+
+
+                  <!-- <li class="nav-item" style="display: inline-block">
+                      <a class="nav-link" href="#">
+                          {{ Auth::user()->name }}
+                      </a>
+                  </li>
+                  
+                  <li>
+                     <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                              {{ __('Logout') }}
+                      </a>
+                      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                          @csrf
+                      </form>
+                  </li> -->
+
               @endguest
           </ul>
       </div>

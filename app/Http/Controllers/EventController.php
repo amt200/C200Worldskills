@@ -11,9 +11,19 @@ use App\Ticket;
 use App\Room;
 use App\Channel;
 use App\Session;
+use Auth;
 
 class EventController extends Controller
 {
+
+  public function __construct()
+    {
+            // $this->middleware('guest')->except('logout');
+            $this->middleware('guest:organizer')->except('logout');
+            // $this->middleware('guest:attendee')->except('logout');
+    }
+
+
   // Page to display all events that organizer has
   public function index()
   {
@@ -62,7 +72,7 @@ class EventController extends Controller
         $event->event_name = $request->event_name;
         $event->event_slug = $request->event_slug;
         // $event->organizer_id = $request->organizer;
-        $event->organizer_id = 1;
+        $event->organizer_id = Auth::user()->id;
         $event->event_date = $request->event_date;
         $insert = $event->save();
 

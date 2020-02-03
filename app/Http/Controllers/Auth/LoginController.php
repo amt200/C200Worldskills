@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Redirect;
+
 
 class LoginController extends Controller
 {
@@ -29,19 +31,13 @@ class LoginController extends Controller
      * @var string
      */
     protected $redirectTo = '/dashboard';
+    protected $redirectTo = '/event';
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-
-    public function __construct()
-    {
-            $this->middleware('guest')->except('logout');
-            $this->middleware('guest:organizer')->except('logout');
-            $this->middleware('guest:attendee')->except('logout');
-    }
 
      public function showOrganizerLoginForm()
     {
@@ -55,11 +51,17 @@ class LoginController extends Controller
             'password' => 'required'
         ]);
 
-        if (Auth::guard('organizer')->attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) {
-            return redirect()->intended('/dashboard');
-            // return 'adasdasd';
+        $valid = Auth::guard('organizer')->attempt(['email' => $request->email, 'password' => $request->password]);
+        if ($valid) {
+            return Redirect::to('/event');
+            // Auth::guard('organizer')->user();
+            // 
+            // return redirect(route('event'))->with(['error' => 'No permission']);
         }
-        return back()->withInput($request->only('email', 'remember'));
+
+
+        // If login fails
+        return back()->with(['error' => 'No permission']);
     }
 
     public function showAttendeeLoginForm()

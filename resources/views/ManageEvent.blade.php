@@ -27,7 +27,7 @@
 
 	<div class="grid-container">
 		@foreach($events as $event)
-
+			@if($event->organizer_id == Auth::user()->id)
 				<div class="card grid-item" style="width: 18rem;">
 				<a href="{{ url('event/'.$event->event_slug) }}">
 				  <div class="card-body">
@@ -42,6 +42,7 @@
 				  </div>
 					</a>
 			</div>
+			@endif
 		@endforeach
 	</div>
 

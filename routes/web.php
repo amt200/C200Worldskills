@@ -33,13 +33,11 @@ Route::get('/logout', function(){
     //ATTENDEE SESSION DETAILS
 
 //Middleware
-// Route::group(['middleware' => ['guest']], function () {
+Route::group(['middleware' => ['auth']], function () {
     // any route here will only be accessible for logged in users
     // 
     // 
 
-
-Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
     //--------------- //
     //Manage Events  //
     //------------- //
@@ -101,16 +99,8 @@ Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
         Route::get('/{slug}/update-ticket/{id}', 'TicketController@displayUpdateTicket')->name('update_ticket');
         Route::post('/{slug}/store-update-ticket', 'TicketController@storeUpdateTicket')->name('store_update_ticket');
 
-    });
-
-
-    Route::get('/create_room', function () {
-        return view('CreateRoom');
-    });
-    Route::get('/room_capacity', function () {
-        return view('RoomCapacity');
-    });
-
+    });    
+});
 
     //ATTENDEE
     Route::get('/attendee',  'AttendeeController@index')->name('attendee');
@@ -121,6 +111,3 @@ Route::get('/dashboard',  'DashboardController@index')->name('dashboard');
         Route::get('/event_list/{slug}/event_agenda', 'AttendeeController@eventAgenda')->name('event_agenda');
     });
 
-/*Route::view('/dashboard', 'dashboard')->middleware('auth');
-Route::view('/organizer', 'dashboard');
-Route::view('/attendee', 'Attendee');*/
