@@ -9,7 +9,7 @@
 			<a href="{{ route('event') }}">Manage Events</a>
 		</li>
 	</ul>
-	
+
 	<ul class="list-unstyled group">
 		<p class="side-nav-header">{{ $event->event_name }}</p>
 
@@ -17,7 +17,7 @@
 			<a class="{{ (request()->is('event/'.$event->event_slug)) ? 'active' : '' }}"href="{{ url('event/'.$event->event_slug) }}">Overview</a>
 		</li>
 	</ul>
-	
+
 	<ul class="list-unstyled group">
 		<p class="side-nav-header">REPORTS</p>
 		<li>
