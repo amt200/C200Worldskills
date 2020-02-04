@@ -34,11 +34,10 @@ class TicketController extends Controller
   	if($request->isMethod('post') )
     {
       $validator = Validator::make($request -> all(), [
-        'ticket_name' => 'required',
-        'ticket_cost' => 'required',
+        'ticket_name' => 'required|regex:/^[A-Z][A-Za-z\s]*$/',
+        'ticket_cost' => 'required|regex:/^[0-9]+[.]{0,1}[0-9]+$/',
         'special_validity' => 'required',
-        'max_tickets' => 'required',
-        'ticket_end_date' => 'required'
+        'max_tickets' => 'required|regex:/^[0-9]*$/',
       ]);
 
       if($validator->fails())
@@ -77,7 +76,7 @@ class TicketController extends Controller
     // Get ticket from id
     $ticket = Ticket::where('id', '=', $id)->delete();
 
-    return redirect('event/'.$slug.'/manage');
+    return redirect('event/'.$slug.'/manage')->with('success', 'Ticket deleted');
   }
 
   public function displayUpdateTicket($slug, $id){
@@ -109,7 +108,7 @@ class TicketController extends Controller
 
       if($validator->fails())
       {
-        return redirect('event/'.$slug.'/update-ticket/'.$request->id)->withErrors($validator);
+        return redirect('event/'.$slug.'/update-ticket/'.$ticketId)->withErrors($validator);
       }
       else
       {
@@ -122,10 +121,10 @@ class TicketController extends Controller
           'tickets_sell_by_date'=>$request->ticket_end_date,
         ]);
 
-        return redirect('event/'.$slug.'/manage/');
+        return redirect('event/'.$slug.'/manage/')->with('success', 'Ticket updated');
         // if($insert)
         // {
-        //   return redirect('event/'.$slug)->with('success', 'Ticket successfully created');
+        //   return redirect('event/'.$slug)-
         // }
         // else
         // {

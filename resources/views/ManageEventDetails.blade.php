@@ -17,22 +17,35 @@
 	<hr>
 </div>
 
+@include('layouts.flash-messages')
+
 <form method="POST" action="{{action('EventController@updateEvent',['slug' => $event->event_slug])}}">
 	@csrf
 	<div class="form-group row event-detail-sections">
 		<div class="col-4">
 			<label for="id_event_name">Event Name</label>
 			<input type="text" class="form-control" id="id_event_name" name="event_name" value="{{ $event->event_name }}">
+
+			@if ($errors->has('event_name'))
+          <p class="text-danger">{{$errors->first('event_name')}}</p>
+        @endif
 		</div>
 
 		<div class="col-4">
 			<label for="id_event_slug">Event Slug</label>
 			<input type="text" class="form-control" id="id_event_slug" name="event_slug" value="{{ $event->event_slug }}">
+
+			@if ($errors->has('event_slug'))
+          <p class="text-danger">{{$errors->first('event_slug')}}</p>
+        @endif
 		</div>
 
 		<div class="col-4">
-			<label for="id_event_slug">Event Date</label>
-			<input type="text" class="form-control" id="id_event_slug" name="event_slug" value="{{ $event->event_date }}" disabled="">
+			<label for="id_event_date">Event Date</label>
+			<input type="text" class="form-control" id="id_event_date" name="event_slug" value="{{ $event->event_date->format('F d, Y') }}">
+			@if ($errors->has('event_date'))
+          <p class="text-danger">{{$errors->first('event_date')}}</p>
+        @endif
 		</div>
 	</div>
 	<div class="row">
@@ -41,7 +54,7 @@
 		<div class="right col-6" >
       <input type="hidden" name="_token" value="{{ csrf_token() }}" />
 			<input type="submit" class="btn btn-primary mr-5" value="Save" style="float: right;"/>
-</form>
+    </form>
 			<form action="{{action('EventController@deleteEvent',['slug' => $event->event_slug])}}" method="POST">
 			    <input type="hidden" name="_method" value="DELETE">
 			    <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -201,6 +214,7 @@
 			</table>
 		</div> {{-- End col 12--}}
 	</div> {{-- End row--}}
-</div> {{-- End Session row--}}
+</div>
+{{-- End Session row--}}
 
 @endsection

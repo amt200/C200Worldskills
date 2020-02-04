@@ -11,6 +11,9 @@
 	</div>
 	<hr>
 </div>
+
+@include('layouts.flash-messages')
+
 	<h4 class="mt-3 mb-5">Edit ticket</h4>
 
 	<form method="POST" action="{{action('TicketController@storeUpdateTicket', ['slug' => $event->event_slug])}}">
@@ -20,6 +23,9 @@
 			<div class="col-4">
 				<label for="id_ticket_name">Name</label>
 				<input type="text" class="form-control" id="id_ticket_name" name="ticket_name" value="{{ $ticket->ticket_name }}">
+				@if ($errors->has('ticket_name'))
+          <p class="text-danger">{{$errors->first('ticket_name')}}</p>
+        @endif
 			</div>
 		</div>
 	
@@ -27,6 +33,9 @@
 			<div class="col-4">
 				<label for="id_ticket_cost">Cost</label>
 				<input type="text" class="form-control" id="id_ticket_cost" name="ticket_cost" value="{{ $ticket->ticket_cost }}">
+				@if ($errors->has('ticket_cost'))
+          <p class="text-danger">{{$errors->first('ticket_cost')}}</p>
+        @endif
 			</div>
 		</div>
 	
@@ -45,6 +54,9 @@
 				<div class="form-group">
 					<label for="id_tickets_left">Tickets Left</label>
 					<input type="text" class="form-control" id="id_tickets_left" name="tickets_left" value="{{ $ticket->tickets_left }}">
+					@if ($errors->has('tickets_left'))
+          <p class="text-danger">{{$errors->first('tickets_left')}}</p>
+        	@endif
 				</div>
 			</div>
 		</div>
@@ -54,6 +66,9 @@
 				<div class="form-group">
 					<label for="id_ticket_end_date">Tickets can be sold until</label>
 					<input type="text" class="form-control" id="id_ticket_end_date" name="ticket_end_date" value="{{ $ticket->tickets_sell_by_date }}">
+					@if ($errors->has('ticket_end_date'))
+          <p class="text-danger">{{$errors->first('ticket_end_date')}}</p>
+        @endif
 				</div>
 			</div>
 		</div>
