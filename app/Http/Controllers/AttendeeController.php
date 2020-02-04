@@ -15,8 +15,7 @@ class AttendeeController extends Controller
             ->join('events', 'organizers.id', 'events.organizer_id')
             ->get();
 
-        $data = $list;
-        return view('AttendeeDashBoard')->with(['event_name' => $data,'event_date' => $data, 'name' => $data]);
+        return view('AttendeeDashBoard',compact('list'));
 
     }
 

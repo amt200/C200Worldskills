@@ -84,7 +84,7 @@ private function findRoomByEventId($event_id){
 
       $findChannelByRoomId = DB::table('channels')->where('id','=', $findRoomById[0]->channel_id)->get();
 
-      $isValid = $this->isValidSession($findChannelByRoomId[0]->id, $request->room_id, $request->start_time, $request->end_time);
+      $isValid = $this->isValidSession(0, $findChannelByRoomId[0]->id, $request->room_id, $request->start_time, $request->end_time);
 
       if (in_array(false, $isValid)) {
 
@@ -114,7 +114,7 @@ private function findRoomByEventId($event_id){
       }
   }
 
-  private function isValidSession($channel_id, $room_id, $start_time, $end_time){
+  private function isValidSession($id, $channel_id, $room_id, $start_time, $end_time){
       $from = new DateTimeZone('GMT');
       $checkSession = "";
       $isValid = false;
@@ -124,41 +124,45 @@ private function findRoomByEventId($event_id){
       $currentTime->setTimezone($to);
 
 
-      if (DB::table('sessions')->where([['channel_id','=',$channel_id],['room_id','=',$room_id]])->get() != null){
-          $checkSession = DB::table('sessions')->where([['channel_id','=',$channel_id],['room_id','=',$room_id]])->get();
-          $requestedStartTime = (int)substr($start_time, 11,2);
+      if (DB::table('sessions')->where([['channel_id','=',$channel_id],['room_id','=',$room_id]])->get() != null) {
+          $checkSession = DB::table('sessions')->where([['channel_id', '=', $channel_id], ['room_id', '=', $room_id]])->get();
+          $requestedStartTime = (int)substr($start_time, 11, 2);
           $requestedEndTime = (int)substr($end_time, 11, 2);
-          $requestedMonth = (int)substr($start_time, 6,1);
+          $requestedMonth = (int)substr($start_time, 6, 1);
           $requestedDay = (int)substr($start_time, 8, 2);
           $requestedYear = (int)substr($start_time, 0, 4);
 
           foreach ($checkSession as $session) {
-              $endTime = $session->end_time;
-              $startTime = $session->start_time;
-              $storedEndHour = (int)substr($endTime, 11, 2);
-              $storedStartHour = (int)substr($startTime, 11, 2);
-              $storedMonth = (int)substr($endTime, 6, 1);
-              $storedDay = (int)substr($endTime, 8, 2);
-              $storedYear = (int)substr($endTime, 0, 4);
+              if ($session->id == $id) {
+                  print "Same ID";
+              } else {
+                  $endTime = $session->end_time;
+                  $startTime = $session->start_time;
+                  $storedEndHour = (int)substr($endTime, 11, 2);
+                  $storedStartHour = (int)substr($startTime, 11, 2);
+                  $storedMonth = (int)substr($endTime, 6, 1);
+                  $storedDay = (int)substr($endTime, 8, 2);
+                  $storedYear = (int)substr($endTime, 0, 4);
 
-              $isOnSameDay = $requestedYear == $storedYear && $requestedMonth == $storedMonth && $requestedDay == $storedDay;
+                  $isOnSameDay = $requestedYear == $storedYear && $requestedMonth == $storedMonth && $requestedDay == $storedDay;
 
-              if ($isOnSameDay && $requestedStartTime >= $storedEndHour || $isOnSameDay && $requestedEndTime <= $storedStartHour || $isOnSameDay == false){
-                  $isValid = true;
-                  array_push($boolean_array, $isValid);
-              }
-              else{
-                  $isValid = false;
-                  array_push($boolean_array, $isValid);
-                  break;
+                  if ($isOnSameDay && $requestedStartTime >= $storedEndHour || $isOnSameDay && $requestedEndTime <= $storedStartHour || $isOnSameDay == false) {
+                      $isValid = true;
+                      array_push($boolean_array, $isValid);
+                  } else {
+                      $isValid = false;
+                      array_push($boolean_array, $isValid);
+                      break;
+                  }
               }
           }
       }
       else{
-          $isValid = true;
-          array_push($boolean_array, $isValid);
-      }
-      return $boolean_array;
+              $isValid = true;
+              array_push($boolean_array, $isValid);
+          }
+          return $boolean_array;
+
   }
 
   public function update($slug, $id){
@@ -213,7 +217,7 @@ private function findRoomByEventId($event_id){
 
       $findChannelByRoomId = DB::table('channels')->where('id','=', $findRoomById[0]->channel_id)->get();
 
-      $isValid = $this->isValidSession($findChannelByRoomId[0]->id, $request->room_id, $request->start_time, $request->end_time);
+      $isValid = $this->isValidSession($id, $findChannelByRoomId[0]->id, $request->room_id, $request->start_time, $request->end_time);
 
 
 
