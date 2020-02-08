@@ -8,5 +8,7 @@
 		<li>
 			<a href="{{ route('event') }}">Manage Events</a>
 		</li>
-    </ul>
+	</ul>
+
+	
 </nav>

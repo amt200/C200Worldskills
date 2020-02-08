@@ -24,30 +24,29 @@ class AttendeeController extends Controller
 
         $findEventBySlug = DB::table('events')->where('event_slug', '=', $slug)->get();
         $eventName = $findEventBySlug[0]->event_name;
-        $findSessionByEvent = DB::table('sessions')->where([['event_id', '=', $findEventBySlug[0]->id],['session_type_id', '=', 2]])->get();
+        $findSessionByEvent = DB::table('sessions')->where('event_id', '=', $findEventBySlug[0]->id)->get();
         $findTicketByEvent = DB::table('tickets')->where('event_id', '=', $findEventBySlug[0]->id)->get();
+        $findTicketsLeftByEvent = DB::table('tickets')->where([['tickets_left', '>', 0],['event_id', '=', $findEventBySlug[0]->id]])->get();
 
-        return view('AttendeeEventRegistration', compact(['slug','eventName','findSessionByEvent','findTicketByEvent']));
+        return view('AttendeeEventRegistration', compact(['slug','eventName','findSessionByEvent','findTicketByEvent','findTicketsLeftByEvent']));
 
     }
     public function update(Request $request, $slug)
     {
+                 $result = "";
+                $getEventIdBySlug = DB::table('events')->where('event_slug', '=', $slug)->get();
+                $ticket = DB::table('tickets')->select('*')->where('event_id', '=', $getEventIdBySlug[0]->id)->get();
+                $selectedTickets = $request->ticketCostCB;
+                foreach ($selectedTickets as $t) {
+                    $ticketLeft = DB::table('tickets')->where('id', '=', (int)$t)->get();
+                    $tl = $ticketLeft[0]->tickets_left - 1;
+                    DB::table('tickets')->where('id', '=', (int)$t)->update(['tickets_left' => $tl]);
+                }
+                $result = "Purchase success!";
+                return redirect('/attendee/home')->with('alertmessage', $result);
+            
 
-        $getEventIdBySlug = DB::table('events')->where('event_slug', '=', $slug)->get();
-        $ticket = DB::table('tickets')->select('*')->where('event_id', '=', $getEventIdBySlug[0]->id)->get();
-        $selectedTickets = $request->ticketCostCB;
-        dd($selectedTickets);
-        foreach ($selectedTickets as $t) {
-            $ticketLeft = DB::table('tickets')->where('id', '=', (int)$t )->get();
-            $tl= $ticketLeft[0]->tickets_left - 1;
-
-
-
-            DB::table('tickets')->where('id', '=', (int)$t)->update(['tickets_left' => $tl]);
-
-        }
-        return redirect('/attendee/home');
-
+            
     }
 
 

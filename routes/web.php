@@ -5,6 +5,7 @@
 
 
 use Illuminate\Support\Facades\Route;
+Route::get('/logout', 'Auth\LoginController@logout')->name('organizerLogout');
 
 Auth::routes();
 
@@ -16,8 +17,9 @@ Route::get('/login/attendee', 'Auth\LoginController@showAttendeeLoginForm');
 
 Route::post('/login/organizer', 'Auth\LoginController@organizerLogin');
 Route::post('/login/attendee', 'Auth\LoginController@attendeeLogin');
-// Route::post('/register/organizer', 'Auth\RegisterController@createAdmin');
+// Route::post('/register/organiser', 'Auth\RegisterController@createAdmin');
 // Route::post('/register/blogger', 'Auth\RegisterController@createBlogger');
+
 
 
 Route::get('/logout', function(){

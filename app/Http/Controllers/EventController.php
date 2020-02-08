@@ -29,22 +29,32 @@ class EventController extends Controller
     {
         $events = Event::all();
 
-        $dataCount = DB::table('events')->count();
+    $data = DB::table('events')->get()->last();
+    $countOrgEvent = DB::table('events')->where('organizer_id', Auth::user()->id)->count();
 
-        $row_count = "";
-        $dataArr = [];
+    // ($events->organizer_id == Auth::user()->id).count();
+    // dd($countOrgEvent);
+    // $row_count = "";
+      $dataArr = [];
+      for($i = $data->id; $i > 0; $i--){
+      $row_count = DB::table('attendee_register_event')
+      ->select(DB::raw("COUNT(id) as count_row"))
+      ->where("event_id", "=", $i)
+      ->get();
 
-        $data = DB::table('events')->get()->last();
-        for($i = $data->id; $i > 0; $i--){
-            $row_count = DB::table('attendee_register_event')
-                ->select(DB::raw("COUNT(id) as count_row"))
-                ->where("event_id", "=", $i)
-                ->get();
+      $value = $row_count[0]->count_row;
+      $key = $i;
+      $dataArr[$key] = $value;
+      }
+    if ( $countOrgEvent < 1) {
+      return view('ManageEvent', compact(['events', 'dataArr', 'countOrgEvent']));
+    }else{
+      return view('ManageEvent', compact(['events','dataArr', 'countOrgEvent']));
+    }
+    
 
-            $value = $row_count[0]->count_row;
-            $key = $i;
-            $dataArr[$key] = $value;
-        }
+  }
+
 
         return view('ManageEvent', compact(['events','dataArr']));
     }
@@ -162,42 +172,38 @@ class EventController extends Controller
         // Get event from slug
         $event = Event::where('event_slug', '=', $slug)->first();
 
-        if($request->isMethod('post') )
-        {
-            $validator = Validator::make($request -> all(), [
-                'event_name' => 'required',
-                'event_slug' => 'required'
-            ]);
 
-            if($validator->fails())
-            {
-                return redirect('event/'.$slug.'/manage/')->withErrors($validator);
-            }
-            else
-            {
-                $id = $event->id;
-                DB::table('events')
-                    ->where('id', '=', $id)
-                    ->update([
-                        'event_name'=>$request->event_name,
-                        'event_slug'=>$request->event_slug
-                    ]);
+  public function updateEvent(Request $request, $slug){
+    // Get event from slug
+    $event = Event::where('event_slug', '=', $slug)->first();
+    
+    if($request->isMethod('post') )
+    {
+      $validator = Validator::make($request -> all(), [
+        'event_name' => 'required',
+        'event_slug' => 'required',
+        'event_date' => 'required'
+      ]);
 
-                // change redirection to the newSlug saved
-                $newSlug = $request->event_slug;
-                return redirect('event/'.$newSlug.'/manage/')->with('success', 'Event successfully updated');
+      if($validator->fails())
+      {
+        return redirect('event/'.$slug.'/manage/')->withErrors($validator);
+      }
+      else
+      {
+        $id = $event->id;
+        DB::table('events')
+        ->where('id', '=', $id) 
+        ->update([
+          'event_name'=>$request->event_name,
+          'event_slug'=>$request->event_slug,
+          'event_date'=>$request->event_date
+        ]);
 
-                // if($update)
-                // {
-                //   return redirect()->route('event')->with('success', 'Event successfully created');
-                // }
-                // else
-                // {
-                //   return redirect()->route('event')->with('error', 'An error occured while creating event');
-                // }
-            }
-        }
-        return view('event');
+        // change redirection to the newSlug saved
+        $newSlug = $request->event_slug;
+        return redirect('event/'.$newSlug.'/manage/')->with('success', 'Event successfully updated');
+      }
     }
 
     public function deleteEvent($slug){
