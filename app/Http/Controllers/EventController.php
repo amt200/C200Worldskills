@@ -31,11 +31,14 @@ class EventController extends Controller
 
     $dataCount = DB::table('events')->count();
 
-    $row_count = "";
-    $dataArr = [];
-
     $data = DB::table('events')->get()->last();
-    for($i = $data->id; $i > 0; $i--){
+    $countOrgEvent = DB::table('events')->where('organizer_id', Auth::user()->id)->count();
+
+    // ($events->organizer_id == Auth::user()->id).count();
+    // dd($countOrgEvent);
+    // $row_count = "";
+      $dataArr = [];
+      for($i = $data->id; $i > 0; $i--){
       $row_count = DB::table('attendee_register_event')
       ->select(DB::raw("COUNT(id) as count_row"))
       ->where("event_id", "=", $i)
@@ -44,9 +47,14 @@ class EventController extends Controller
       $value = $row_count[0]->count_row;
       $key = $i;
       $dataArr[$key] = $value;
+      }
+    if ( $countOrgEvent < 1) {
+      return view('ManageEvent', compact(['events', 'dataArr', 'countOrgEvent']));
+    }else{
+      return view('ManageEvent', compact(['events','dataArr', 'countOrgEvent']));
     }
+    
 
-    return view('ManageEvent', compact(['events','dataArr']));
   }
 
   // Create method for event creation

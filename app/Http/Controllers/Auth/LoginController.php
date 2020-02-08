@@ -81,4 +81,9 @@ class LoginController extends Controller
         }
         return back()->withInput($request->only('lastName', 'remember'));
     }
+
+    public function logout(Request $request) {
+      Auth::logout();
+      return redirect('/login');
+    }
 }

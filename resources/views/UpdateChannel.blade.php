@@ -5,7 +5,7 @@
     <div>
         <h2 class="mt-3 mb-3">{{$event_name ?? ''}}</h2>
         <hr/>
-        <h4 class="mt-3 mb-5">Create new channel</h4>
+        <h4 class="mt-3 mb-5">Update channel</h4>
 
         {!! Form::open(['method'=>'POST','action'=>['ChannelController@storeUpdate', $slug ?? '']]) !!}
         <div class="form-group row mb-5">

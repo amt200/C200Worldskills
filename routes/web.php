@@ -5,6 +5,7 @@
 
 
 use Illuminate\Support\Facades\Route;
+Route::get('/logout', 'Auth\LoginController@logout')->name('organizerLogout');
 
 Auth::routes();
 
@@ -20,10 +21,7 @@ Route::post('/login/attendee', 'Auth\LoginController@attendeeLogin');
 // Route::post('/register/blogger', 'Auth\RegisterController@createBlogger');
 
 
-Route::get('/logout', function(){
-   Auth::logout();
-    return Redirect::to('/login/organizer');
-})->name('organizerLogout');
+
 
     //ATTENDEE SIGN IN
     Route::get('/sign_in', function() {

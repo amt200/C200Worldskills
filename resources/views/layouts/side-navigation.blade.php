@@ -10,19 +10,6 @@
 		</li>
 	</ul>
 
-	<ul class="list-unstyled group">
-		<p class="side-nav-header">{{ $event->event_name }}</p>
-
-		<li >
-			<a class="{{ (request()->is('event/'.$event->event_slug)) ? 'active' : '' }}"href="{{ url('event/'.$event->event_slug) }}">Overview</a>
-		</li>
-	</ul>
-
-	<ul class="list-unstyled group">
-		<p class="side-nav-header">REPORTS</p>
-		<li>
-			<a href="#">Room Capacity</a>
-		</li>
-  </ul>
+	
 
 </nav>

@@ -14,17 +14,15 @@
 	<hr>
 	@include('layouts.flash-messages')
 	
-	@if(count($dataArr) < 1)
-	<div class="alert alert-warning" role="alert">
-  	There are no events currently..
-	</div>
-
-	@else
 	<!-- Count total Events -->
 	<!-- <div class="alert alert-primary" role="alert">
 	  	TOTAL EVENTS : {{count($dataArr)}}
 	</div> -->
-
+	@if($countOrgEvent < 1)
+	<div class="alert alert-warning" role="alert">
+  	There are no events currently..
+	</div>
+	@endif
 	<div class="grid-container">
 		@foreach($events as $event)
 			@if($event->organizer_id == Auth::user()->id)
@@ -46,8 +44,9 @@
 		@endforeach
 	</div>
 
-
-	@endif
+	<!-- @foreach($events as $event) -->
+			
+		<!-- @endforeach -->
 </div>
 
 
