@@ -60,7 +60,7 @@ class LoginController extends Controller
 
 
         // If login fails
-        return back()->with(['error' => 'No permission']);
+        return back()->with(['error' => 'Please log in']);
     }
 
     public function showAttendeeLoginForm()
@@ -84,6 +84,6 @@ class LoginController extends Controller
 
     public function logout(Request $request) {
       Auth::logout();
-      return redirect('/login');
+      return redirect('/login')->with(['success' => 'You are successfully logged out!'] );
     }
 }
