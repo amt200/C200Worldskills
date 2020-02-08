@@ -91,7 +91,7 @@ private function findRoomByEventId($event_id){
           $enteredData = [$request->title, $request->speaker, $request->cost,
               $request->start_time, $request->end_time, $request->description];
 
-          return redirect('event/'.$slug.'/create_session')->with(session(['alertmessage' => 'A session has already been booked. Please try different time.', 'enteredData'=>$enteredData]));
+          return redirect('event/'.$slug.'/create_session')->with(session(['error' => 'A session has already been booked. Please try different time.', 'enteredData'=>$enteredData]));
       }
       else{
           $session = new Session;
@@ -110,7 +110,7 @@ private function findRoomByEventId($event_id){
 
           $session->save();
 
-          return redirect('event/'.$slug);
+          return redirect('event/'.$slug.'/manage/')->with('success', "Session successfully created.");
       }
   }
 
@@ -207,7 +207,7 @@ private function findRoomByEventId($event_id){
 
 
       if ($validator->fails()) {
-          return redirect('event/'.$slug.'/manage/'.$request->id)
+          return redirect('event/'.$slug.'/update_session/'.$request->id)
               ->withErrors($validator)
               ->withInput();
       }
@@ -223,18 +223,19 @@ private function findRoomByEventId($event_id){
 
       if(in_array(false, $isValid)){
 
-          return redirect('event/'.$slug.'/update_session/'.$request->id)->with('alertmessage', "A session has already been booked. Please try different time.");
+          return redirect('event/'.$slug.'/update_session/'.$request->id)->with('error', "A session has already been booked. Please try different time.");
       }
      else{
+
          DB::table('sessions')->where('id','=', $id)->update(['title'=>$request->title, 'speaker'=>$request->speaker,
              'room_id'=>$request->room_id, 'channel_id'=>$findChannelByRoomId[0]->id, 'cost'=>$request->cost,
              'start_time'=>$request->start_time, 'end_time'=>$request->end_time]);
-         return redirect('event/'.$slug);
+         return redirect('event/'.$slug.'/manage/')->with('success', "Session successfully updated.");
      }
   }
 
   public function delete($slug, $id){
       DB::table('sessions')->where('id','=', $id)->delete();
-      return redirect('event/'.$slug);
+      return redirect('event/'.$slug.'/manage/')->with('success', "Session successfully deleted.");
   }
 }
